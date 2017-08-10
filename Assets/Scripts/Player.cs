@@ -4,7 +4,7 @@ using UnityEngine.Experimental.UIElements;
 
 namespace Assets.Scripts
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IUnitOwner
     {
         public List<Unit> Units;
         private void Start()
@@ -17,16 +17,22 @@ namespace Assets.Scripts
             {
                 foreach (var unit in Units)
                 {
-                    Debug.Log("hahah");
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    var Distance = Vector3.Distance(transform.position, Camera.main.transform.position);
-                    var rayPoint = ray.GetPoint(Distance);
-                    var target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    target.z = 0f;
+                    var distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+                    var rayPoint = ray.GetPoint(distance);
                     unit.SetNewTarget(rayPoint);
                 }
             }
         }
-    
+
+        public void AddUnit(Unit unit)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void RemoveUnit(Unit unit)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
