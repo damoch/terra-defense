@@ -18,9 +18,12 @@ namespace Assets.Scripts
                 foreach (var unit in Units)
                 {
                     Debug.Log("hahah");
+                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    var Distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+                    var rayPoint = ray.GetPoint(Distance);
                     var target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     target.z = 0f;
-                    unit.SetNewTarget(target);
+                    unit.SetNewTarget(rayPoint);
                 }
             }
         }
