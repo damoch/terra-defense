@@ -4,7 +4,7 @@ using UnityEngine.Experimental.UIElements;
 
 namespace Assets.Scripts
 {
-    public class Player : MonoBehaviour, IUnitOwner
+    public class Player : MonoBehaviour
     {
         public List<Unit> Units;
         private void Start()
@@ -23,16 +23,6 @@ namespace Assets.Scripts
                     unit.SetNewTarget(rayPoint);
                 }
             }
-        }
-
-        public void AddUnit(Unit unit)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RemoveUnit(Unit unit)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

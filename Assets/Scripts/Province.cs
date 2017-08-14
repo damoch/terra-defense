@@ -5,11 +5,11 @@ using UnityEngine;
 namespace Assets.Scripts
 {
     public class Province : MonoBehaviour {
-        public List<Unit> Units { get; set; }
         public List<Unit> EnemyUnits { get; set; }
-        
+        public int DefenseValue { get; set; }
+        public Country Owner;
+
         private void Start () {
-		    Units = new List<Unit>();
             EnemyUnits = new List<Unit>();
         }
 
@@ -22,6 +22,12 @@ namespace Assets.Scripts
             }
         }
 
+        private void HandleUnitEnter(Unit unitComponent)
+        {
+            if (Owner.Units.Contains(unitComponent)) DefenseValue += unitComponent.DefenceValue;
+
+        }
+
         private void OnTriggerExit2D(Collider2D other)
         {
             var unitComponent = other.gameObject.GetComponent<Unit>();
@@ -31,19 +37,9 @@ namespace Assets.Scripts
             }
         }
 
-        private void HandleUnitEnter(Unit unit)
+        private void HandleUnitExit(Unit unitComponent)
         {
-            Units.Add(unit);
-        }
-
-        private void HandleUnitExit(Unit unit)
-        {
-            Units.Remove(unit);
-        }
-
-        public int GetProvinceDefenceValue()
-        {
-            return Units.Sum(unit => unit.DefenceValue);
+            if (Owner.Units.Contains(unitComponent)) DefenseValue -= unitComponent.DefenceValue;
         }
     }
 }
