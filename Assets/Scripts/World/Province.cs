@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using Assets.Scripts.Fractions;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.World
 {
     public class Province : MonoBehaviour {
         public List<Unit> EnemyUnits { get; set; }
@@ -11,6 +11,7 @@ namespace Assets.Scripts
 
         private void Start () {
             EnemyUnits = new List<Unit>();
+            DefenseValue = 0;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -24,8 +25,7 @@ namespace Assets.Scripts
 
         private void HandleUnitEnter(Unit unitComponent)
         {
-            if (Owner.Units.Contains(unitComponent)) DefenseValue += unitComponent.DefenceValue;
-
+            if (Owner.Alliance.IsUnitAllied(unitComponent)) DefenseValue += unitComponent.DefenceValue;
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -39,7 +39,7 @@ namespace Assets.Scripts
 
         private void HandleUnitExit(Unit unitComponent)
         {
-            if (Owner.Units.Contains(unitComponent)) DefenseValue -= unitComponent.DefenceValue;
+            if (Owner.Alliance.IsUnitAllied(unitComponent)) DefenseValue -= unitComponent.DefenceValue;
         }
     }
 }

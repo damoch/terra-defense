@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Fractions;
+using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.World
 {
     public class Unit : MonoBehaviour
     {
         private Vector3 _target;
+        public UnitOwner Owner;
         public float UnitSpeed;
         public int AttackValue;
         public int DefenceValue;
@@ -34,6 +36,10 @@ namespace Assets.Scripts
             return !_target.Equals(transform.position);
         }
 
+        /// <summary>
+        /// Gives new target to Unit
+        /// </summary>
+        /// <param name="newTarget"></param>
         public void SetNewTarget(Vector3 newTarget)
         {
             _target = newTarget;
