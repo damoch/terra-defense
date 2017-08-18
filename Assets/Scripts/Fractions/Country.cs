@@ -8,6 +8,10 @@ namespace Assets.Scripts.Fractions
         public Alliance Alliance;
         private void Start () {
         }
-	
+
+        public override bool IsEnemy(Unit unit)
+        {
+            return unit.Owner.GetType() == typeof(Aliens);
+        }
     }
 }

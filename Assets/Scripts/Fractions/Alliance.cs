@@ -13,13 +13,9 @@ namespace Assets.Scripts.Fractions
 		
         }
 
-        public bool IsUnitAllied(Unit unitComponent)
+        public override bool IsEnemy(Unit unit)
         {
-            foreach (var country in Countries)
-            {
-                if (unitComponent.Owner.Equals(country)) return true;
-            }
-            return false;
+            return unit.Owner.GetType() == typeof(Aliens);
         }
     }
 }

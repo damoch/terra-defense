@@ -20,6 +20,25 @@ namespace Assets.Scripts.Players
             {
                 HandleLeftClick();
             }
+            if (Input.GetMouseButton((int) MouseButton.RightMouse))
+            {
+                HandleRightClick();
+            }
+        }
+
+        private void HandleRightClick()
+        {
+            if (SelectedUnit != null)
+            {
+                SelectedUnit.SetNewTarget(GetMouseToWorldCoordinates());
+            }
+        }
+
+        private Vector2 GetMouseToWorldCoordinates()
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+            return ray.GetPoint(distance);
         }
 
         private void HandleLeftClick()
@@ -39,7 +58,7 @@ namespace Assets.Scripts.Players
 
         private void SelectUnit(Unit unitComponent)
         {
-            if (Alliance.IsUnitAllied(unitComponent))
+            if (!Alliance.IsEnemy(unitComponent))
             {
                 SelectedUnit = unitComponent;
             }

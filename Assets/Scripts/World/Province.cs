@@ -25,7 +25,15 @@ namespace Assets.Scripts.World
 
         private void HandleUnitEnter(Unit unitComponent)
         {
-            if (Owner.Alliance.IsUnitAllied(unitComponent)) DefenseValue += unitComponent.DefenceValue;
+            if (Owner.IsEnemy(unitComponent))
+            {
+                EnemyUnits.Add(unitComponent);
+                Debug.Log("Enemy detected!");
+            }
+            else 
+            {
+                DefenseValue += unitComponent.DefenceValue;
+            }
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -39,7 +47,15 @@ namespace Assets.Scripts.World
 
         private void HandleUnitExit(Unit unitComponent)
         {
-            if (Owner.Alliance.IsUnitAllied(unitComponent)) DefenseValue -= unitComponent.DefenceValue;
+            if (Owner.IsEnemy(unitComponent))
+            {
+                EnemyUnits.Remove(unitComponent);
+                Debug.Log("Enemy retreated!");
+            }
+            else
+            {
+                DefenseValue -= unitComponent.DefenceValue;
+            }
         }
     }
 }
