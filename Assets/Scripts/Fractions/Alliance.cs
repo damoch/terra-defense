@@ -17,5 +17,10 @@ namespace Assets.Scripts.Fractions
         {
             return unit.Owner.GetType() == typeof(Aliens);
         }
+
+        public override List<Unit> GetPlayerControllableUnits()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

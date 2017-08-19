@@ -5,35 +5,35 @@ namespace Assets.Scripts.World
 {
     public class Unit : MonoBehaviour
     {
-        private Vector3 _target;
+        protected Vector3 Target;
         public UnitOwner Owner;
         public float UnitSpeed;
         public int AttackValue;
         public int DefenceValue;
         public int Status;
         
-        private void Start ()
+        public virtual void Start ()
         {
-            _target = transform.position;
+            Target = transform.position;
         }
 	
-        private void Update () {
+        public virtual void Update () {
             if (ShouldMove())
             {
                 MoveTowardsTarget();
             }
 		
         }
-        
-        private void MoveTowardsTarget()
+
+        protected void MoveTowardsTarget()
         {
             var step = UnitSpeed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, _target, step);
+            transform.position = Vector3.MoveTowards(transform.position, Target, step);
         }
 
-        private bool ShouldMove()
+        protected bool ShouldMove()
         {
-            return !_target.Equals(transform.position);
+            return !Target.Equals(transform.position);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Assets.Scripts.World
         /// <param name="newTarget"></param>
         public void SetNewTarget(Vector3 newTarget)
         {
-            _target = newTarget;
+            Target = newTarget;
         }
 
         /// <summary>

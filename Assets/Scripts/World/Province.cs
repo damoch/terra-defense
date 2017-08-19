@@ -84,9 +84,9 @@ namespace Assets.Scripts.World
             var losingArmy = totalAttack > totalDefense ? AlliedUnits : EnemyUnits;
             var winningArmy = totalAttack <= totalDefense ? AlliedUnits : EnemyUnits;
 
-            for (var index = 0; index < losingArmy.Count; index++)
+            for (var i = 0; i < losingArmy.Count; i++)
             {
-                var unit = losingArmy[index];
+                var unit = losingArmy[i];
                 unit.AddDamage(damageValue);
             }
 

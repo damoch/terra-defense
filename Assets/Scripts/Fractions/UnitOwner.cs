@@ -12,5 +12,11 @@ namespace Assets.Scripts.Fractions
         /// <param name="unit"></param>
         /// <returns></returns>
         public abstract bool IsEnemy(Unit unit);
+
+        /// <summary>
+        /// Returns Units, taht can be controlled by player (either AI or Human)
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<Unit> GetPlayerControllableUnits();
     }
 }
