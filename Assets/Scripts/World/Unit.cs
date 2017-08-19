@@ -44,6 +44,19 @@ namespace Assets.Scripts.World
         {
             _target = newTarget;
         }
+
+        /// <summary>
+        /// Adds damage points to unit HP, if HP fells below zero, unit is destroyed
+        /// </summary>
+        /// <param name="value"></param>
+        public void AddDamage(int value)
+        {
+            Status -= value;
+            if (Status <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
         
     }
 }
