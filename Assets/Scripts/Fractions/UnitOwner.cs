@@ -6,6 +6,7 @@ namespace Assets.Scripts.Fractions
 {
     public abstract class UnitOwner : MonoBehaviour
     {
+        public List<Unit> AvaibleUnits;
         /// <summary>
         /// Checks, if unit entering province is friendly
         /// </summary>
@@ -18,5 +19,7 @@ namespace Assets.Scripts.Fractions
         /// </summary>
         /// <returns></returns>
         public abstract List<Unit> GetPlayerControllableUnits();
+
+        public abstract GameObject ProduceUnit(Vector2 spawnPosition);
     }
 }

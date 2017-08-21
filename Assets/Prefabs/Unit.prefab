@@ -103,7 +103,7 @@ MonoBehaviour:
   UnitSpeed: 4
   AttackValue: 1
   DefenceValue: 2
-  Status: 100
+  Status: 2
 --- !u!212 &212071459969690460
 SpriteRenderer:
   m_ObjectHideFlags: 1

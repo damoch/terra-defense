@@ -22,5 +22,10 @@ namespace Assets.Scripts.Fractions
         {
             throw new NotImplementedException();
         }
+
+        public override GameObject ProduceUnit(Vector2 spawnPosition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

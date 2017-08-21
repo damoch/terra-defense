@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.World;
+using UnityEngine;
 
 namespace Assets.Scripts.Fractions
 {
@@ -15,6 +16,11 @@ namespace Assets.Scripts.Fractions
         }
 
         public override List<Unit> GetPlayerControllableUnits()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override GameObject ProduceUnit(Vector2 spawnPosition)
         {
             throw new System.NotImplementedException();
         }

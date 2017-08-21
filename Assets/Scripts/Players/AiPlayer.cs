@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Fractions;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Fractions;
+using Assets.Scripts.World;
 using UnityEngine;
 
 namespace Assets.Scripts.Players
@@ -15,7 +17,14 @@ namespace Assets.Scripts.Players
         private void MakeNextMove()
         {
             Debug.Log("Deciding move");
-            Debug.Log(Aliens.GetPlayerControllableUnits());
+            var units = Aliens.GetPlayerControllableUnits();
+            //Not sure if that is necesary...
+            var platforms = new List<PlatformUnit>();
+            foreach (var unit in units)
+            {
+                platforms.Add((PlatformUnit)unit);
+            }
+            Debug.Log(platforms);
         }
 
     }

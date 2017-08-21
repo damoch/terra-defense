@@ -559,7 +559,7 @@ Prefab:
     - target: {fileID: 114342459257155596, guid: b894f0a7f26c9584eb0feedab9a43be9,
         type: 2}
       propertyPath: Status
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}
@@ -727,11 +727,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4707363587322680, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.98
+      value: 3.16
       objectReference: {fileID: 0}
     - target: {fileID: 4707363587322680, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.26
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4707363587322680, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}
       propertyPath: m_LocalPosition.z
@@ -782,6 +782,16 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 029c3bec67b168043aac879a9765944a,
         type: 3}
+    - target: {fileID: 61677310865981882, guid: b894f0a7f26c9584eb0feedab9a43be9,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 61677310865981882, guid: b894f0a7f26c9584eb0feedab9a43be9,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.96
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114342459257155596, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}
@@ -802,6 +812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987961afec5f707419fcddaaa8d136a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AvaibleUnits:
+  - {fileID: 114342459257155596, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}
 --- !u!1001 &2146362416
 Prefab:
   m_ObjectHideFlags: 0
@@ -858,7 +870,7 @@ Prefab:
     - target: {fileID: 114342459257155596, guid: b894f0a7f26c9584eb0feedab9a43be9,
         type: 2}
       propertyPath: Status
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}

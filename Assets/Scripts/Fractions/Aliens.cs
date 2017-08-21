@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.World;
+using UnityEngine;
 
 namespace Assets.Scripts.Fractions
 {
     public class Aliens : UnitOwner {
-        public List<Unit> PlatformUnits { get; set; }
         private void Start()
         {
             //PlatformUnits = FindObjectsOfType<PlatformUnit>().ToList();
@@ -25,6 +25,13 @@ namespace Assets.Scripts.Fractions
                 result.Add(platformUnit);
             }
             return result;
+        }
+
+        public override GameObject ProduceUnit(Vector2 spawnPosition)
+        {
+            var instance = Instantiate(AvaibleUnits[0].gameObject, spawnPosition, Quaternion.identity);
+            instance.GetComponent<Unit>().Owner = this;
+            return instance;
         }
     }
 }
