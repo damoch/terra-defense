@@ -21,6 +21,7 @@ namespace Assets.Scripts.World
                 throw new UnityException("No Aliens on scene!");
             }
             InvokeRepeating("DecideNextMove", 1f, 1f);
+            SetupTimeValues();
         }
 
         private void DecideNextMove()

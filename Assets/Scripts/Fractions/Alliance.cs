@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Fractions
 {
-    public class Alliance : UnitOwner
+    public class Alliance : UnitOwner, ITimeAffected
     {
         public string Name;
         public List<Country> Countries;
@@ -24,6 +24,16 @@ namespace Assets.Scripts.Fractions
         }
 
         public override GameObject ProduceUnit(Vector2 spawnPosition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void HourEvent()
+        {
+            Debug.Log(Name);
+        }
+
+        public void SetupTimeValues()
         {
             throw new NotImplementedException();
         }

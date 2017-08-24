@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.World
 {
-    public class Unit : MonoBehaviour
+    public class Unit : MonoBehaviour, ITimeAffected
     {
         protected Vector3 Target;
         public UnitOwner Owner;
@@ -15,6 +15,7 @@ namespace Assets.Scripts.World
         public virtual void Start ()
         {
             Target = transform.position;
+            SetupTimeValues();
         }
 	
         public virtual void Update () {
@@ -57,6 +58,16 @@ namespace Assets.Scripts.World
                 Destroy(gameObject);
             }
         }
-        
+
+        public void HourEvent()
+        {
+            Debug.Log("Test");
+        }
+
+        public void SetupTimeValues()
+        {
+            var clock = FindObjectOfType<Clock>();
+            UnitSpeed = UnitSpeed / clock.LengthOfHour;
+        }
     }
 }
