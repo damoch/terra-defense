@@ -8,8 +8,7 @@ namespace Assets.Scripts.World
     {
         public DateTime GameDateTime { get; set; }
         public float LengthOfHour;
-
-        // Use this for initialization
+        
         private void Start () {
 		    GameDateTime = new DateTime(2075,4,5,6,0,0);
             InvokeRepeating("HourEvent",LengthOfHour,LengthOfHour);
@@ -27,9 +26,5 @@ namespace Assets.Scripts.World
                 affected.GetComponent<ITimeAffected>().HourEvent();
             }
         }
-
-
-
-
     }
 }

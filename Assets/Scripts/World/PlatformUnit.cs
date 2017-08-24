@@ -30,10 +30,6 @@ namespace Assets.Scripts.World
             {
                 Units.Add(AliensOwner.ProduceUnit(transform.position));
             }
-            else if (TargetProvince == null || TargetProvince.Owner.Equals(AliensOwner))
-            {
-                FindTargetProvince();
-            }
             else
             {
                 for (var i = 0; i < Units.Count; i++)
@@ -51,22 +47,7 @@ namespace Assets.Scripts.World
             }
         }
 
-        private void FindTargetProvince()
-        {
-            var targetOptions = FindObjectsOfType<Province>().Where(t => !t.Owner.Equals(AliensOwner)).ToList();
-
-            TargetProvince = targetOptions[0];
-            var currentDist = Vector2.Distance(transform.position, TargetProvince.transform.position);
-            foreach (var targetOption in targetOptions)
-            {
-                if (Vector2.Distance(transform.position, targetOption.transform.position) < currentDist)
-                {
-                    currentDist = Vector2.Distance(transform.position, targetOption.transform.position);
-                    TargetProvince = targetOption;
-                }
-            }
-
-        }
+     
 
         public override void Update()
         {

@@ -6,11 +6,6 @@ using UnityEngine;
 namespace Assets.Scripts.Fractions
 {
     public class Aliens : UnitOwner {
-        private void Start()
-        {
-            //PlatformUnits = FindObjectsOfType<PlatformUnit>().ToList();
-        }
-
         public override bool IsEnemy(Unit unit)
         {
             return unit.Owner.GetType() != typeof(Aliens);
