@@ -47,12 +47,12 @@ namespace Assets.Scripts.World
         }
 
         /// <summary>
-        /// Adds damage points to unit HP, if HP fells below zero, unit is destroyed
+        /// Changes unit HP, if HP fells below zero, unit is destroyed
         /// </summary>
         /// <param name="value"></param>
-        public void AddDamage(int value)
+        public void ModifyStatus(int value)
         {
-            Status -= value;
+            Status += value;
             if (Status <= 0)
             {
                 Destroy(gameObject);

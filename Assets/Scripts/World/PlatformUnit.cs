@@ -26,18 +26,18 @@ namespace Assets.Scripts.World
 
         private void DecideNextMove()
         {
-            if (!ShouldMove() && Units.Count < 3)
+            if (ShouldBuildMoreUnits())
             {
                 Units.Add(AliensOwner.ProduceUnit(transform.position));
             }
-            else
+            else if(!ShouldMove())
             {
                 for (var i = 0; i < Units.Count; i++)
                 {
                     var unit = Units[i];
                     if (unit != null)
                     {
-                        unit.GetComponent<Unit>().SetNewTarget(TargetProvince.transform.position);
+                        unit.GetComponent<Unit>().SetNewTarget(TargetProvince.GetRandomPosition());
                     }
                     else
                     {
@@ -45,6 +45,11 @@ namespace Assets.Scripts.World
                     }
                 }
             }
+        }
+
+        private bool ShouldBuildMoreUnits()
+        {
+            return TargetProvince.DefenseValue + 1 > Units.Sum(unit => unit.GetComponent<Unit>().AttackValue) && !ShouldMove();
         }
 
      

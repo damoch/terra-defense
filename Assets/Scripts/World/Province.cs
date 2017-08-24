@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Fractions;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.World
 {
@@ -23,7 +24,6 @@ namespace Assets.Scripts.World
             EnemyUnits = new List<Unit>();
             AlliedUnits = new List<Unit>();
             DefenseValue = 0;
-
             #if UNITY_EDITOR
             if (BattleDelay == 0)
             {
@@ -87,7 +87,7 @@ namespace Assets.Scripts.World
             for (var i = 0; i < losingArmy.Count; i++)
             {
                 var unit = losingArmy[i];
-                unit.AddDamage(damageValue);
+                unit.ModifyStatus(-damageValue);
             }
 
             if (losingArmy.Count == 0)
@@ -120,6 +120,15 @@ namespace Assets.Scripts.World
                 AlliedUnits.Remove(unitComponent);
                 DefenseValue -= unitComponent.DefenceValue;
             }
+        }
+
+        public Vector2 GetRandomPosition()
+        {
+            var center = transform.position;
+            var size = GetComponent<SpriteRenderer>().sprite.bounds.size;
+            var x = Random.Range(center.x - size.x / 2, center.x + size.y / 2);
+            var y = Random.Range(center.y - size.y / 2, center.y - size.y / 2);
+            return new Vector2(x,y);
         }
     }
 }

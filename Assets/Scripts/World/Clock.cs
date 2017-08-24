@@ -1,5 +1,4 @@
 ﻿using System;
-using Assets.Scripts.Misc;
 using UnityEngine;
 
 namespace Assets.Scripts.World
