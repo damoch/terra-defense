@@ -2,7 +2,7 @@
 using Assets.Scripts.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Fractions
+namespace Assets.Scripts.Factions
 {
     public abstract class UnitOwner : MonoBehaviour
     {

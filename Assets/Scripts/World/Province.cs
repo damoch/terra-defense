@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Fractions;
+using Assets.Scripts.Factions;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

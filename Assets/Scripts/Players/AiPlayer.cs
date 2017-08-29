@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Fractions;
+using Assets.Scripts.Factions;
 using Assets.Scripts.World;
 using UnityEngine;
 
 namespace Assets.Scripts.Players
 {
-    public class AiPlayer : MonoBehaviour {
+    // ReSharper disable once InconsistentNaming
+    public class AIPlayer : MonoBehaviour {
         public Aliens Aliens { get; set; }
         public List<Province> Provinces { get; set; }
         private void Start ()

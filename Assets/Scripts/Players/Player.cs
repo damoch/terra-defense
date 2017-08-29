@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Fractions;
+using Assets.Scripts.Factions;
+using Assets.Scripts.UI;
 using Assets.Scripts.World;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
@@ -10,9 +11,10 @@ namespace Assets.Scripts.Players
     {
         public Alliance Alliance;
         public Unit SelectedUnit;
+        public UIController UIController { get; set; }
         private void Start()
         {
-            
+            UIController = FindObjectOfType<UIController>();
         }
         private void Update()
         {
@@ -53,11 +55,16 @@ namespace Assets.Scripts.Players
                     SelectUnit(unitComponent);
                 }
             }
+            else
+            {
+                UIController.DisableUnitInfoPanel();
+            }
 
         }
 
         private void SelectUnit(Unit unitComponent)
         {
+            UIController.SetUnitInfo(unitComponent);
             if (!Alliance.IsEnemy(unitComponent))
             {
                 SelectedUnit = unitComponent;

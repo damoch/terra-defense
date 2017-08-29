@@ -19,7 +19,6 @@ namespace Assets.Scripts.World
             Debug.Log(GameDateTime);
 
             var objectsWithTag = GameObject.FindGameObjectsWithTag("TimeAffected");
-            Debug.Log("sasasas");
             foreach (var affected in objectsWithTag)
             {
                 affected.GetComponent<ITimeAffected>().HourEvent();

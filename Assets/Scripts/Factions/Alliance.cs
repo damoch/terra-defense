@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Fractions
+namespace Assets.Scripts.Factions
 {
     public class Alliance : UnitOwner, ITimeAffected
     {

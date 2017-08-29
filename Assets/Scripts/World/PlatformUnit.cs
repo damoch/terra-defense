@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Fractions;
+using Assets.Scripts.Factions;
 using UnityEngine;
 
 namespace Assets.Scripts.World
@@ -49,7 +49,20 @@ namespace Assets.Scripts.World
 
         private bool ShouldBuildMoreUnits()
         {
-            return TargetProvince.DefenseValue + 1 > Units.Sum(unit => unit.GetComponent<Unit>().AttackValue) && !ShouldMove();
+            var sum = 0;
+            for (var i = 0; i < Units.Count; i++)
+            {
+                var unit = Units[i];
+                if (unit != null)
+                {
+                    sum += unit.GetComponent<Unit>().AttackValue;
+                }
+                else
+                {
+                    Units.RemoveAt(i);
+                }
+            }
+            return TargetProvince.DefenseValue + 1 > sum && !ShouldMove();
         }
 
      

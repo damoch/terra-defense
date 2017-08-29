@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Fractions;
+﻿using Assets.Scripts.Factions;
 using UnityEngine;
 
 namespace Assets.Scripts.World

@@ -3,7 +3,7 @@ using System.Linq;
 using Assets.Scripts.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Fractions
+namespace Assets.Scripts.Factions
 {
     public class Aliens : UnitOwner {
         public override bool IsEnemy(Unit unit)
