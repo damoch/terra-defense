@@ -214,6 +214,7 @@ MonoBehaviour:
   UnitNameText: {fileID: 1932332062}
   UnitFactionText: {fileID: 1169178482}
   DateTimeText: {fileID: 489599230}
+  UnitInfoPanel: {fileID: 79502464}
 --- !u!4 &203283966
 Transform:
   m_ObjectHideFlags: 0
