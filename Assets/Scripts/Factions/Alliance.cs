@@ -37,5 +37,20 @@ namespace Assets.Scripts.Factions
         {
             throw new NotImplementedException();
         }
+
+        public override void EnemyIsAttackingProperty(GameObject caller)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void EnemyIsCloseToProperty(GameObject caller)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void EnemyIsRetreatingFromProperty(GameObject caller)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

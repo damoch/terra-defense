@@ -20,7 +20,6 @@ namespace Assets.Scripts.Players
 
         private void MakeNextMove()
         {
-            Debug.Log("Deciding move");
             var units = Aliens.GetPlayerControllableUnits();
             //Not sure if that is necesary...
             var platforms = new List<PlatformUnit>();

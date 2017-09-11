@@ -36,20 +36,12 @@ namespace Assets.Scripts.World
         {
             return !Target.Equals(transform.position);
         }
-
-        /// <summary>
-        /// Gives new target to Unit
-        /// </summary>
-        /// <param name="newTarget"></param>
+        
         public void SetNewTarget(Vector3 newTarget)
         {
             Target = newTarget;
         }
-
-        /// <summary>
-        /// Changes unit HP, if HP fells below zero, unit is destroyed
-        /// </summary>
-        /// <param name="value"></param>
+        
         public void ModifyStatus(int value)
         {
             Status += value;

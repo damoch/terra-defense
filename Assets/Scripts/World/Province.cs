@@ -47,6 +47,7 @@ namespace Assets.Scripts.World
 
             if (Owner.IsEnemy(unitComponent))
             {
+                Owner.EnemyIsAttackingProperty(gameObject);
                 EnemyUnits.Add(unitComponent);
                 if (!IsBattle)
                 {

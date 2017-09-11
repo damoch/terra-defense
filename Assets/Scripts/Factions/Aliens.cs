@@ -28,5 +28,20 @@ namespace Assets.Scripts.Factions
             instance.GetComponent<Unit>().Owner = this;
             return instance;
         }
+
+        public override void EnemyIsAttackingProperty(GameObject caller)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void EnemyIsCloseToProperty(GameObject caller)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void EnemyIsRetreatingFromProperty(GameObject caller)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
