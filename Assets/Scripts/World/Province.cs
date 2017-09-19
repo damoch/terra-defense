@@ -8,17 +8,19 @@ using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.World
 {
-    public class Province : MonoBehaviour
+    public class Province : MonoBehaviour, ITimeAffected
     {
         public float BattleDelay;
+        public float AlertDelay { get; set; }
         public List<Unit> EnemyUnits { get; set; }
         public List<Unit> AlliedUnits { get; set; }
         public int DefenseValue { get; set; }
         public bool IsBattle { get; set; }
         public UnitOwner Owner;
-
+        public int CreditsPerHour;
         private void Start ()
         {
+            SetupTimeValues();
            
             IsBattle = false;
             EnemyUnits = new List<Unit>();
@@ -30,6 +32,25 @@ namespace Assets.Scripts.World
                 BattleDelay = 1f;
             }
             #endif
+
+            InvokeRepeating("CheckSurrondings", AlertDelay, AlertDelay);
+        }
+
+        private void CheckSurrondings()
+        {
+            var hitColliders = Physics2D.OverlapCircleAll(transform.position, 100);
+            var units = new List<Unit>();
+
+            foreach (var hitCollider in hitColliders)
+            {
+                var unit = hitCollider.gameObject.GetComponent<Unit>();
+                if (unit != null && Owner.IsEnemy(unit))
+                {
+                    Owner.EnemyIsCloseToProperty(gameObject);
+                    return;
+                }
+            }
+            
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -130,6 +151,16 @@ namespace Assets.Scripts.World
             var x = Random.Range(center.x - size.x / 2, center.x + size.y / 2);
             var y = Random.Range(center.y - size.y / 2, center.y - size.y / 2);
             return new Vector2(x,y);
+        }
+
+        public void HourEvent()
+        {
+            Owner.Credits += CreditsPerHour;
+        }
+
+        public void SetupTimeValues()
+        {
+            AlertDelay = FindObjectOfType<Clock>().LengthOfHour / 4;
         }
     }
 }

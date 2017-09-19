@@ -11,9 +11,14 @@ namespace Assets.Scripts.World
         public int AttackValue;
         public int DefenceValue;
         public int Status;
+        public int Cost;
         
         public virtual void Start ()
         {
+            if (Cost == 0)
+            {
+                Cost = 5;
+            }
             Target = transform.position;
             SetupTimeValues();
         }

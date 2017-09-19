@@ -31,17 +31,17 @@ namespace Assets.Scripts.Factions
 
         public override void EnemyIsAttackingProperty(GameObject caller)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Enemy is attacking");
         }
 
         public override void EnemyIsCloseToProperty(GameObject caller)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Enemy is close to property");
         }
 
         public override void EnemyIsRetreatingFromProperty(GameObject caller)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Enemy is retreating");
         }
     }
 }

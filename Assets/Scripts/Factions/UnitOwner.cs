@@ -6,6 +6,7 @@ namespace Assets.Scripts.Factions
 {
     public abstract class UnitOwner : MonoBehaviour
     {
+        public int Credits;
         public List<Unit> AvaibleUnits;
 
         public abstract bool IsEnemy(Unit unit);
