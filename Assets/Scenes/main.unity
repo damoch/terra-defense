@@ -700,6 +700,15 @@ Prefab:
       propertyPath: Owner
       value: 
       objectReference: {fileID: 283452386}
+    - target: {fileID: 114685295563720994, guid: b2fd5058aaa255b4ebf60b695e2d1ca5,
+        type: 2}
+      propertyPath: CreditsPerHour
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756237892879136, guid: b2fd5058aaa255b4ebf60b695e2d1ca5, type: 2}
+      propertyPath: m_TagString
+      value: TimeAffected
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b2fd5058aaa255b4ebf60b695e2d1ca5, type: 2}
   m_IsPrefabParent: 0
@@ -1253,6 +1262,15 @@ Prefab:
       propertyPath: m_Name
       value: Province (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114685295563720994, guid: b2fd5058aaa255b4ebf60b695e2d1ca5,
+        type: 2}
+      propertyPath: CreditsPerHour
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756237892879136, guid: b2fd5058aaa255b4ebf60b695e2d1ca5, type: 2}
+      propertyPath: m_TagString
+      value: TimeAffected
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b2fd5058aaa255b4ebf60b695e2d1ca5, type: 2}
   m_IsPrefabParent: 0
@@ -1388,6 +1406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987961afec5f707419fcddaaa8d136a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Credits: 0
   AvaibleUnits:
   - {fileID: 114342459257155596, guid: b894f0a7f26c9584eb0feedab9a43be9, type: 2}
 --- !u!1 &2046570045

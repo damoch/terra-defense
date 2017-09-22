@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.World;
 using UnityEngine;
 
@@ -20,12 +21,20 @@ namespace Assets.Scripts.Factions
 
         public override List<Unit> GetPlayerControllableUnits()
         {
-            throw new NotImplementedException();
+            //Czy sojusz powinien mieć jednostki
+            return FindObjectsOfType<Unit>().Where(u => u.Owner.Equals(this)).ToList();
         }
 
         public override GameObject ProduceUnit(Vector2 spawnPosition)
         {
-            throw new NotImplementedException();
+            if (AvaibleUnits[0].Cost <= Credits)
+            {
+                Credits -= AvaibleUnits[0].Cost;
+                var instance = Instantiate(AvaibleUnits[0].gameObject, spawnPosition, Quaternion.identity);
+                instance.GetComponent<Unit>().Owner = this;
+                return instance;
+            }
+            return null;
         }
 
         public void HourEvent()

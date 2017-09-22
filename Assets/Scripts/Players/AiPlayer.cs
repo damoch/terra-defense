@@ -2,6 +2,7 @@
 using System.Linq;
 using Assets.Scripts.Factions;
 using Assets.Scripts.World;
+using Assets.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts.Players
@@ -20,6 +21,7 @@ namespace Assets.Scripts.Players
 
         private void MakeNextMove()
         {
+            #region AI
             var units = Aliens.GetPlayerControllableUnits();
             //Not sure if that is necesary...
             var platforms = new List<PlatformUnit>();
@@ -41,16 +43,16 @@ namespace Assets.Scripts.Players
             var validTargets = Provinces.Where(p => !p.Owner.Equals(Aliens)).ToList();
             if(validTargets.Count == 0)return;
 
-            var currentTarget = FindClosestProvince(validTargets, platformUnit);
+            var currentTarget = UtilsAndTools.FindNearestProvince(platformUnit, validTargets);
             platformUnit.TargetProvince = currentTarget;
 
-            var attackPositions = Provinces.Where(p => p.Owner.Equals(Aliens)).ToList();
-            if (attackPositions.Count == 0) return;
-
-            platformUnit.SetNewTarget(FindClosestProvince(attackPositions, platformUnit).transform.position);
+            var attackPosition = UtilsAndTools.FindNearestProvince(platformUnit, Aliens);
+            if(attackPosition != null)
+                platformUnit.SetNewTarget(attackPosition.transform.position);
 
         }
 
+        #endregion
         private Province FindClosestProvince(List<Province> validTargets, PlatformUnit platformUnit)
         {
             var currentTarget = validTargets[0];

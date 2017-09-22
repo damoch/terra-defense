@@ -9,10 +9,16 @@ namespace Assets.Utils
     public class UtilsAndTools : MonoBehaviour {
         public static Province FindNearestProvince(MonoBehaviour caller, UnitOwner owner)
         {
-            var possibleRetreatTargets = FindObjectsOfType<Province>().Where(p => p.Owner.Equals(owner)).ToList();
-            var currentTarget = possibleRetreatTargets[0];
+            var possibleTargets = FindObjectsOfType<Province>().Where(p => p.Owner.Equals(owner)).ToList();
+            return FindNearestProvince(caller, possibleTargets);
+        }
+
+        public static Province FindNearestProvince(MonoBehaviour caller, List<Province> possibleTargets)
+        {
+            if (possibleTargets.Count == 0) return null;
+            var currentTarget = possibleTargets[0];
             var currentDist = Vector2.Distance(caller.transform.position, currentTarget.transform.position);
-            foreach (var targetOption in possibleRetreatTargets)
+            foreach (var targetOption in possibleTargets)
             {
                 if (!(Vector2.Distance(caller.transform.position, targetOption.transform.position) < currentDist) || caller.Equals(targetOption)) continue;
                 currentDist = Vector2.Distance(caller.transform.position, targetOption.transform.position);
@@ -20,6 +26,7 @@ namespace Assets.Utils
             }
             return currentTarget;
         }
+
         public static float FindAverageDistance(MonoBehaviour destination, List<MonoBehaviour> sources)
         {
             var distances = new List<float>();
