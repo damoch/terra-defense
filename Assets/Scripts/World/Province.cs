@@ -14,9 +14,10 @@ namespace Assets.Scripts.World
         public float AlertDelay { get; set; }
         public List<Unit> EnemyUnits { get; set; }
         public List<Unit> AlliedUnits { get; set; }
-        public int DefenseValue { get; set; }
+        public float DefenseValue { get; set; }
         public bool IsBattle { get; set; }
         public UnitOwner Owner;
+        private UnitOwner _originalOwner;
         public int CreditsPerHour;
         private void Start ()
         {
@@ -33,13 +34,13 @@ namespace Assets.Scripts.World
             }
             #endif
 
+            _originalOwner = Owner;
             InvokeRepeating("CheckSurrondings", AlertDelay, AlertDelay);
         }
 
         private void CheckSurrondings()
         {
             var hitColliders = Physics2D.OverlapCircleAll(transform.position, 100);
-            var units = new List<Unit>();
 
             foreach (var hitCollider in hitColliders)
             {
@@ -101,25 +102,65 @@ namespace Assets.Scripts.World
         {
             var totalAttack = EnemyUnits.Sum(unit => unit.AttackValue);
             var totalDefense = AlliedUnits.Sum(unit => unit.DefenceValue);
-            var damageValue = Math.Abs(totalDefense - totalAttack);
+            List<Unit> losingArmy;
+            List<Unit> winningArmy;
+            float damageValue;
 
-            var losingArmy = totalAttack > totalDefense ? AlliedUnits : EnemyUnits;
-            var winningArmy = totalAttack <= totalDefense ? AlliedUnits : EnemyUnits;
+            if (Math.Abs(totalDefense - totalAttack) < 0.01)
+            {
+                losingArmy = EnemyUnits;
+                winningArmy = AlliedUnits;
+                damageValue = UnityEngine.Random.Range(0.01f, totalDefense / 2);
+            }
+            else
+            {
+                damageValue = Math.Abs(totalDefense - totalAttack);
+
+                losingArmy = totalAttack > totalDefense ? AlliedUnits : EnemyUnits;
+                winningArmy = totalAttack <= totalDefense ? AlliedUnits : EnemyUnits;
+            }
 
             for (var i = 0; i < losingArmy.Count; i++)
             {
-                var unit = losingArmy[i];
-                unit.ModifyStatus(-damageValue);
+                try
+                {
+                    var unit = losingArmy[i];
+                    unit.ModifyStatus(-damageValue);
+                }
+                catch
+                {
+                    //
+                }
             }
+            damageValue *= 0.33f;
 
-            if (losingArmy.Count == 0)
+            for (var i = 0; i < winningArmy.Count; i++)
             {
-                Debug.Log("Battle is over");
-                Owner = winningArmy[0].Owner;
-                AlliedUnits = winningArmy;
-                EnemyUnits = new List<Unit>();
-                IsBattle = false;
+                try
+                {
+                    var unit = winningArmy[i];
+                    unit.ModifyStatus(-damageValue);
+                }
+                catch
+                {
+                    //
+                }
             }
+            //damageValue *= 0.3f;
+
+            //for (var i = 0; i < winningArmy.Count; i++)
+            //{
+            //    var unit = losingArmy[i];
+            //    unit.ModifyStatus(-damageValue);
+            //}
+
+
+            if (losingArmy.Count != 0) return;
+            var proposedOwner = winningArmy[0].Owner;
+            Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner ;
+            AlliedUnits = winningArmy;
+            EnemyUnits = new List<Unit>();
+            IsBattle = false;
         }
 
         private void OnTriggerExit2D(Collider2D other)

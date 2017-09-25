@@ -8,9 +8,10 @@ namespace Assets.Scripts.World
         protected Vector3 Target;
         public UnitOwner Owner;
         public float UnitSpeed;
-        public int AttackValue;
-        public int DefenceValue;
-        public int Status;
+        public float AttackValue;
+        public float DefenceValue;
+        private float _initialStatus;
+        public float Status;
         public int Cost;
         
         public virtual void Start ()
@@ -21,6 +22,7 @@ namespace Assets.Scripts.World
             }
             Target = transform.position;
             SetupTimeValues();
+            _initialStatus = Status;
         }
 	
         public virtual void Update () {
@@ -47,13 +49,16 @@ namespace Assets.Scripts.World
             Target = newTarget;
         }
         
-        public void ModifyStatus(int value)
+        public void ModifyStatus(float value)
         {
             Status += value;
             if (Status <= 0)
             {
                 Destroy(gameObject);
             }
+            var propertyModifier = Status / (float)_initialStatus;
+            AttackValue  *= propertyModifier;
+            DefenceValue *= propertyModifier;
         }
 
         public void HourEvent()

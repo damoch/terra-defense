@@ -49,7 +49,7 @@ namespace Assets.Scripts.World
 
         private bool ShouldBuildMoreUnits()
         {
-            var sum = 0;
+            var sum = 0f;
             for (var i = 0; i < Units.Count; i++)
             {
                 var unit = Units[i];

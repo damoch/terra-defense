@@ -21,7 +21,7 @@ namespace Assets.Scripts.Factions
 
         public override List<Unit> GetPlayerControllableUnits()
         {
-            //Czy sojusz powinien mieć jednostki
+            //Czy sojusz powinien mieć jednostki?
             return FindObjectsOfType<Unit>().Where(u => u.Owner.Equals(this)).ToList();
         }
 
@@ -60,6 +60,11 @@ namespace Assets.Scripts.Factions
         public override void EnemyIsRetreatingFromProperty(GameObject caller)
         {
             throw new NotImplementedException();
+        }
+
+        public void RequestDonation(Country country)
+        {
+            Debug.Log(country.Name + " is requesting donation");
         }
     }
 }

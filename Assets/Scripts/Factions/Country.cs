@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.World;
 using Assets.Utils;
@@ -33,8 +34,11 @@ namespace Assets.Scripts.Factions
                 Credits -= AvaibleUnits[0].Cost;
                 var instance = Instantiate(AvaibleUnits[0].gameObject, spawnPosition, Quaternion.identity);
                 instance.GetComponent<Unit>().Owner = this;
+                Debug.Log(instance.GetComponent<Unit>().Owner);
+                Debug.Log(this);
                 return instance;
             }
+            Alliance.RequestDonation(this);
             return null;
         }
 
@@ -64,13 +68,14 @@ namespace Assets.Scripts.Factions
 
         public void HourEvent()
         {
+            var playerUnits = GetPlayerControllableUnits();
             var provinceUnderAttack = GetProvinceWithHighestValue(_provincesUnderAttack);
             var provinceWithEnemiesNear = GetProvinceWithHighestValue(_threatenedProvinces);
             if (provinceUnderAttack != null)
             {
                 var attackStrength = provinceUnderAttack.EnemyUnits.Sum(a => a.AttackValue);
                 if (provinceUnderAttack.DefenseValue <= attackStrength &&
-                    GetPlayerControllableUnits().Sum(a => a.DefenceValue) < attackStrength)
+                    playerUnits.Sum(a => a.DefenceValue) < attackStrength)
                 {
                     var retreatProvince = UtilsAndTools.FindNearestProvince(provinceUnderAttack, this);
                     foreach (var alliedUnit in provinceUnderAttack.AlliedUnits)
@@ -82,8 +87,22 @@ namespace Assets.Scripts.Factions
                 }
                 else
                 {
-                    var playerUnits = GetPlayerControllableUnits();
                     var avgDist = UtilsAndTools.FindAverageDistance(provinceUnderAttack, playerUnits);
+                    var hitColliders = Physics2D.OverlapCircleAll(provinceUnderAttack.transform.position, avgDist);
+
+                    foreach (var hitCollider in hitColliders)
+                    {
+                        try
+                        {
+                            var unit = hitCollider.gameObject.GetComponent<Unit>();
+                            if(!IsEnemy(unit))
+                                unit.SetNewTarget(provinceUnderAttack.GetRandomPosition());
+                        }
+                        catch
+                        {
+                            
+                        }
+                    }
 
                 }
             }

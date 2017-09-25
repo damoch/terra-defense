@@ -24,6 +24,7 @@ namespace Assets.Utils
                 currentDist = Vector2.Distance(caller.transform.position, targetOption.transform.position);
                 currentTarget = targetOption;
             }
+
             return currentTarget;
         }
 

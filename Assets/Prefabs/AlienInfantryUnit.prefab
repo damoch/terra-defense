@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50359344672470834}
   - component: {fileID: 61677310865981882}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: AlienInfantryUnit
   m_TagString: TimeAffected
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Owner: {fileID: 0}
   UnitSpeed: 4
-  AttackValue: 1
+  AttackValue: 5
   DefenceValue: 2
   Status: 2
   Cost: 5

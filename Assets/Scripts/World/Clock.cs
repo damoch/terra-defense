@@ -17,12 +17,19 @@ namespace Assets.Scripts.World
         {
             GameDateTime = GameDateTime.AddHours(1);
             Debug.Log(GameDateTime);
-
+            
             var objectsWithTag = GameObject.FindGameObjectsWithTag("TimeAffected");
             for (var index = 0; index < objectsWithTag.Length; index++)
             {
-                var affected = objectsWithTag[index];
-                affected.GetComponent<ITimeAffected>().HourEvent();
+                try
+                {
+                    var affected = objectsWithTag[index];
+                    affected.GetComponent<ITimeAffected>().HourEvent();
+                }
+                catch
+                {
+                    //Obiekt nie istnieje
+                }
             }
         }
     }
