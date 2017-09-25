@@ -1,8 +1,10 @@
-﻿using Assets.Scripts.World;
+﻿using Assets.Scripts.Implementations.Units;
+using Assets.Scripts.Implementations.World;
+using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.UI
+namespace Assets.Scripts.Implementations.UI
 {
     // ReSharper disable once InconsistentNaming
     public class UIController : MonoBehaviour, ITimeAffected

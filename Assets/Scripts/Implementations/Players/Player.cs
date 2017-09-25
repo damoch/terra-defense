@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Factions;
-using Assets.Scripts.UI;
-using Assets.Scripts.World;
+﻿using Assets.Scripts.Implementations.Factions;
+using Assets.Scripts.Implementations.UI;
+using Assets.Scripts.Implementations.Units;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 
-namespace Assets.Scripts.Players
+namespace Assets.Scripts.Implementations.Players
 {
     public class Player : MonoBehaviour
     {

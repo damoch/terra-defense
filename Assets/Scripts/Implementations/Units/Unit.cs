@@ -1,7 +1,9 @@
-﻿using Assets.Scripts.Factions;
+﻿using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Implementations.World;
+using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 
-namespace Assets.Scripts.World
+namespace Assets.Scripts.Implementations.Units
 {
     public class Unit : MonoBehaviour, ITimeAffected
     {

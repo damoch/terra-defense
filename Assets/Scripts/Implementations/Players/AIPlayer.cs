@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Factions;
-using Assets.Scripts.World;
-using Assets.Utils;
+using Assets.Scripts.Implementations.Factions;
+using Assets.Scripts.Implementations.Units;
+using Assets.Scripts.Implementations.World;
+using Assets.Scripts.Implementations.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.Players
+namespace Assets.Scripts.Implementations.Players
 {
     // ReSharper disable once InconsistentNaming
     public class AIPlayer : MonoBehaviour {

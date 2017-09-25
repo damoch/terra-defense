@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts.Factions;
+using Assets.Scripts.Implementations.Factions;
+using Assets.Scripts.Implementations.World;
 using UnityEngine;
 
-namespace Assets.Scripts.World
+namespace Assets.Scripts.Implementations.Units
 {
     public class PlatformUnit : Unit {
         public Aliens AliensOwner { get; set; }

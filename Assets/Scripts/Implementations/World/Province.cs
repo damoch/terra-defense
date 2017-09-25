@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Factions;
+using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Implementations.Factions;
+using Assets.Scripts.Implementations.Units;
+using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Assets.Scripts.World
+namespace Assets.Scripts.Implementations.World
 {
     public class Province : MonoBehaviour, ITimeAffected
     {

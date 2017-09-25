@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.World;
+using Assets.Scripts.Implementations.Units;
 using UnityEngine;
 
-namespace Assets.Scripts.Factions
+namespace Assets.Scripts.Abstractions.Factions
 {
     public abstract class UnitOwner : MonoBehaviour
     {

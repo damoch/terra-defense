@@ -1,12 +1,14 @@
-﻿using System.Linq;
-using Assets.Scripts.Factions;
-using Assets.Scripts.World;
-using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Implementations.Units;
+using Assets.Scripts.Implementations.World;
+using UnityEngine;
 
-namespace Assets.Utils
+namespace Assets.Scripts.Implementations.Utils
 {
-    public class UtilsAndTools : MonoBehaviour {
+    public class UtilsAndTools : MonoBehaviour
+    {
         public static Province FindNearestProvince(MonoBehaviour caller, UnitOwner owner)
         {
             var possibleTargets = FindObjectsOfType<Province>().Where(p => p.Owner.Equals(owner)).ToList();
@@ -38,7 +40,7 @@ namespace Assets.Utils
             return distances.Average();
         }
 
-        public static float FindAverageDistance(MonoBehaviour destination, List<Unit> sources)//Unit implementuje interfejs, więc nie jest kompatybilny z MonoBehavior
+        public static float FindAverageDistance(MonoBehaviour destination, List<Unit> sources)//Unit implementuje interfejs, wi�c nie jest kompatybilny z MonoBehavior
         {
             var newSources = sources.Cast<MonoBehaviour>().ToList();
             return FindAverageDistance(destination, newSources);

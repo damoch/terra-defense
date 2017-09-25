@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.World;
-using Assets.Utils;
+using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Implementations.Units;
+using Assets.Scripts.Implementations.Utils;
+using Assets.Scripts.Implementations.World;
+using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Factions
+namespace Assets.Scripts.Implementations.Factions
 {
     public class Country : UnitOwner, ITimeAffected {
         public string Name;

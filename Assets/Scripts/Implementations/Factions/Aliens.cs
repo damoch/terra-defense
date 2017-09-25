@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.World;
+using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Implementations.Units;
 using UnityEngine;
 
-namespace Assets.Scripts.Factions
+namespace Assets.Scripts.Implementations.Factions
 {
     public class Aliens : UnitOwner {
         public override bool IsEnemy(Unit unit)

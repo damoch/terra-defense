@@ -1,7 +1,8 @@
 ﻿using System;
+using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 
-namespace Assets.Scripts.World
+namespace Assets.Scripts.Implementations.World
 {
     public class Clock : MonoBehaviour
     {
