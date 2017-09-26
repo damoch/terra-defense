@@ -1167,6 +1167,11 @@ Prefab:
       propertyPath: ZoomMin
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114760158595574976, guid: c7a28b53f1cec28419fb481b8e0210f7,
+        type: 2}
+      propertyPath: ScrollingSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c7a28b53f1cec28419fb481b8e0210f7, type: 2}
   m_IsPrefabParent: 0
