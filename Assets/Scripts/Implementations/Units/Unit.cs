@@ -25,6 +25,7 @@ namespace Assets.Scripts.Implementations.Units
             Target = transform.position;
             SetupTimeValues();
             _initialStatus = Status;
+            GetComponent<SpriteRenderer>().color = Owner.UnitColor;
         }
 	
         public virtual void Update () {

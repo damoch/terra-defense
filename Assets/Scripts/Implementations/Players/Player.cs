@@ -8,12 +8,25 @@ namespace Assets.Scripts.Implementations.Players
 {
     public class Player : MonoBehaviour
     {
+        public float ZoomMin;
+        public float ZoomMax;
+        public float ScrollingSpeed;
         public Alliance Alliance;
         public Unit SelectedUnit;
+        public Camera Camera;
         public UIController UIController { get; set; }
         private void Start()
         {
             UIController = FindObjectOfType<UIController>();
+
+            if (Camera == null)
+            {
+                Camera = Camera.main;
+            }
+
+
+            
+            //Debug.Log();
         }
         private void Update()
         {
@@ -25,6 +38,21 @@ namespace Assets.Scripts.Implementations.Players
             {
                 HandleRightClick();
             }
+            var size = Camera.orthographicSize;
+            if (Input.GetAxis("Mouse ScrollWheel") < 0 && size < ZoomMax)
+            {
+                Camera.orthographicSize++;
+            }
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0 && size > ZoomMin)
+            {
+                Camera.orthographicSize--;
+            }
+
+            if (Input.mousePosition.x > Screen.width - 50) Camera.transform.Translate(ScrollingSpeed, 0, 0, 0);
+            if (Input.mousePosition.x < 50) Camera.transform.Translate(-ScrollingSpeed, 0, 0, 0);
+            if (Input.mousePosition.y > Screen.height - 50) Camera.transform.Translate(0, ScrollingSpeed, 0, 0);
+            if (Input.mousePosition.y < 50) Camera.transform.Translate(0, -ScrollingSpeed, 0, 0);
         }
 
         private void HandleRightClick()

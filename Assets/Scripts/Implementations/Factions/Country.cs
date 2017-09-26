@@ -102,7 +102,7 @@ namespace Assets.Scripts.Implementations.Factions
                         }
                         catch
                         {
-                            
+                            //
                         }
                     }
 

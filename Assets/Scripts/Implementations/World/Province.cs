@@ -22,6 +22,7 @@ namespace Assets.Scripts.Implementations.World
         public UnitOwner Owner;
         private UnitOwner _originalOwner;
         public int CreditsPerHour;
+        private SpriteRenderer _spriteRenderer;
         private void Start ()
         {
             SetupTimeValues();
@@ -39,6 +40,8 @@ namespace Assets.Scripts.Implementations.World
 
             _originalOwner = Owner;
             InvokeRepeating("CheckSurrondings", AlertDelay, AlertDelay);
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer.color = Owner.Color;
         }
 
         private void CheckSurrondings()
@@ -161,6 +164,7 @@ namespace Assets.Scripts.Implementations.World
             if (losingArmy.Count != 0) return;
             var proposedOwner = winningArmy[0].Owner;
             Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner ;
+            _spriteRenderer.color = Owner.Color;
             AlliedUnits = winningArmy;
             EnemyUnits = new List<Unit>();
             IsBattle = false;

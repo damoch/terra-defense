@@ -6,6 +6,8 @@ namespace Assets.Scripts.Abstractions.Factions
 {
     public abstract class UnitOwner : MonoBehaviour
     {
+        public Color Color;
+        public Color UnitColor;
         public int Credits;
         public List<Unit> AvaibleUnits;
 

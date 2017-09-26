@@ -51,5 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18127fa0d64ac6149b8a52d1b9e71d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Credits: 0
+  AvaibleUnits: []
   Name: Country0
   Alliance: {fileID: 0}

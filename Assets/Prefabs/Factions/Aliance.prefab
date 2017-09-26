@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a8882d9105ec549b207bfa964a083b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Credits: 0
+  AvaibleUnits: []
   Name: AL0
   Countries:
   - {fileID: 0}
