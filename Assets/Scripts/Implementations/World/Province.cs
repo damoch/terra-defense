@@ -75,8 +75,13 @@ namespace Assets.Scripts.Implementations.World
 
             if (Owner.IsEnemy(unitComponent))
             {
-                Owner.EnemyIsAttackingProperty(gameObject);
                 EnemyUnits.Add(unitComponent);
+                Owner.EnemyIsAttackingProperty(gameObject);
+                if (!AlliedUnits.Any())
+                {
+                    SetSkirmishResult();
+                    return;
+                }
                 if (!IsBattle)
                 {
                     StartCoroutine("CommenceBattle");

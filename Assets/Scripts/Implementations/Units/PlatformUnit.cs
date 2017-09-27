@@ -22,7 +22,7 @@ namespace Assets.Scripts.Implementations.Units
             }
             InvokeRepeating("DecideNextMove", 1f, 1f);
             SetupTimeValues();
-            GetComponent<SpriteRenderer>().color = AliensOwner.Color;
+            GetComponent<SpriteRenderer>().color = AliensOwner.UnitColor;
         }
 
         private void DecideNextMove()
