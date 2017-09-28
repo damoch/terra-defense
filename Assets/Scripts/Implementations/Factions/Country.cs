@@ -84,7 +84,12 @@ namespace Assets.Scripts.Implementations.Factions
                     {
                         alliedUnit.SetNewTarget(retreatProvince.GetRandomPosition());
                     }
-                    ProduceUnit(retreatProvince.GetRandomPosition());
+                    var unit = ProduceUnit(retreatProvince.GetRandomPosition());
+
+                    if (retreatProvince.Owner != this)
+                    {
+                        unit.transform.position = UtilsAndTools.FindNearestProvince(retreatProvince, this).GetRandomPosition();
+                    }
                     return;
                 }
                 else
@@ -116,7 +121,12 @@ namespace Assets.Scripts.Implementations.Factions
                 {
                     supporterAlliedUnit.SetNewTarget(provinceWithEnemiesNear.GetRandomPosition());
                 }
-                ProduceUnit(provinceWithEnemiesNear.GetRandomPosition());
+                var unit = ProduceUnit(provinceWithEnemiesNear.GetRandomPosition());
+
+                if (provinceWithEnemiesNear.Owner != this)
+                {
+                    unit.transform.position = UtilsAndTools.FindNearestProvince(provinceWithEnemiesNear, this).GetRandomPosition();
+                }
             }
         }
 
