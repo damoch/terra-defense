@@ -169,6 +169,23 @@ namespace Assets.Scripts.Implementations.World
             if (losingArmy.Count != 0) return;
             var proposedOwner = winningArmy[0].Owner;
             Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner ;
+
+            if (Owner != _originalOwner)
+            {
+                try
+                {
+                    Owner.LostProvinces.Add(this);
+                }
+                catch 
+                {
+                    Owner.LostProvinces = new List<Province> {this};
+                }
+            }
+            else
+            {
+                Owner.LostProvinces.Remove(this);
+            }
+
             _spriteRenderer.color = Owner.Color;
             AlliedUnits = winningArmy;
             EnemyUnits = new List<Unit>();

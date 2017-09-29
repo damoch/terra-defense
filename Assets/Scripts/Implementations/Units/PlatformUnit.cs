@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Implementations.Factions;
 using Assets.Scripts.Implementations.World;
 using UnityEngine;
@@ -27,6 +28,8 @@ namespace Assets.Scripts.Implementations.Units
 
         private void DecideNextMove()
         {
+            if(TargetProvince == null)return;
+
             if (ShouldBuildMoreUnits())
             {
                 Units.Add(AliensOwner.ProduceUnit(transform.position));
@@ -38,7 +41,7 @@ namespace Assets.Scripts.Implementations.Units
                     var unit = Units[i];
                     if (unit != null)
                     {
-                        unit.GetComponent<Unit>().SetNewTarget(TargetProvince.GetRandomPosition());
+                        unit.GetComponent<Unit>().SetNewTarget(TargetProvince.gameObject.transform.position);
                     }
                     else
                     {
@@ -63,6 +66,7 @@ namespace Assets.Scripts.Implementations.Units
                     Units.RemoveAt(i);
                 }
             }
+
             return TargetProvince.DefenseValue + 1 > sum && !ShouldMove();
         }
 

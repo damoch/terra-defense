@@ -17,6 +17,7 @@ namespace Assets.Scripts.Implementations.Factions
         private void Start () {
             _provincesUnderAttack = new Dictionary<Province, int>();
             _threatenedProvinces = new Dictionary<Province, int>();
+            LostProvinces = new List<Province>();
         }
 
         public override bool IsEnemy(Unit unit)
@@ -73,7 +74,31 @@ namespace Assets.Scripts.Implementations.Factions
             var playerUnits = GetPlayerControllableUnits();
             var provinceUnderAttack = GetProvinceWithHighestValue(_provincesUnderAttack);
             var provinceWithEnemiesNear = GetProvinceWithHighestValue(_threatenedProvinces);
-            if (provinceUnderAttack != null)
+            var lostProvince = LostProvinces.First();
+
+            if (lostProvince != null)
+            {
+                var occupationStrength = lostProvince.DefenseValue;
+
+                var alliedUnits = GetPlayerControllableUnits();
+
+                if (alliedUnits.Sum(a => a.AttackValue) < occupationStrength)
+                {
+                    var retreatProvince = UtilsAndTools.FindNearestProvince(lostProvince, this);
+                    ProduceUnit(retreatProvince.GetRandomPosition());
+                    return;
+                }
+                var attackStrength = 0f;
+
+                foreach (var alliedUnit in alliedUnits)
+                {
+                    alliedUnit.SetNewTarget(lostProvince.transform.position);
+                    attackStrength += alliedUnit.AttackValue;
+
+                    if(attackStrength > occupationStrength)break;
+                }
+            }
+            else if (provinceUnderAttack != null)
             {
                 var attackStrength = provinceUnderAttack.EnemyUnits.Sum(a => a.AttackValue);
                 if (provinceUnderAttack.DefenseValue <= attackStrength &&
