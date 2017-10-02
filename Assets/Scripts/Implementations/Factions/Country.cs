@@ -74,28 +74,31 @@ namespace Assets.Scripts.Implementations.Factions
             var playerUnits = GetPlayerControllableUnits();
             var provinceUnderAttack = GetProvinceWithHighestValue(_provincesUnderAttack);
             var provinceWithEnemiesNear = GetProvinceWithHighestValue(_threatenedProvinces);
-            var lostProvince = LostProvinces.First();
+            var lostProvince = LostProvinces.Count > 0 ? LostProvinces[0] : null;
 
             if (lostProvince != null)
             {
                 var occupationStrength = lostProvince.DefenseValue;
 
                 var alliedUnits = GetPlayerControllableUnits();
+                Debug.Log("Alies" + alliedUnits.Sum(a => a.AttackValue));
+                Debug.Log("Enemy " +occupationStrength);
 
                 if (alliedUnits.Sum(a => a.AttackValue) < occupationStrength)
                 {
                     var retreatProvince = UtilsAndTools.FindNearestProvince(lostProvince, this);
-                    ProduceUnit(retreatProvince.GetRandomPosition());
+                    ProduceUnit(retreatProvince.transform.position);
                     return;
                 }
                 var attackStrength = 0f;
 
-                foreach (var alliedUnit in alliedUnits)
+                for (var index = 0; index < alliedUnits.Count; index++)
                 {
+                    var alliedUnit = alliedUnits[index];
                     alliedUnit.SetNewTarget(lostProvince.transform.position);
                     attackStrength += alliedUnit.AttackValue;
 
-                    if(attackStrength > occupationStrength)break;
+                    if (attackStrength > occupationStrength) break;
                 }
             }
             else if (provinceUnderAttack != null)
@@ -107,13 +110,13 @@ namespace Assets.Scripts.Implementations.Factions
                     var retreatProvince = UtilsAndTools.FindNearestProvince(provinceUnderAttack, this);
                     foreach (var alliedUnit in provinceUnderAttack.AlliedUnits)
                     {
-                        alliedUnit.SetNewTarget(retreatProvince.GetRandomPosition());
+                        alliedUnit.SetNewTarget(retreatProvince.transform.position);
                     }
-                    var unit = ProduceUnit(retreatProvince.GetRandomPosition());
+                    var unit = ProduceUnit(retreatProvince.transform.position);
 
                     if (retreatProvince.Owner != this)
                     {
-                        unit.transform.position = UtilsAndTools.FindNearestProvince(retreatProvince, this).GetRandomPosition();
+                        unit.transform.position = UtilsAndTools.FindNearestProvince(retreatProvince, this).transform.position;
                     }
                     return;
                 }
@@ -128,7 +131,7 @@ namespace Assets.Scripts.Implementations.Factions
                         {
                             var unit = hitCollider.gameObject.GetComponent<Unit>();
                             if(!IsEnemy(unit))
-                                unit.SetNewTarget(provinceUnderAttack.GetRandomPosition());
+                                unit.SetNewTarget(provinceUnderAttack.transform.position);
                         }
                         catch
                         {
@@ -138,19 +141,20 @@ namespace Assets.Scripts.Implementations.Factions
 
                 }
             }
+            //zła logika!
 
             if (provinceWithEnemiesNear != null)
             {
                 var supporter = UtilsAndTools.FindNearestProvince(provinceWithEnemiesNear, this);
                 foreach (var supporterAlliedUnit in supporter.AlliedUnits)
                 {
-                    supporterAlliedUnit.SetNewTarget(provinceWithEnemiesNear.GetRandomPosition());
+                    supporterAlliedUnit.SetNewTarget(provinceWithEnemiesNear.transform.position);
                 }
-                var unit = ProduceUnit(provinceWithEnemiesNear.GetRandomPosition());
+                var unit = ProduceUnit(provinceWithEnemiesNear.transform.position);
 
                 if (provinceWithEnemiesNear.Owner != this)
                 {
-                    unit.transform.position = UtilsAndTools.FindNearestProvince(provinceWithEnemiesNear, this).GetRandomPosition();
+                    unit.transform.position = UtilsAndTools.FindNearestProvince(provinceWithEnemiesNear, this).transform.position;
                 }
             }
         }

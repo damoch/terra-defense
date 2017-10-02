@@ -41,8 +41,9 @@ namespace Assets.Scripts.Implementations.Units
                     {
                         unit.GetComponent<Unit>().SetNewTarget(target.transform.position);
                     }
-                    catch
+                    catch(Exception e)
                     {
+                        Debug.Log(e.Message);
                         //
                     }
                 }

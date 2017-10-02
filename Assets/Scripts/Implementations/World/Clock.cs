@@ -22,14 +22,14 @@ namespace Assets.Scripts.Implementations.World
             var objectsWithTag = GameObject.FindGameObjectsWithTag("TimeAffected");
             for (var index = 0; index < objectsWithTag.Length; index++)
             {
+                var affected = objectsWithTag[index].GetComponent<ITimeAffected>();
                 try
                 {
-                    var affected = objectsWithTag[index];
-                    affected.GetComponent<ITimeAffected>().HourEvent();
+                    affected.HourEvent();
                 }
-                catch
+                catch(Exception ex)
                 {
-                    //Obiekt nie istnieje
+                    Debug.Log(ex.Message);
                 }
             }
         }

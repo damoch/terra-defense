@@ -17,7 +17,15 @@ namespace Assets.Scripts.Implementations.World
         public float AlertDelay { get; set; }
         public List<Unit> EnemyUnits { get; set; }
         public List<Unit> AlliedUnits { get; set; }
-        public float DefenseValue { get; set; }
+
+        public float DefenseValue
+        {
+            get
+            {
+                return AlliedUnits != null ? AlliedUnits.Sum(a => a.DefenceValue) : 0;
+            }
+        }
+
         public bool IsBattle { get; set; }
         public UnitOwner Owner;
         private UnitOwner _originalOwner;
@@ -30,7 +38,6 @@ namespace Assets.Scripts.Implementations.World
             IsBattle = false;
             EnemyUnits = new List<Unit>();
             AlliedUnits = new List<Unit>();
-            DefenseValue = 0;
             #if UNITY_EDITOR
             if (BattleDelay == 0)
             {
@@ -51,11 +58,19 @@ namespace Assets.Scripts.Implementations.World
             foreach (var hitCollider in hitColliders)
             {
                 var unit = hitCollider.gameObject.GetComponent<Unit>();
-                if (unit != null && Owner.IsEnemy(unit))
+                try
                 {
-                    Owner.EnemyIsCloseToProperty(gameObject);
-                    return;
+                    if (unit != null && Owner.IsEnemy(unit))
+                    {
+                        Owner.EnemyIsCloseToProperty(gameObject);
+                        return;
+                    }
                 }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
+
             }
             
         }
@@ -96,7 +111,6 @@ namespace Assets.Scripts.Implementations.World
             else 
             {
                 AlliedUnits.Add(unitComponent);
-                DefenseValue += unitComponent.DefenceValue;
             }
         }
 
@@ -144,9 +158,9 @@ namespace Assets.Scripts.Implementations.World
                     var unit = losingArmy[i];
                     unit.ModifyStatus(-damageValue);
                 }
-                catch
+                catch(Exception e)
                 {
-                    //
+                    Debug.Log(e.Message);
                 }
             }
             damageValue *= 0.33f;
@@ -158,9 +172,9 @@ namespace Assets.Scripts.Implementations.World
                     var unit = winningArmy[i];
                     unit.ModifyStatus(-damageValue);
                 }
-                catch
+                catch(Exception e)
                 {
-                    //
+                    Debug.Log(e.Message);
                 }
             }
             //damageValue *= 0.3f;
@@ -173,18 +187,18 @@ namespace Assets.Scripts.Implementations.World
 
 
             if (losingArmy.Count != 0) return;
-            var proposedOwner = winningArmy[0].Owner;
+            var proposedOwner = winningArmy[0].Owner;//obsłużyć nullowanie
             Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner ;
 
             if (Owner != _originalOwner)
             {
                 try
                 {
-                    Owner.LostProvinces.Add(this);
+                    _originalOwner.LostProvinces.Add(this);
                 }
-                catch 
+                catch (Exception e)
                 {
-                    Owner.LostProvinces = new List<Province> {this};
+                    _originalOwner.LostProvinces = new List<Province> {this};
                 }
             }
             else
@@ -222,17 +236,7 @@ namespace Assets.Scripts.Implementations.World
             else
             {
                 AlliedUnits.Remove(unitComponent);
-                DefenseValue -= unitComponent.DefenceValue;
             }
-        }
-
-        public Vector2 GetRandomPosition()
-        {
-            var center = transform.position;
-            var size = GetComponent<SpriteRenderer>().sprite.bounds.size;
-            var x = Random.Range(center.x - size.x / 2, center.x + size.y / 2);
-            var y = Random.Range(center.y - size.y / 2, center.y - size.y / 2);
-            return new Vector2(x,y);
         }
 
         public void HourEvent()
