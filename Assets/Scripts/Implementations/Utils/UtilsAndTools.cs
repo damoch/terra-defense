@@ -9,6 +9,12 @@ namespace Assets.Scripts.Implementations.Utils
 {
     public class UtilsAndTools : MonoBehaviour
     {
+
+        public static Province FindNearestProvince(MonoBehaviour caller)
+        {
+            var possibleTargets = FindObjectsOfType<Province>().ToList();
+            return FindNearestProvince(caller, possibleTargets);
+        }
         public static Province FindNearestProvince(MonoBehaviour caller, UnitOwner owner)
         {
             var possibleTargets = FindObjectsOfType<Province>().Where(p => p.Owner.Equals(owner)).ToList();
@@ -38,6 +44,11 @@ namespace Assets.Scripts.Implementations.Utils
                 distances.Add(Vector2.Distance(destination.transform.position, source.transform.position));
             }
             return distances.Average();
+        }
+
+        public static float GetDistance(MonoBehaviour a, MonoBehaviour b)
+        {
+            return Vector2.Distance(a.transform.position, b.transform.position);
         }
 
         public static float FindAverageDistance(MonoBehaviour destination, List<Unit> sources)//Unit implementuje interfejs, wiêc nie jest kompatybilny z MonoBehavior

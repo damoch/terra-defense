@@ -73,6 +73,12 @@ namespace Assets.Scripts.Implementations.World
         {
             if(AlliedUnits.Contains(unitComponent) || EnemyUnits.Contains(unitComponent))return;
 
+            if (unitComponent.GetType() == typeof(PlatformUnit))
+            {
+                var unit = (PlatformUnit) unitComponent;
+                unit.CurrentProvince = this;
+            }
+
             if (Owner.IsEnemy(unitComponent))
             {
                 EnemyUnits.Add(unitComponent);
@@ -203,6 +209,12 @@ namespace Assets.Scripts.Implementations.World
 
         private void HandleUnitExit(Unit unitComponent)
         {
+            if (unitComponent.GetType() == typeof(PlatformUnit))
+            {
+                var unit = (PlatformUnit)unitComponent;
+                unit.CurrentProvince = null;
+            }
+
             if (Owner.IsEnemy(unitComponent))
             {
                 EnemyUnits.Remove(unitComponent);
