@@ -187,7 +187,10 @@ namespace Assets.Scripts.Implementations.World
 
 
             if (losingArmy.Count != 0) return;
-            var proposedOwner = winningArmy[0].Owner;//obsłużyć nullowanie
+            var proposedOwner = winningArmy.Count > 0 ? winningArmy[0].Owner : null;
+
+            if(proposedOwner == null) return;
+
             Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner ;
 
             if (Owner != _originalOwner)
