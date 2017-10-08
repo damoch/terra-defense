@@ -197,7 +197,7 @@ namespace Assets.Scripts.Implementations.World
             {
                 try
                 {
-                    _originalOwner.LostProvinces.Add(this);
+                    _originalOwner.HandlePropertyLost(this);
                 }
                 catch (Exception e)
                 {

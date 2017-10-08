@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Abstractions.Factions;
 using Assets.Scripts.Implementations.Units;
+using Assets.Scripts.Implementations.World;
 using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 
@@ -46,27 +47,32 @@ namespace Assets.Scripts.Implementations.Factions
 
         public void SetupTimeValues()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void EnemyIsAttackingProperty(GameObject caller)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void EnemyIsCloseToProperty(GameObject caller)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void EnemyIsRetreatingFromProperty(GameObject caller)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void RequestDonation(Country country)
         {
             Debug.Log(country.Name + " is requesting donation");
+        }
+
+        public override void HandlePropertyLost(Province province)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

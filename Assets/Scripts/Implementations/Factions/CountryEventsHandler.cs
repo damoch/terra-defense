@@ -74,7 +74,7 @@ namespace Assets.Scripts.Implementations.Factions
             Debug.Log("Alies" + playerUnits.Sum(a => a.AttackValue));
             Debug.Log("Enemy " + occupationStrength);
 
-            if (playerUnits.Sum(a => a.AttackValue) < occupationStrength)
+            if (playerUnits.Sum(a => a.AttackValue) <= occupationStrength+1)
             {
                 var retreatProvince = UtilsAndTools.FindNearestProvince(lostProvince, _country);
                 _country.ProduceUnit(retreatProvince.transform.position);

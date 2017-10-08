@@ -112,11 +112,14 @@ namespace Assets.Scripts.Implementations.Factions
             {
                 if (i.Owner == this) _provincesUnderAttack.Remove(i);
             }
-
-            foreach (var i in _threatenedProvinces.Keys)
+            foreach (var lostProvince in LostProvinces)
             {
-                if (i.Owner == this) _provincesUnderAttack.Remove(i);
+                if (lostProvince.Owner == this) LostProvinces.Remove(lostProvince);
             }
+            //foreach (var i in _threatenedProvinces.Keys)
+            //{
+            //    if (i.Owner == this) _threatenedProvinces.Remove(i);
+            //}
         }
 
         private Province GetProvinceWithHighestValue(Dictionary<Province,int> dictToSearch)
@@ -139,6 +142,13 @@ namespace Assets.Scripts.Implementations.Factions
             {
                 _provincesUnderAttack.Remove(province);
             }
+        }
+
+        public override void HandlePropertyLost(Province province)
+        {
+            LostProvinces.Add(province);
+            if (_threatenedProvinces.Keys.Contains(province)) _threatenedProvinces.Remove(province);
+            if (_provincesUnderAttack.Keys.Contains(province)) _provincesUnderAttack.Remove(province);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using Assets.Scripts.Abstractions.Factions;
 using Assets.Scripts.Implementations.Units;
+using Assets.Scripts.Implementations.World;
 using UnityEngine;
 
 namespace Assets.Scripts.Implementations.Factions
@@ -43,6 +44,11 @@ namespace Assets.Scripts.Implementations.Factions
         public override void EnemyIsRetreatingFromProperty(GameObject caller)
         {
             Debug.Log("Enemy is retreating");
+        }
+
+        public override void HandlePropertyLost(Province province)
+        {
+            //throw new System.NotImplementedException();
         }
     }
 }
