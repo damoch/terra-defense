@@ -12,7 +12,7 @@ namespace Assets.Scripts.Implementations.Units
         public float UnitSpeed;
         public float AttackValue;
         public float DefenceValue;
-        private float _initialStatus;
+        protected float InitialStatus;
         public float Status;
         public int Cost;
         
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Implementations.Units
             }
             Target = transform.position;
             SetupTimeValues();
-            _initialStatus = Status;
+            InitialStatus = Status;
             GetComponent<SpriteRenderer>().color = Owner.UnitColor;
         }
 	
@@ -52,14 +52,14 @@ namespace Assets.Scripts.Implementations.Units
             Target = newTarget;
         }
         
-        public void ModifyStatus(float value)
+        public virtual void ModifyStatus(float value)
         {
             Status += value;
             if (Status <= 0)
             {
                 Destroy(gameObject);
             }
-            var propertyModifier = Status / (float)_initialStatus;
+            var propertyModifier = Status / (float)InitialStatus;
             AttackValue  *= propertyModifier;
             DefenceValue *= propertyModifier;
         }

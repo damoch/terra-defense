@@ -45,10 +45,9 @@ namespace Assets.Scripts.Implementations.Factions
         {
             Debug.Log("Enemy is retreating");
         }
-
-        public override void HandlePropertyLost(Province province)
+        public override void PropertyChangesOwner(Province province, bool isLost)
         {
-            //throw new System.NotImplementedException();
+            throw new System.NotImplementedException();
         }
     }
 }

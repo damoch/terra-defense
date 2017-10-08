@@ -7,7 +7,6 @@ using Assets.Scripts.Implementations.Factions;
 using Assets.Scripts.Implementations.Units;
 using Assets.Scripts.Interfaces.World;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Implementations.World
 {
@@ -100,7 +99,7 @@ namespace Assets.Scripts.Implementations.World
                 Owner.EnemyIsAttackingProperty(gameObject);
                 if (!AlliedUnits.Any())
                 {
-                    SetSkirmishResult();
+                    ChangeOwner(unitComponent.Owner, EnemyUnits);
                     return;
                 }
                 if (!IsBattle)
@@ -126,30 +125,16 @@ namespace Assets.Scripts.Implementations.World
                 StartCoroutine("CommenceBattle");
             }
 
-
         }
 
         private void SetSkirmishResult()
         {
             var totalAttack = EnemyUnits.Sum(unit => unit.AttackValue);
             var totalDefense = AlliedUnits.Sum(unit => unit.DefenceValue);
-            List<Unit> losingArmy;
-            List<Unit> winningArmy;
-            float damageValue;
+            var damageValue = Math.Abs(totalDefense - totalAttack);
+            var losingArmy = totalAttack > totalDefense ? AlliedUnits : EnemyUnits;
+            var winningArmy = totalAttack <= totalDefense ? AlliedUnits : EnemyUnits;
 
-            if (Math.Abs(totalDefense - totalAttack) < 0.01)
-            {
-                losingArmy = EnemyUnits;
-                winningArmy = AlliedUnits;
-                damageValue = UnityEngine.Random.Range(0.01f, totalDefense / 2);
-            }
-            else
-            {
-                damageValue = Math.Abs(totalDefense - totalAttack);
-
-                losingArmy = totalAttack > totalDefense ? AlliedUnits : EnemyUnits;
-                winningArmy = totalAttack <= totalDefense ? AlliedUnits : EnemyUnits;
-            }
 
             for (var i = 0; i < losingArmy.Count; i++)
             {
@@ -177,38 +162,20 @@ namespace Assets.Scripts.Implementations.World
                     Debug.Log(e.Message);
                 }
             }
-            //damageValue *= 0.3f;
-
-            //for (var i = 0; i < winningArmy.Count; i++)
-            //{
-            //    var unit = losingArmy[i];
-            //    unit.ModifyStatus(-damageValue);
-            //}
-
 
             if (losingArmy.Count != 0) return;
+
             var proposedOwner = winningArmy.Count > 0 ? winningArmy[0].Owner : null;
 
             if(proposedOwner == null) return;
 
-            Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner ;
+            ChangeOwner(proposedOwner, winningArmy);
+        }
 
-            if (Owner != _originalOwner)
-            {
-                try
-                {
-                    _originalOwner.HandlePropertyLost(this);
-                }
-                catch (Exception e)
-                {
-                    _originalOwner.LostProvinces = new List<Province> {this};
-                }
-            }
-            else
-            {
-                Owner.LostProvinces.Remove(this);
-            }
-
+        private void ChangeOwner(UnitOwner proposedOwner, List<Unit> winningArmy)
+        {
+            Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner;
+            _originalOwner.PropertyChangesOwner(this, Owner != _originalOwner);
             _spriteRenderer.color = Owner.Color;
             AlliedUnits = winningArmy;
             EnemyUnits = new List<Unit>();
@@ -232,14 +199,8 @@ namespace Assets.Scripts.Implementations.World
                 unit.CurrentProvince = null;
             }
 
-            if (Owner.IsEnemy(unitComponent))
-            {
-                EnemyUnits.Remove(unitComponent);
-            }
-            else
-            {
-                AlliedUnits.Remove(unitComponent);
-            }
+            var listToRemove = Owner.IsEnemy(unitComponent) ? EnemyUnits : AlliedUnits;
+            listToRemove.Remove(unitComponent);
         }
 
         public void HourEvent()

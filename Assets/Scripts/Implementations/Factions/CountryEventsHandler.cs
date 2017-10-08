@@ -77,7 +77,8 @@ namespace Assets.Scripts.Implementations.Factions
             if (playerUnits.Sum(a => a.AttackValue) <= occupationStrength+1)
             {
                 var retreatProvince = UtilsAndTools.FindNearestProvince(lostProvince, _country);
-                _country.ProduceUnit(retreatProvince.transform.position);
+                if(retreatProvince != null)
+                    _country.ProduceUnit(retreatProvince.transform.position);
                 return;
             }
             var attackStrength = 0f;

@@ -70,9 +70,9 @@ namespace Assets.Scripts.Implementations.Factions
             Debug.Log(country.Name + " is requesting donation");
         }
 
-        public override void HandlePropertyLost(Province province)
+        public override void PropertyChangesOwner(Province province, bool isLost)
         {
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

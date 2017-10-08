@@ -27,7 +27,6 @@ namespace Assets.Scripts.Implementations.Players
         {
             #region AI
             var units = Aliens.GetPlayerControllableUnits();
-            //Not sure if that is necesary...
             var platforms = new List<PlatformUnit>();
             foreach (var unit in units)
             {

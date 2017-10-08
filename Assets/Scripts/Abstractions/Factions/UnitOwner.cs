@@ -26,6 +26,7 @@ namespace Assets.Scripts.Abstractions.Factions
         public abstract void EnemyIsRetreatingFromProperty(GameObject caller);
 
         public abstract void EnemyIsCloseToProperty(GameObject caller);
-        public abstract void HandlePropertyLost(Province province);
+
+        public abstract void PropertyChangesOwner(Province province, bool isLost);
     }
 }

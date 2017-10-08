@@ -44,7 +44,6 @@ namespace Assets.Scripts.Implementations.Units
                     catch(Exception e)
                     {
                         Debug.Log(e.Message);
-                        //
                     }
                 }
                 SetNewTarget(target.transform.position);
@@ -90,15 +89,25 @@ namespace Assets.Scripts.Implementations.Units
             return TargetProvince.DefenseValue + 1 > sum && !ShouldMove();
         }
 
-     
-
-        public override void Update()
+        public override void ModifyStatus(float value)
         {
-            if (ShouldMove())
+            Status += value;
+            if (Status <= 0)
             {
-                MoveTowardsTarget();
+                var units = AliensOwner.GetPlayerControllableUnits();
+                foreach (var unit in units)
+                {
+                    var platform = (PlatformUnit) unit;
+                    if (platform != this)
+                    {
+                        platform.Units.AddRange(Units);
+                    }
+                }
+                Destroy(gameObject);
             }
+            var propertyModifier = Status / (float)InitialStatus;
+            AttackValue *= propertyModifier;
+            DefenceValue *= propertyModifier;
         }
-
     }
 }
