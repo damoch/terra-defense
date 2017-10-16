@@ -1384,6 +1384,21 @@ Prefab:
       propertyPath: UnitColor.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: EnemyCloseToProvincePanicValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: EnemyAttackingProvincePanicValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: ProvinceLostPanic
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35bb44b0cbd749446a16cb51dc27aa95, type: 2}
   m_IsPrefabParent: 0
@@ -1568,6 +1583,21 @@ Prefab:
       propertyPath: Name
       value: Country2
       objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: EnemyCloseToProvincePanicValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: EnemyAttackingProvincePanicValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: ProvinceLostPanic
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35bb44b0cbd749446a16cb51dc27aa95, type: 2}
   m_IsPrefabParent: 0
@@ -1683,6 +1713,21 @@ Prefab:
         type: 2}
       propertyPath: Name
       value: Country1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: EnemyCloseToProvincePanicValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: EnemyAttackingProvincePanicValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114911485683761574, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+        type: 2}
+      propertyPath: ProvinceLostPanic
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35bb44b0cbd749446a16cb51dc27aa95, type: 2}

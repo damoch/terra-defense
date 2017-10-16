@@ -205,6 +205,20 @@ namespace Assets.Scripts.Implementations.World
 
         public void HourEvent()
         {
+            try
+            {
+                var country = (Country) Owner;
+                if (country.PanicEffect)
+                    country.Credits += CreditsPerHour / 2;
+                else
+                {
+                    country.Credits += CreditsPerHour;
+                }
+            }
+            catch (InvalidCastException e)
+            {
+                Owner.Credits += CreditsPerHour;
+            }
             Owner.Credits += CreditsPerHour;
         }
 

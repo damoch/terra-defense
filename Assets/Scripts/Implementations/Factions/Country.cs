@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Abstractions.Factions;
 using Assets.Scripts.Implementations.Units;
-using Assets.Scripts.Implementations.Utils;
 using Assets.Scripts.Implementations.World;
 using Assets.Scripts.Interfaces.World;
 using UnityEngine;
@@ -16,7 +15,11 @@ namespace Assets.Scripts.Implementations.Factions
         private Dictionary<Province, int> _provincesUnderAttack;
         private Dictionary<Province, int> _threatenedProvinces;
         private readonly CountryEventsHandler _handler;
-
+        public int EnemyCloseToProvincePanicValue;
+        public int EnemyAttackingProvincePanicValue;
+        public int ProvinceLostPanic;
+        public int PanicLevel { get; set; }
+        public bool PanicEffect { get { return PanicLevel > Alliance.AveragePanic; } }
         public Country()
         {
             _handler = new CountryEventsHandler(this);
@@ -66,6 +69,7 @@ namespace Assets.Scripts.Implementations.Factions
             if (!_provincesUnderAttack.ContainsKey(province))
             {
                 _provincesUnderAttack.Add(province,0);
+                PanicLevel += EnemyAttackingProvincePanicValue;
             }
             _provincesUnderAttack[province]++;
         }
@@ -78,6 +82,7 @@ namespace Assets.Scripts.Implementations.Factions
             if (!_threatenedProvinces.ContainsKey(province))
             {
                 _threatenedProvinces.Add(province, 0);
+                PanicLevel += EnemyCloseToProvincePanicValue;
             }
             _threatenedProvinces[province]++;
         }
@@ -137,6 +142,7 @@ namespace Assets.Scripts.Implementations.Factions
             if (_provincesUnderAttack[province] <= 0)
             {
                 _provincesUnderAttack.Remove(province);
+                PanicLevel -= EnemyAttackingProvincePanicValue;
             }
         }
 
@@ -144,6 +150,8 @@ namespace Assets.Scripts.Implementations.Factions
         {
             if(isLost) LostProvinces.Add(province);
             else LostProvinces.Remove(province);
+
+            PanicLevel += isLost ? ProvinceLostPanic : -ProvinceLostPanic;
 
             if (_threatenedProvinces.Keys.Contains(province)) _threatenedProvinces.Remove(province);
             if (_provincesUnderAttack.Keys.Contains(province)) _provincesUnderAttack.Remove(province);
