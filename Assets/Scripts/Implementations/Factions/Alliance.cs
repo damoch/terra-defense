@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Abstractions.World;
 using Assets.Scripts.Implementations.Units;
 using Assets.Scripts.Implementations.World;
-using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 
 namespace Assets.Scripts.Implementations.Factions
@@ -73,7 +73,7 @@ namespace Assets.Scripts.Implementations.Factions
 
         public override void PropertyChangesOwner(Province province, bool isLost)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

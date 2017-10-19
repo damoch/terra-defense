@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Abstractions.World;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Implementations.World;
-using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 
 namespace Assets.Scripts.Implementations.Units
@@ -11,10 +12,12 @@ namespace Assets.Scripts.Implementations.Units
         public UnitOwner Owner;
         public float UnitSpeed;
         public float AttackValue;
+        public float AirAttackValue;
         public float DefenceValue;
         protected float InitialStatus;
         public float Status;
         public int Cost;
+        public UnitType UnitType;
         
         public virtual void Start ()
         {

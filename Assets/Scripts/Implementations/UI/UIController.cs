@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Implementations.Units;
+﻿using Assets.Scripts.Abstractions.World;
+using Assets.Scripts.Implementations.Units;
 using Assets.Scripts.Implementations.World;
-using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 using UnityEngine.UI;
 

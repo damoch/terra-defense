@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Abstractions.World;
 using Assets.Scripts.Implementations.Factions;
 using Assets.Scripts.Implementations.Units;
-using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 
 namespace Assets.Scripts.Implementations.World
@@ -16,6 +16,7 @@ namespace Assets.Scripts.Implementations.World
         public float AlertDelay { get; set; }
         public List<Unit> EnemyUnits { get; set; }
         public List<Unit> AlliedUnits { get; set; }
+        private BattleHandler _battleHandler;
 
         public float DefenseValue
         {
@@ -48,6 +49,7 @@ namespace Assets.Scripts.Implementations.World
             InvokeRepeating("CheckSurrondings", AlertDelay, AlertDelay);
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRenderer.color = Owner.Color;
+            _battleHandler = new BattleHandler();
         }
 
         private void CheckSurrondings()
@@ -129,47 +131,10 @@ namespace Assets.Scripts.Implementations.World
 
         private void SetSkirmishResult()
         {
-            var totalAttack = EnemyUnits.Sum(unit => unit.AttackValue);
-            var totalDefense = AlliedUnits.Sum(unit => unit.DefenceValue);
-            var damageValue = Math.Abs(totalDefense - totalAttack);
-            var losingArmy = totalAttack > totalDefense ? AlliedUnits : EnemyUnits;
-            var winningArmy = totalAttack <= totalDefense ? AlliedUnits : EnemyUnits;
-
-
-            for (var i = 0; i < losingArmy.Count; i++)
-            {
-                try
-                {
-                    var unit = losingArmy[i];
-                    unit.ModifyStatus(-damageValue);
-                }
-                catch(Exception e)
-                {
-                    Debug.Log(e.Message);
-                }
-            }
-            damageValue *= 0.33f;
-
-            for (var i = 0; i < winningArmy.Count; i++)
-            {
-                try
-                {
-                    var unit = winningArmy[i];
-                    unit.ModifyStatus(-damageValue);
-                }
-                catch(Exception e)
-                {
-                    Debug.Log(e.Message);
-                }
-            }
-
-            if (losingArmy.Count != 0) return;
-
-            var proposedOwner = winningArmy.Count > 0 ? winningArmy[0].Owner : null;
-
-            if(proposedOwner == null) return;
-
-            ChangeOwner(proposedOwner, winningArmy);
+            var winner = _battleHandler.SetSkirmishResult(AlliedUnits, EnemyUnits);
+            if (EnemyUnits.Count == 0 || !winner)return;
+            var winningArmy = AlliedUnits.Count > 0 ? AlliedUnits : EnemyUnits;
+            ChangeOwner(winner, winningArmy);
         }
 
         private void ChangeOwner(UnitOwner proposedOwner, List<Unit> winningArmy)

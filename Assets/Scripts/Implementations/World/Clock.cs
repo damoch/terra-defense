@@ -1,6 +1,7 @@
 ﻿using System;
-using Assets.Scripts.Interfaces.World;
+using Assets.Scripts.Abstractions.World;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Implementations.World
 {
@@ -11,14 +12,14 @@ namespace Assets.Scripts.Implementations.World
         
         private void Start () {
 		    GameDateTime = new DateTime(2075,4,5,6,0,0);
-            InvokeRepeating("HourEvent",LengthOfHour,LengthOfHour);
+            InvokeRepeating("HourEvent", LengthOfHour, LengthOfHour);
         }
 
         private void HourEvent()
         {
             GameDateTime = GameDateTime.AddHours(1);
             Debug.Log(GameDateTime);
-            
+            var target = new GameObject();
             var objectsWithTag = GameObject.FindGameObjectsWithTag("TimeAffected");
             for (var index = 0; index < objectsWithTag.Length; index++)
             {
@@ -27,9 +28,9 @@ namespace Assets.Scripts.Implementations.World
                 {
                     affected.HourEvent();
                 }
-                catch(Exception ex)
+                catch 
                 {
-                    Debug.Log(ex.Message);
+                    //
                 }
             }
         }

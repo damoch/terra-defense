@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Abstractions.World;
 using Assets.Scripts.Implementations.Units;
 using Assets.Scripts.Implementations.World;
-using Assets.Scripts.Interfaces.World;
 using UnityEngine;
 
 namespace Assets.Scripts.Implementations.Factions
@@ -25,11 +25,6 @@ namespace Assets.Scripts.Implementations.Factions
             _handler = new CountryEventsHandler(this);
         }
 
-        public CountryEventsHandler CountryEventsHandler
-        {
-            get { return _handler; }
-        }
-
         private void Start () {
             _provincesUnderAttack = new Dictionary<Province, int>();
             _threatenedProvinces = new Dictionary<Province, int>();
@@ -46,19 +41,30 @@ namespace Assets.Scripts.Implementations.Factions
             return FindObjectsOfType<Unit>().Where(u => u.Owner.Equals(this)).ToList();
         }
 
+        private Unit SelectUnitToProduce()
+        {
+            Unit result = null;
+            foreach (var avaibleUnit in AvaibleUnits)
+            {
+                if (avaibleUnit.Cost > Credits)
+                    return result;
+                result = avaibleUnit;
+            }
+            return result;
+        }
+
         public override GameObject ProduceUnit(Vector2 spawnPosition)
         {
-            if (AvaibleUnits[0].Cost <= Credits)
+            var unit = SelectUnitToProduce();
+            if (!unit)
             {
-                Credits -= AvaibleUnits[0].Cost;
-                var instance = Instantiate(AvaibleUnits[0].gameObject, spawnPosition, Quaternion.identity);
-                instance.GetComponent<Unit>().Owner = this;
-                Debug.Log(instance.GetComponent<Unit>().Owner);
-                Debug.Log(this);
-                return instance;
+                Alliance.RequestDonation(this);
+                return null;
             }
-            Alliance.RequestDonation(this);
-            return null;
+            Credits -= unit.Cost;
+            var instance = Instantiate(unit.gameObject, spawnPosition, Quaternion.identity);
+            instance.GetComponent<Unit>().Owner = this;
+            return instance;
         }
 
         public override void EnemyIsAttackingProperty(GameObject caller)
