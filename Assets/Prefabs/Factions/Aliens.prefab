@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4720732815629872}
+  - component: {fileID: 114342591085578622}
   m_Layer: 0
   m_Name: Aliens
   m_TagString: Untagged
@@ -39,3 +40,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114342591085578622
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1304727727867526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987961afec5f707419fcddaaa8d136a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Color: {r: 0.46323532, g: 0.044279832, b: 0.044279832, a: 1}
+  UnitColor: {r: 0.28762975, g: 0.5147059, b: 0.4301396, a: 1}
+  Credits: 0
+  AvaibleUnits:
+  - {fileID: 114342459257155596, guid: 39940f7e5f381674dbfefbfda95156b1, type: 2}
+  - {fileID: 114342459257155596, guid: 0014c6842b869c14889e98c978e787d4, type: 2}
+  - {fileID: 114342459257155596, guid: e9e00eda8fe1b494b8ec2f4656364ce6, type: 2}
+  - {fileID: 114466127011558798, guid: 33e7e44100d66494b80d88e4db4f379e, type: 2}

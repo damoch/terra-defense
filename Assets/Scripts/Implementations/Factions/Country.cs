@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Abstractions.Factions;
 using Assets.Scripts.Abstractions.World;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Implementations.Data;
 using Assets.Scripts.Implementations.Units;
 using Assets.Scripts.Implementations.World;
 using UnityEngine;
@@ -31,6 +33,24 @@ namespace Assets.Scripts.Implementations.Factions
             LostProvinces = new List<Province>();
         }
 
+        public void ReceiveOrder(Order order)
+        {
+            var playerUnits = GetPlayerControllableUnits();
+            switch (order.OrderType)
+            {
+                case OrderType.AttackProvince:
+                    _handler.AttackProvince((Province)order.Subject, playerUnits);
+                    break;
+                case OrderType.FortifyProvince:
+                    _handler.FortifyProvince((Province)order.Subject, playerUnits);
+                    break;
+                case OrderType.SendHelpTo:
+                    _handler.DonateWithUnits((Country) order.Subject, playerUnits);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
         public override bool IsEnemy(Unit unit)
         {
             return unit.Owner.GetType() == typeof(Aliens);
@@ -103,7 +123,7 @@ namespace Assets.Scripts.Implementations.Factions
 
             if (lostProvince != null)
             {
-                _handler.HandleLostProvince(lostProvince, playerUnits);
+                _handler.AttackProvince(lostProvince, playerUnits);
                 return;
             }
              if (provinceUnderAttack != null)

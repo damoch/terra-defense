@@ -31,6 +31,18 @@ namespace Assets.Scripts.Implementations.Factions
             }
         }
 
+        public void FortifyProvince(Province province, List<Unit> playerUnits)
+        {
+            var unitCount = Random.Range(0, 6);
+
+            foreach (var playerUnit in playerUnits)
+            {
+                unitCount--;
+                playerUnit.SetNewTarget(province.transform.position);
+                if(unitCount <= 0)return;
+            }
+        }
+
         public void HandleProvinceUnderAttack(Province provinceUnderAttack, List<Unit> playerUnits)
         {
             var attackStrength = provinceUnderAttack.EnemyUnits.Sum(a => a.AttackValue);
@@ -67,7 +79,7 @@ namespace Assets.Scripts.Implementations.Factions
             }
         }
 
-        public void HandleLostProvince(Province lostProvince, List<Unit> playerUnits)
+        public void AttackProvince(Province lostProvince, List<Unit> playerUnits)
         {
             var occupationStrength = lostProvince.DefenseValue;
             
@@ -89,6 +101,17 @@ namespace Assets.Scripts.Implementations.Factions
                 attackStrength += alliedUnit.AttackValue;
 
                 if (attackStrength > occupationStrength) break;
+            }
+        }
+
+        public void DonateWithUnits(Country orderSubject, List<Unit> playerUnits)
+        {
+            var unitCount = Random.Range(0, 6);
+
+            foreach (var playerUnit in playerUnits)
+            {
+                playerUnit.Owner = orderSubject;
+                playerUnit.SetNewTarget(UtilsAndTools.FindNearestProvince(orderSubject).transform.position);
             }
         }
     }

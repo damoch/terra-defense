@@ -9,13 +9,14 @@ namespace Assets.Scripts.Implementations.Units
     public class Unit : MonoBehaviour, ITimeAffected
     {
         protected Vector3 Target;
+        public string UnitName;
         public UnitOwner Owner;
-        public float UnitSpeed;
+        public float Status;
         public float AttackValue;
         public float AirAttackValue;
         public float DefenceValue;
+        public float UnitSpeed;
         protected float InitialStatus;
-        public float Status;
         public int Cost;
         public UnitType UnitType;
         
