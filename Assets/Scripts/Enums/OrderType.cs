@@ -2,6 +2,6 @@
 {
     public enum OrderType
     {
-        AttackProvince, FortifyProvince, SendHelpTo
+        AttackProvince, FortifyProvince, SendHelpTo, None
     }
 }

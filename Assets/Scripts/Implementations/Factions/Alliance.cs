@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Abstractions.Factions;
 using Assets.Scripts.Abstractions.World;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Implementations.Data;
 using Assets.Scripts.Implementations.Units;
 using Assets.Scripts.Implementations.World;
 using UnityEngine;
@@ -75,5 +77,16 @@ namespace Assets.Scripts.Implementations.Factions
         {
             //throw new NotImplementedException();
         }
+
+        public void SendCommandToCountry(OrderType orderType, MonoBehaviour subject, Country handledCountry)
+        {
+            var command = new Order
+            {
+                OrderType = orderType,
+                Subject = subject
+            };
+            handledCountry.ReceiveOrder(command);
+        }
+
     }
 }

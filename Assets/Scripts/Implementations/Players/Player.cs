@@ -1,6 +1,10 @@
-﻿using Assets.Scripts.Implementations.Factions;
+﻿using Assets.Scripts.Abstractions.Factions;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Implementations.Data;
+using Assets.Scripts.Implementations.Factions;
 using Assets.Scripts.Implementations.UI;
 using Assets.Scripts.Implementations.Units;
+using Assets.Scripts.Implementations.World;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 
@@ -14,6 +18,9 @@ namespace Assets.Scripts.Implementations.Players
         public Alliance Alliance;
         public Unit SelectedUnit;
         public Camera Camera;
+        private Country _handledCountry;
+        public OrderType OrderType { get; set; }
+        
         public UIController UIController { get; set; }
         private void Start()
         {
@@ -24,7 +31,7 @@ namespace Assets.Scripts.Implementations.Players
                 Camera = Camera.main;
             }
 
-
+            OrderType = OrderType.None;
             
             //Debug.Log();
         }
@@ -76,11 +83,31 @@ namespace Assets.Scripts.Implementations.Players
             var hit = Physics2D.Raycast(new Vector2(screenToWorld.x, screenToWorld.y), Vector2.zero, 0f);
             if (hit.transform != null)
             {
-                var unitComponent = hit.transform.gameObject.GetComponent<Unit>();
-                if (unitComponent != null)
+                var clickedObject = hit.transform.gameObject;
+                var unitComponent = clickedObject.GetComponent<Unit>();
+                if (unitComponent)
                 {
                     SelectUnit(unitComponent);
+                    return;
                 }
+
+                var province = clickedObject.GetComponent<Province>();
+                if (province)
+                {
+                    if (!_handledCountry)
+                    {
+                        _handledCountry = (Country) province.Owner;
+                        UIController.ShowCommandPanel();
+                    }
+                    else if(_handledCountry && OrderType != OrderType.None)
+                    {
+                        Alliance.SendCommandToCountry(OrderType, province.gameObject.GetComponent<MonoBehaviour>(), _handledCountry);
+                        OrderType = OrderType.None;
+                        _handledCountry = null;
+                    }
+                    return;
+                }
+
             }
             else
             {

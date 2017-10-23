@@ -1,6 +1,9 @@
-﻿using Assets.Scripts.Abstractions.World;
+﻿using System;
+using Assets.Scripts.Abstractions.World;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Implementations.Units;
 using Assets.Scripts.Implementations.World;
+using Assets.Scripts.Implementations.Players;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +15,14 @@ namespace Assets.Scripts.Implementations.UI
         public Text UnitNameText;
         public Text UnitFactionText;
         public Text DateTimeText;
+        public Button AttackProvinceButton;
         public GameObject UnitInfoPanel;
+        public Player Player { get; set; }
         public Clock Clock { get; set; }
         private void Start ()
         {
             Clock = FindObjectOfType<Clock>();
+            Player = FindObjectOfType<Player>();
             HourEvent();
             DisableUnitInfoPanel();
         }
@@ -45,6 +51,15 @@ namespace Assets.Scripts.Implementations.UI
         public void SetupTimeValues()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void ShowCommandPanel()
+        {
+        }
+
+        public void SetOrderType()
+        {
+            Player.OrderType = OrderType.AttackProvince;
         }
     }
 }
