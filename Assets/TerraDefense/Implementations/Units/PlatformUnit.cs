@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Implementations.Factions;
-using Assets.Scripts.Implementations.Utils;
-using Assets.Scripts.Implementations.World;
+using Assets.TerraDefense.Implementations.Factions;
+using Assets.TerraDefense.Implementations.Utils;
+using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Implementations.Units
+namespace Assets.TerraDefense.Implementations.Units
 {
     public class PlatformUnit : Unit {
         public Aliens AliensOwner { get; set; }

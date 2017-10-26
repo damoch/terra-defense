@@ -1,9 +1,8 @@
 ﻿using System;
-using Assets.Scripts.Abstractions.World;
+using Assets.TerraDefense.Abstractions.World;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.Implementations.World
+namespace Assets.TerraDefense.Implementations.World
 {
     public class Clock : MonoBehaviour
     {

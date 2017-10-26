@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Implementations.Units;
-using Assets.Scripts.Implementations.World;
+using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Abstractions.Factions
+namespace Assets.TerraDefense.Abstractions.Factions
 {
     public abstract class UnitOwner : MonoBehaviour
     {

@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Abstractions.Factions;
-using Assets.Scripts.Abstractions.World;
-using Assets.Scripts.Implementations.Factions;
-using Assets.Scripts.Implementations.Units;
+using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Abstractions.World;
+using Assets.TerraDefense.Implementations.Factions;
+using Assets.TerraDefense.Implementations.Units;
 using UnityEngine;
 
-namespace Assets.Scripts.Implementations.World
+namespace Assets.TerraDefense.Implementations.World
 {
     public class Province : MonoBehaviour, ITimeAffected
     {

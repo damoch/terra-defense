@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Implementations.Factions;
-using Assets.Scripts.Implementations.Units;
-using Assets.Scripts.Implementations.World;
-using Assets.Scripts.Implementations.Utils;
+using Assets.TerraDefense.Implementations.Factions;
+using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.Utils;
+using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Implementations.Players
+namespace Assets.TerraDefense.Implementations.Players
 {
     // ReSharper disable once InconsistentNaming
     public class AIPlayer : MonoBehaviour {

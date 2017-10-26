@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Abstractions.Factions;
-using Assets.Scripts.Implementations.Units;
-using Assets.Scripts.Implementations.World;
+using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Implementations.Utils
+namespace Assets.TerraDefense.Implementations.Utils
 {
     public class UtilsAndTools : MonoBehaviour
     {

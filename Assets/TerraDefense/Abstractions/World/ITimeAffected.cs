@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions.World
+﻿namespace Assets.TerraDefense.Abstractions.World
 {
     public interface ITimeAffected
     {

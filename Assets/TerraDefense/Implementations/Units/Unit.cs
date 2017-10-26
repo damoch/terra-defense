@@ -1,10 +1,10 @@
-﻿using Assets.Scripts.Abstractions.Factions;
-using Assets.Scripts.Abstractions.World;
-using Assets.Scripts.Enums;
-using Assets.Scripts.Implementations.World;
+﻿using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Abstractions.World;
+using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Implementations.Units
+namespace Assets.TerraDefense.Implementations.Units
 {
     public class Unit : MonoBehaviour, ITimeAffected
     {

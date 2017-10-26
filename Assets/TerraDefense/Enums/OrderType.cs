@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Enums
+﻿namespace Assets.TerraDefense.Enums
 {
     public enum OrderType
     {

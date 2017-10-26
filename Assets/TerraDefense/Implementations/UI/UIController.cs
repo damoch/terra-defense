@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Abstractions.World;
-using Assets.Scripts.Enums;
-using Assets.Scripts.Implementations.Units;
-using Assets.Scripts.Implementations.World;
-using Assets.Scripts.Implementations.Players;
+using Assets.TerraDefense.Abstractions.World;
+using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Players;
+using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Implementations.UI
+namespace Assets.TerraDefense.Implementations.UI
 {
     // ReSharper disable once InconsistentNaming
     public class UIController : MonoBehaviour, ITimeAffected

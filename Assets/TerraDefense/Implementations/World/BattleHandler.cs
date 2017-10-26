@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Assets.Scripts.Abstractions.Factions;
-using Assets.Scripts.Enums;
-using Assets.Scripts.Implementations.Units;
+using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Units;
 using UnityEngine;
 
-namespace Assets.Scripts.Implementations.World
+namespace Assets.TerraDefense.Implementations.World
 {
     internal class BattleHandler
     {

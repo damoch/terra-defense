@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Assets.Scripts.Enums;
+﻿using Assets.TerraDefense.Enums;
 using UnityEngine;
 
-namespace Assets.Scripts.Implementations.Data
+namespace Assets.TerraDefense.Implementations.Data
 {
     public class Order : MonoBehaviour
     {

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Implementations.Units;
-using Assets.Scripts.Implementations.Utils;
-using Assets.Scripts.Implementations.World;
+using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.Utils;
+using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 
-namespace Assets.Scripts.Implementations.Factions
+namespace Assets.TerraDefense.Implementations.Factions
 {
     public class CountryEventsHandler
     {

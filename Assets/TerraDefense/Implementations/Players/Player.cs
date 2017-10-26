@@ -1,12 +1,12 @@
-﻿using Assets.Scripts.Enums;
-using Assets.Scripts.Implementations.Factions;
-using Assets.Scripts.Implementations.UI;
-using Assets.Scripts.Implementations.Units;
-using Assets.Scripts.Implementations.World;
+﻿using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Factions;
+using Assets.TerraDefense.Implementations.UI;
+using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 
-namespace Assets.Scripts.Implementations.Players
+namespace Assets.TerraDefense.Implementations.Players
 {
     public class Player : MonoBehaviour
     {
