@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Factions;
-using Assets.Scripts.Enums;
-using Assets.Scripts.Implementations.Data;
+﻿using Assets.Scripts.Enums;
 using Assets.Scripts.Implementations.Factions;
 using Assets.Scripts.Implementations.UI;
 using Assets.Scripts.Implementations.Units;
@@ -84,10 +82,10 @@ namespace Assets.Scripts.Implementations.Players
             if (hit.transform != null)
             {
                 var clickedObject = hit.transform.gameObject;
-                var unitComponent = clickedObject.GetComponent<Unit>();
-                if (unitComponent)
+                var unit = clickedObject.GetComponent<Unit>();
+                if (unit)
                 {
-                    SelectUnit(unitComponent);
+                    SelectUnit(unit);
                     return;
                 }
 
@@ -96,13 +94,21 @@ namespace Assets.Scripts.Implementations.Players
                 {
                     if (!_handledCountry)
                     {
-                        _handledCountry = (Country) province.Owner;
-                        UIController.ShowCommandPanel();
+                        try
+                        {
+                            _handledCountry = (Country) province.Owner;
+                            UIController.ShowCommandPanel(true);
+                        }
+                        catch
+                        {
+                            
+                        }
                     }
                     else if(_handledCountry && OrderType != OrderType.None)
                     {
                         Alliance.SendCommandToCountry(OrderType, province.gameObject.GetComponent<MonoBehaviour>(), _handledCountry);
                         OrderType = OrderType.None;
+                        UIController.ShowCommandPanel(false);
                         _handledCountry = null;
                     }
                     return;

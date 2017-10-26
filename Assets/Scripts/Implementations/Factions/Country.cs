@@ -33,23 +33,33 @@ namespace Assets.Scripts.Implementations.Factions
             LostProvinces = new List<Province>();
         }
 
-        public void ReceiveOrder(Order order)
+        public bool ReceiveOrder(Order order)
         {
             var playerUnits = GetPlayerControllableUnits();
-            switch (order.OrderType)
+            try
             {
-                case OrderType.AttackProvince:
-                    _handler.AttackProvince((Province)order.Subject, playerUnits);
-                    break;
-                case OrderType.FortifyProvince:
-                    _handler.FortifyProvince((Province)order.Subject, playerUnits);
-                    break;
-                case OrderType.SendHelpTo:
-                    _handler.DonateWithUnits((Country) order.Subject, playerUnits);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                switch (order.OrderType)
+                {
+                    case OrderType.AttackProvince:
+                        _handler.AttackProvince((Province) order.Subject, playerUnits);
+                        break;
+                    case OrderType.FortifyProvince:
+                        _handler.FortifyProvince((Province) order.Subject, playerUnits);
+                        break;
+                    case OrderType.SendHelpTo:
+                        _handler.DonateWithUnits((Country) order.Subject.gameObject.GetComponent<Province>().Owner,
+                            playerUnits);
+                        break;
+                    case OrderType.None:
+                        break;
+                }
+                return true;
             }
+            catch
+            {
+                return false;
+            }
+
         }
         public override bool IsEnemy(Unit unit)
         {

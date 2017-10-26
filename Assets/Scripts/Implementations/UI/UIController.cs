@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Abstractions.World;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Implementations.Units;
@@ -16,13 +18,23 @@ namespace Assets.Scripts.Implementations.UI
         public Text UnitFactionText;
         public Text DateTimeText;
         public Button AttackProvinceButton;
+        public Button FortifyProvinceButton;
+        public Button SendHelpToButton;
         public GameObject UnitInfoPanel;
+        public GameObject OrderPanel;
         public Player Player { get; set; }
         public Clock Clock { get; set; }
+        public Dictionary<Button, OrderType> OrderTypesForButtons { get; set; }
         private void Start ()
         {
             Clock = FindObjectOfType<Clock>();
             Player = FindObjectOfType<Player>();
+            OrderTypesForButtons = new Dictionary<Button, OrderType>
+            {
+                {AttackProvinceButton, OrderType.AttackProvince},
+                {FortifyProvinceButton, OrderType.FortifyProvince},
+                {SendHelpToButton, OrderType.SendHelpTo}
+            };
             HourEvent();
             DisableUnitInfoPanel();
         }
@@ -53,13 +65,23 @@ namespace Assets.Scripts.Implementations.UI
             throw new System.NotImplementedException();
         }
 
-        public void ShowCommandPanel()
+        public void ShowCommandPanel(bool show)
         {
+            OrderPanel.SetActive(show);
+            foreach (var button in OrderTypesForButtons.Keys)
+            {
+                button.gameObject.SetActive(show);
+            }
         }
 
-        public void SetOrderType()
+        public void SetOrderType(Button sender)
         {
-            Player.OrderType = OrderType.AttackProvince;
+            Player.OrderType = OrderTypesForButtons[sender];
+
+            foreach (var button in OrderTypesForButtons.Keys.Where(a => !a.Equals(sender)))
+            {
+                button.gameObject.SetActive(false);
+            }
         }
     }
 }
