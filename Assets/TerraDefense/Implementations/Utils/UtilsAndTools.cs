@@ -56,6 +56,28 @@ namespace Assets.TerraDefense.Implementations.Utils
             var newSources = sources.Cast<MonoBehaviour>().ToList();
             return FindAverageDistance(destination, newSources);
         }
+
+        public static Unit FindNearestUnit(Province province, UnitOwner owner)
+        {
+            var units = FindObjectsOfType<Unit>().Where(u => u.Owner.Equals(owner)).ToList();
+            return FindNearestUnit(province, units);
+        }
+
+        public static Unit FindNearestUnit(Province province, List<Unit> units)
+        {
+            var currUnit = units[0];
+            var currDist = GetDistance(currUnit, province);
+
+            foreach (var unit in units)
+            {
+                var newDist = GetDistance(unit, province);
+                if (!(newDist < currDist)) continue;
+                currDist = newDist;
+                currUnit = unit;
+            }
+            return currUnit;
+        }
     }
+    
 
 }

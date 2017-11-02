@@ -47,7 +47,7 @@ namespace Assets.TerraDefense.Implementations.Factions
         }
         public override void PropertyChangesOwner(Province province, bool isLost)
         {
-            throw new System.NotImplementedException();
+           
         }
     }
 }

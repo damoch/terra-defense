@@ -19,16 +19,24 @@ namespace Assets.TerraDefense.Implementations.UI
         public Button AttackProvinceButton;
         public Button FortifyProvinceButton;
         public Button SendHelpToButton;
+
+        public List<Button> OrderButtons;
         public GameObject UnitInfoPanel;
         public GameObject OrderPanel;
         public Player Player { get; set; }
         public Clock Clock { get; set; }
-        public Dictionary<Button, OrderType> OrderTypesForButtons { get; set; }
+        private Dictionary<Button, OrderType> _orderTypesForButtons;
         private void Start ()
         {
             Clock = FindObjectOfType<Clock>();
             Player = FindObjectOfType<Player>();
-            OrderTypesForButtons = new Dictionary<Button, OrderType>
+
+            foreach (var orderButton in OrderButtons)
+            {
+                var button = orderButton;
+                orderButton.onClick.AddListener(() => { SetOrderType(button); });
+            }
+            _orderTypesForButtons = new Dictionary<Button, OrderType>
             {
                 {AttackProvinceButton, OrderType.AttackProvince},
                 {FortifyProvinceButton, OrderType.FortifyProvince},
@@ -67,7 +75,7 @@ namespace Assets.TerraDefense.Implementations.UI
         public void ShowCommandPanel(bool show)
         {
             OrderPanel.SetActive(show);
-            foreach (var button in OrderTypesForButtons.Keys)
+            foreach (var button in _orderTypesForButtons.Keys)
             {
                 button.gameObject.SetActive(show);
             }
@@ -75,9 +83,9 @@ namespace Assets.TerraDefense.Implementations.UI
 
         public void SetOrderType(Button sender)
         {
-            Player.OrderType = OrderTypesForButtons[sender];
+            Player.OrderType = _orderTypesForButtons[sender];
 
-            foreach (var button in OrderTypesForButtons.Keys.Where(a => !a.Equals(sender)))
+            foreach (var button in _orderTypesForButtons.Keys.Where(a => !a.Equals(sender)))
             {
                 button.gameObject.SetActive(false);
             }

@@ -16,6 +16,9 @@ namespace Assets.TerraDefense.Implementations.World
         public float AlertDelay { get; set; }
         public List<Unit> EnemyUnits { get; set; }
         public List<Unit> AlliedUnits { get; set; }
+        public bool IsTerraformed { get; set; }
+        public int TimeOccupied { get; set; }
+
         private BattleHandler _battleHandler;
 
         public float DefenseValue
@@ -34,7 +37,8 @@ namespace Assets.TerraDefense.Implementations.World
         private void Start ()
         {
             SetupTimeValues();
-           
+
+            TimeOccupied = 0;
             IsBattle = false;
             EnemyUnits = new List<Unit>();
             AlliedUnits = new List<Unit>();
@@ -131,7 +135,7 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void SetSkirmishResult()
         {
-            var winner = _battleHandler.SetSkirmishResult(AlliedUnits, EnemyUnits);
+            var winner = _battleHandler.SetSkirmishResult(AlliedUnits, EnemyUnits, IsTerraformed);
             if (EnemyUnits.Count == 0 || !winner)return;
             var winningArmy = AlliedUnits.Count > 0 ? AlliedUnits : EnemyUnits;
             ChangeOwner(winner, winningArmy);
@@ -139,6 +143,7 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void ChangeOwner(UnitOwner proposedOwner, List<Unit> winningArmy)
         {
+            TimeOccupied = 0;
             Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner;
             _originalOwner.PropertyChangesOwner(this, Owner != _originalOwner);
             _spriteRenderer.color = Owner.Color;
@@ -170,6 +175,7 @@ namespace Assets.TerraDefense.Implementations.World
 
         public void HourEvent()
         {
+            TimeOccupied++;
             try
             {
                 var country = (Country) Owner;

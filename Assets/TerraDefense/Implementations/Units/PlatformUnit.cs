@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
@@ -12,6 +13,9 @@ namespace Assets.TerraDefense.Implementations.Units
         public List<GameObject> Units { get; set; }
         public Province TargetProvince { get; set; }
         public Province CurrentProvince { get; set; }
+        public int TerraformingTime;
+        public bool IsTerraforming { get; set; }
+        private int _terraformingStatus;
         public override void Start()
         {
             TargetProvince = null;
@@ -26,10 +30,34 @@ namespace Assets.TerraDefense.Implementations.Units
             InvokeRepeating("DecideNextMove", 1f, 1f);
             SetupTimeValues();
             GetComponent<SpriteRenderer>().color = AliensOwner.UnitColor;
+            _terraformingStatus = 0;
+            IsTerraforming = false;
         }
 
         private void DecideNextMove()
         {
+            if (IsTerraforming)
+            {
+                if (CurrentProvince.Owner.Equals(AliensOwner))
+                {
+                    _terraformingStatus++;
+                    if (_terraformingStatus >= TerraformingTime)
+                    {
+                        CurrentProvince.IsTerraformed = true;
+                        IsTerraforming = false;
+                        _terraformingStatus = 0;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    IsTerraforming = false;
+                    _terraformingStatus = 0;
+                }
+            }
             if(TargetProvince == null)return;
 
             if (UtilsAndTools.GetDistance(this, TargetProvince) > 6f)
@@ -70,6 +98,8 @@ namespace Assets.TerraDefense.Implementations.Units
             }
         }
 
+
+
         private bool ShouldBuildMoreUnits()
         {
             var sum = 0f;
@@ -105,7 +135,7 @@ namespace Assets.TerraDefense.Implementations.Units
                 }
                 Destroy(gameObject);
             }
-            var propertyModifier = Status / (float)InitialStatus;
+            var propertyModifier = Status / InitialStatus;
             AttackValue *= propertyModifier;
             DefenceValue *= propertyModifier;
         }

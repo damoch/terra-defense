@@ -11,11 +11,14 @@ namespace Assets.TerraDefense.Implementations.Players
     // ReSharper disable once InconsistentNaming
     public class AIPlayer : MonoBehaviour {
         public Aliens Aliens { get; set; }
+        public int HoursBeforeTerraformation;
         private List<Province> _provinces;
         private Dictionary<PlatformUnit, Province> _orders;
+        private Dictionary<PlatformUnit, Province> _terraformingOrders;
         private void Start ()
         {
             _orders = new Dictionary<PlatformUnit, Province>();
+            _terraformingOrders = new Dictionary<PlatformUnit, Province>();
             Aliens = FindObjectOfType<Aliens>();
             _provinces = FindObjectsOfType<Province>().ToList();
 
@@ -32,17 +35,40 @@ namespace Assets.TerraDefense.Implementations.Players
             {
                 platforms.Add((PlatformUnit)unit);
             }
+
+            var toTerraform = FindTrovinceToTerraform();
+            if (toTerraform && !_terraformingOrders.Values.Contains(toTerraform))
+            {
+                var terraformer = (PlatformUnit)UtilsAndTools.FindNearestUnit(toTerraform, units);
+                if (terraformer.CurrentProvince != toTerraform)
+                {
+                    terraformer.TargetProvince = toTerraform;
+                }
+                else
+                {
+                    terraformer.IsTerraforming = true;
+                }
+                if (!_terraformingOrders.Keys.Contains(terraformer)) _terraformingOrders.Add(terraformer, toTerraform);
+                else _terraformingOrders[terraformer] = toTerraform;
+                platforms.Remove(terraformer);
+            }
             
             foreach (var platformUnit in platforms)
             {
                 if (!_orders.ContainsKey(platformUnit)) _orders.Add(platformUnit, null);
 
                 var target = _orders[platformUnit];
-                if (target == null || target.Owner.Equals(Aliens))
+                if ((target == null || target.Owner.Equals(Aliens)) && !platformUnit.IsTerraforming)
                 {
                     FindTargetFor(platformUnit);
                 }
             }
+        }
+
+        private Province FindTrovinceToTerraform()
+        {
+            var provinces = FindObjectsOfType<Province>().Where(x => x.Owner.Equals(Aliens) && x.TimeOccupied >= HoursBeforeTerraformation).ToList();
+            return provinces.FirstOrDefault();
         }
 
         private void FindTargetFor(PlatformUnit platformUnit)

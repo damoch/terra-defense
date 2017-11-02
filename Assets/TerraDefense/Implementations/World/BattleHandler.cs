@@ -10,8 +10,13 @@ namespace Assets.TerraDefense.Implementations.World
 {
     internal class BattleHandler
     {
-        public UnitOwner SetSkirmishResult(List<Unit> alliedUnits, List<Unit> enemyUnits)
+        public UnitOwner SetSkirmishResult(List<Unit> alliedUnits, List<Unit> enemyUnits, bool isTerraformed)
         {
+            if (isTerraformed)
+            {
+                enemyUnits.ForEach(u => u.ModifyStatus(u.Status));
+                return alliedUnits.Count > 0 ? alliedUnits[0].Owner : null;
+            }
             var totalAttack = enemyUnits.Sum(unit => unit.AttackValue);
             var totalDefense = alliedUnits.Sum(unit => unit.DefenceValue);
 

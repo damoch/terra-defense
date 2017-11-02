@@ -108,6 +108,7 @@ MonoBehaviour:
   UnitSpeed: 2
   Cost: 120
   UnitType: 0
+  TerraformingTime: 12
 --- !u!212 &212411921912053348
 SpriteRenderer:
   m_ObjectHideFlags: 1
