@@ -18,8 +18,6 @@ namespace Assets.TerraDefense.Implementations.Players
             _orders = new Dictionary<PlatformUnit, Province>();
             Aliens = FindObjectOfType<Aliens>();
             _provinces = FindObjectsOfType<Province>().ToList();
-
-
             InvokeRepeating("MakeNextMove",1f,1f);
         }
 
@@ -49,6 +47,7 @@ namespace Assets.TerraDefense.Implementations.Players
         {
             var alreadyAttacked = _orders.Values.ToList();
             var validTargets = _provinces.Where(p => !p.Owner.Equals(Aliens) && !alreadyAttacked.Contains(p)).ToList();
+            var occupiedProvincesWithoutDefenses = _provinces.Where(p => p.Owner.Equals(Aliens) && p.DefenseValue < 1);
             
             if(validTargets.Count == 0)return;
 

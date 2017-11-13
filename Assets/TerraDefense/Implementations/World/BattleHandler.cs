@@ -36,18 +36,22 @@ namespace Assets.TerraDefense.Implementations.World
                     Debug.Log(e.Message);
                 }
             }
-            damageValue *= 0.33f;
-
-            for (var i = 0; i < winningArmy.Count; i++)
+            if (losingArmy.Count > 0)
             {
-                try
+                var counterValue = losingArmy.Sum(x => x.AttackValue);
+                var counterAirValue = losingArmy.Sum(x => x.AirAttackValue);
+
+                for (var i = 0; i < winningArmy.Count; i++)
                 {
-                    var unit = winningArmy[i];
-                    unit.ModifyStatus(-damageValue);
-                }
-                catch
-                {
-                    //
+                    try
+                    {
+                        var unit = winningArmy[i];
+                        unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -counterValue : -counterAirValue);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e.Message);
+                    }
                 }
             }
 

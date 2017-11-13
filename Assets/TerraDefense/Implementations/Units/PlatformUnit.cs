@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
@@ -9,14 +10,15 @@ namespace Assets.TerraDefense.Implementations.Units
 {
     public class PlatformUnit : Unit {
         public Aliens AliensOwner { get; set; }
-        public List<GameObject> Units { get; set; }
+        public List<Unit> Units { get; set; }
         public Province TargetProvince { get; set; }
         public Province CurrentProvince { get; set; }
+        public PlatformUnitMode PlatformUnitMode { get; set; }
         public override void Start()
         {
             TargetProvince = null;
             Target = transform.position;
-            Units = new List<GameObject>();
+            Units = new List<Unit>();
             Target = transform.position;
             AliensOwner = FindObjectOfType<Aliens>();
             if (AliensOwner == null)
@@ -26,11 +28,33 @@ namespace Assets.TerraDefense.Implementations.Units
             InvokeRepeating("DecideNextMove", 1f, 1f);
             SetupTimeValues();
             GetComponent<SpriteRenderer>().color = AliensOwner.UnitColor;
+            PlatformUnitMode = PlatformUnitMode.Attack;
         }
 
         private void DecideNextMove()
         {
-            if(TargetProvince == null)return;
+            switch (PlatformUnitMode)
+            {
+                case PlatformUnitMode.Attack:
+                    DecideInAttackMode();
+                    break;
+                case PlatformUnitMode.Defense:
+                    DecideInDefenseMode();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+           
+        }
+
+        private void DecideInDefenseMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DecideInAttackMode()
+        {
+            if (TargetProvince == null || TargetProvince.Owner == AliensOwner) return;
 
             if (UtilsAndTools.GetDistance(this, TargetProvince) > 6f)
             {
@@ -39,9 +63,9 @@ namespace Assets.TerraDefense.Implementations.Units
                 {
                     try
                     {
-                        unit.GetComponent<Unit>().SetNewTarget(target.transform.position);
+                        unit.SetNewTarget(target.transform.position);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Debug.Log(e.Message);
                     }
@@ -51,16 +75,16 @@ namespace Assets.TerraDefense.Implementations.Units
 
             if (ShouldBuildMoreUnits())
             {
-                Units.Add(AliensOwner.ProduceUnit(transform.position));
+                Units.Add(AliensOwner.ProduceUnit(this).GetComponent<Unit>());
             }
-            else if(!ShouldMove())
+            else if (!ShouldMove())
             {
                 for (var i = 0; i < Units.Count; i++)
                 {
                     var unit = Units[i];
                     if (unit != null)
                     {
-                        unit.GetComponent<Unit>().SetNewTarget(TargetProvince.gameObject.transform.position);
+                        unit.SetNewTarget(TargetProvince.gameObject.transform.position);
                     }
                     else
                     {
@@ -78,7 +102,7 @@ namespace Assets.TerraDefense.Implementations.Units
                 var unit = Units[i];
                 if (unit != null)
                 {
-                    sum += unit.GetComponent<Unit>().AttackValue;
+                    sum += unit.AttackValue;
                 }
                 else
                 {
