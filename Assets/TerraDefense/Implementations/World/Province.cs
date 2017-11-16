@@ -139,8 +139,21 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void ChangeOwner(UnitOwner proposedOwner, List<Unit> winningArmy)
         {
+            if (_originalOwner == null && proposedOwner.GetType() == typeof(Country))
+            {
+                _originalOwner = proposedOwner;
+            }
+            else if (_originalOwner != null)
+            {
+                _originalOwner.PropertyChangesOwner(this, Owner != _originalOwner);
+            }
             Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner;
-            _originalOwner.PropertyChangesOwner(this, Owner != _originalOwner);
+
+            //if (_originalOwner == null && proposedOwner.GetType() == typeof(Country))
+            //{
+            //    _originalOwner = proposedOwner;
+            //}
+            //Owner = _originalOwner == null && proposedOwner.GetType() == typeof(Aliens) ? proposedOwner;
             _spriteRenderer.color = Owner.Color;
             AlliedUnits = winningArmy;
             EnemyUnits = new List<Unit>();

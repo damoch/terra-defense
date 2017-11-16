@@ -53,12 +53,30 @@ namespace Assets.TerraDefense.Implementations.Players
             {
                 Camera.orthographicSize--;
             }
+#if !UNITY_EDITOR
+            if (Input.mousePosition.x > Screen.width - 50 || Input.GetKey(KeyCode.RightArrow))
+                Camera.transform.Translate(ScrollingSpeed, 0, 0, 0);
 
-#if !DEBUG
-            if (Input.mousePosition.x > Screen.width - 50) Camera.transform.Translate(ScrollingSpeed, 0, 0, 0);
-            if (Input.mousePosition.x < 50) Camera.transform.Translate(-ScrollingSpeed, 0, 0, 0);
-            if (Input.mousePosition.y > Screen.height - 50) Camera.transform.Translate(0, ScrollingSpeed, 0, 0);
-            if (Input.mousePosition.y < 50) Camera.transform.Translate(0, -ScrollingSpeed, 0, 0);
+            if (Input.mousePosition.x < 50 || Input.GetKey(KeyCode.LeftArrow))
+                Camera.transform.Translate(-ScrollingSpeed, 0, 0, 0);
+
+            if (Input.mousePosition.y > Screen.height - 50 || Input.GetKey(KeyCode.UpArrow))
+                Camera.transform.Translate(0, ScrollingSpeed, 0, 0);
+
+            if (Input.mousePosition.y < 50 || Input.GetKey(KeyCode.DownArrow))
+                Camera.transform.Translate(0, -ScrollingSpeed, 0, 0);
+#else
+            if (Input.GetKey(KeyCode.RightArrow))
+                Camera.transform.Translate(ScrollingSpeed, 0, 0, 0);
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+                Camera.transform.Translate(-ScrollingSpeed, 0, 0, 0);
+
+            if (Input.GetKey(KeyCode.UpArrow))
+                Camera.transform.Translate(0, ScrollingSpeed, 0, 0);
+
+            if (Input.GetKey(KeyCode.DownArrow))
+                Camera.transform.Translate(0, -ScrollingSpeed, 0, 0);
 #endif
         }
 

@@ -5,6 +5,7 @@ using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 
@@ -183,6 +184,18 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public override void PropertyChangesOwner(Province province, bool isLost)
         {
+            if (FindObjectsOfType<Province>().Count(x => x.Owner == this) == 0)
+            {
+                Alliance.Countries.Remove(this);
+                var units = FindObjectsOfType<Unit>().Where(x => x.Owner == this).ToList();
+                for (var index = 0; index < units.Count; index++)
+                {
+                    var unit = units[index];
+                    Destroy(unit.gameObject);
+                }
+                Destroy(gameObject);
+            }
+
             if(isLost) LostProvinces.Add(province);
             else LostProvinces.Remove(province);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Utils;
@@ -54,6 +55,15 @@ namespace Assets.TerraDefense.Implementations.Units
 
         private void DecideInAttackMode()
         {
+            if (CurrentProvince != null && CurrentProvince.Owner == AliensOwner)
+            {
+                var units = CurrentProvince.AlliedUnits.Where(x => x != this).ToList();
+                if (units.Count == 0)
+                {
+                    AliensOwner.ProduceUnit(this);
+                    return;
+                }
+            }
             if (TargetProvince == null || TargetProvince.Owner == AliensOwner) return;
 
             if (UtilsAndTools.GetDistance(this, TargetProvince) > 6f)
