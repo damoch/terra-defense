@@ -226,6 +226,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerGameObject: {fileID: 1847574945800934, guid: c7a28b53f1cec28419fb481b8e0210f7,
     type: 2}
+  AiPlayerGameObject: {fileID: 1912471128485944, guid: 47ed927577a62ff4f9034af8aae90824,
+    type: 2}
   ClockGameObject: {fileID: 1984101340555714, guid: 98e910d128924ed428f96efb24e0fc80,
     type: 2}
   AliensGameObject: {fileID: 1304727727867526, guid: 236f74b8b9dd75a4b8e5ea3d3d0c1b0f,
@@ -236,10 +238,11 @@ MonoBehaviour:
     type: 2}
   ProvinceGameObject: {fileID: 1756237892879136, guid: b2fd5058aaa255b4ebf60b695e2d1ca5,
     type: 2}
-  OriginX: 0
-  OriginY: 0
-  NumberOfCountries: 2
-  ProvincesPerCountry: 2
+  AlienPlatformGameObject: {fileID: 1741497933629170, guid: 33e7e44100d66494b80d88e4db4f379e,
+    type: 2}
+  MapSquareWidth: 8
+  NumberOfCountries: 4
+  NumberOfInvaders: 3
 --- !u!4 &1848625029
 Transform:
   m_ObjectHideFlags: 0
