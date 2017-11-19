@@ -18,7 +18,6 @@ namespace Assets.TerraDefense.Implementations.World
         {
             GameDateTime = GameDateTime.AddHours(1);
             Debug.Log(GameDateTime);
-            var target = new GameObject();
             var objectsWithTag = GameObject.FindGameObjectsWithTag("TimeAffected");
             for (var index = 0; index < objectsWithTag.Length; index++)
             {

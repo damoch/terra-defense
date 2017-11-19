@@ -51,5 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e910f8da0b56cbc42b1f4e490fe938f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ZoomMin: 3
+  ZoomMax: 9
+  ScrollingSpeed: 0.05
   Alliance: {fileID: 0}
   SelectedUnit: {fileID: 0}
+  Camera: {fileID: 0}

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114911485683761574}
   m_Layer: 0
   m_Name: Country
-  m_TagString: Untagged
+  m_TagString: TimeAffected
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,7 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18127fa0d64ac6149b8a52d1b9e71d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Color: {r: 0, g: 0, b: 0, a: 0}
+  UnitColor: {r: 0, g: 0, b: 0, a: 0}
   Credits: 0
   AvaibleUnits: []
   Name: Country0
   Alliance: {fileID: 0}
+  EnemyCloseToProvincePanicValue: 0
+  EnemyAttackingProvincePanicValue: 0
+  ProvinceLostPanic: 0

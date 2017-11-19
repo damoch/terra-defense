@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Units;
@@ -30,7 +31,8 @@ namespace Assets.TerraDefense.Implementations.Players
             {
                 platforms.Add((PlatformUnit)unit);
             }
-            
+
+            FixOrders(platforms);
             foreach (var platformUnit in platforms)
             {
                 if (!_orders.ContainsKey(platformUnit)) _orders.Add(platformUnit, null);
@@ -43,11 +45,30 @@ namespace Assets.TerraDefense.Implementations.Players
             }
         }
 
+        private void FixOrders(List<PlatformUnit> platforms)
+        {
+
+            foreach (var ordersKey in _orders.Keys)
+            {
+                if (!platforms.Contains(ordersKey))
+
+
+                    try
+                    {
+                        _orders.Remove(ordersKey);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Log(ex.Message);
+                        //
+                    }
+            }
+        }
+
         private void FindTargetFor(PlatformUnit platformUnit)
         {
             var alreadyAttacked = _orders.Values.ToList();
             var validTargets = _provinces.Where(p => !p.Owner.Equals(Aliens) && !alreadyAttacked.Contains(p)).ToList();
-            var occupiedProvincesWithoutDefenses = _provinces.Where(p => p.Owner.Equals(Aliens) && p.DefenseValue < 1);
             
             if(validTargets.Count == 0)return;
 

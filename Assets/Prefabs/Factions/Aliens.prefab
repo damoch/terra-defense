@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114342591085578622}
   m_Layer: 0
   m_Name: Aliens
-  m_TagString: Untagged
+  m_TagString: TimeAffected
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
