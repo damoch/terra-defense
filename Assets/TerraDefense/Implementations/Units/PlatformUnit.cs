@@ -22,6 +22,7 @@ namespace Assets.TerraDefense.Implementations.Units
             Units = new List<Unit>();
             Target = transform.position;
             AliensOwner = FindObjectOfType<Aliens>();
+            Owner = AliensOwner;
             if (AliensOwner == null)
             {
                 throw new UnityException("No Aliens on scene!");

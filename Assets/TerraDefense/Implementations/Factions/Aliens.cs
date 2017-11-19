@@ -49,6 +49,7 @@ namespace Assets.TerraDefense.Implementations.Factions
         {
             GameObject instance;
             var spawnPosition = pu.gameObject.transform.position;
+            if (!pu.TargetProvince) return null;
             var enemies = pu.TargetProvince.AlliedUnits;
             var friends = pu.Units;
 

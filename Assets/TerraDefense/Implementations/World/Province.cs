@@ -87,7 +87,8 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void HandleUnitEnter(Unit unitComponent)
         {
-            if(AlliedUnits.Contains(unitComponent) || EnemyUnits.Contains(unitComponent))return;
+            if(AlliedUnits != null && AlliedUnits.Contains(unitComponent) || 
+                EnemyUnits != null && EnemyUnits.Contains(unitComponent))return;
 
             if (unitComponent.GetType() == typeof(PlatformUnit))
             {
