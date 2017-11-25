@@ -56,5 +56,4 @@ MonoBehaviour:
   Credits: 0
   AvaibleUnits: []
   Name: AL0
-  Countries:
-  - {fileID: 0}
+  Countries: []

@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.Utils;
 using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.World
 {
-    internal class BattleHandler
+    public class BattleHandler
     {
+        private readonly Province _province;
+
+        public BattleHandler(Province province)
+        {
+            _province = province;
+        }
+
         public UnitOwner SetSkirmishResult(List<Unit> alliedUnits, List<Unit> enemyUnits)
         {
             var totalAttack = enemyUnits.Sum(unit => unit.AttackValue);
@@ -30,12 +39,16 @@ namespace Assets.TerraDefense.Implementations.World
                 {
                     var unit = losingArmy[i];
                     unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue);
+
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(e.Message);
+                    Debug.Log(e);
                 }
             }
+#if UNITY_EDITOR
+            losingArmy.RemoveAll(x => x.Status <= 0);
+#endif
             if (losingArmy.Count > 0)
             {
                 var counterValue = losingArmy.Sum(x => x.AttackValue);
@@ -47,17 +60,23 @@ namespace Assets.TerraDefense.Implementations.World
                     {
                         var unit = winningArmy[i];
                         unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -counterValue : -counterAirValue);
+
                     }
                     catch (Exception e)
                     {
-                        Debug.Log(e.Message);
+                        Debug.Log(e);
                     }
                 }
+
+#if UNITY_EDITOR
+                winningArmy.RemoveAll(x => x.Status <= 0);
+#endif
             }
 
 
             if (losingArmy.Count != 0) return null;
             return  winningArmy.Count > 0 ? winningArmy[0].Owner : null;
         }
+
     }
 }

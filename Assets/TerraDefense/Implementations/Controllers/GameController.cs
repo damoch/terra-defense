@@ -23,6 +23,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
 
         public int NumberOfCountries;
         public int NumberOfInvaders;
+        public int NumberOfStartUnits;
         
         private float _provinceHeight;
         private float _provinceWidth;
@@ -85,15 +86,17 @@ namespace Assets.TerraDefense.Implementations.Controllers
             {
                 var color = new Color(Random.Range(0,255)/(float)255, Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255);
                 var unitColor = new Color(Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255);
-
+                var provinces = new List<Province>();
                 var country = Instantiate(CountryGameObject).GetComponent<Country>();
                 country.Color = color;
                 country.UnitColor = unitColor;
+                country.Credits = 100;
                 country.Name = "Country" + i;
 #if UNITY_EDITOR
                 country.gameObject.name = "Country" + i;
 #endif
                 country.Alliance = Alliance;
+                Alliance.Countries.Add(country);
 
                 for (var x = startX; x < startX + countryWidth; x++)
                 {
@@ -101,14 +104,31 @@ namespace Assets.TerraDefense.Implementations.Controllers
                     {
                         _provincesMap[x][y].Owner = country;
                         _provincesMap[x][y].enabled = true;
+                        provinces.Add(_provincesMap[x][y]);
+#if UNITY_EDITOR
+                        _provincesMap[x][y].gameObject.name = "Country" + i + "Province:" + x + y;
+#endif
                     }
-                    
+
                 }
                 if (startX < MapSquareWidth - startX) startX += countryWidth;
                 else
                 {
                     startX = 0;
                     startY += countryWidth;
+                }
+
+                for (var u = 0; u < NumberOfStartUnits; u++)
+                {
+                    var unit =
+                        Instantiate(country.AvaibleUnits[Random.Range(0, country.AvaibleUnits.Count - 1)].gameObject)
+                            .GetComponent<Unit>();
+                    unit.Owner = country;
+                    var province = provinces[Random.Range(0, provinces.Count - 1)];
+                    if(province.AlliedUnits == null)
+                        province.AlliedUnits = new List<Unit>();
+                    province.AlliedUnits.Add(unit);
+                    unit.gameObject.transform.position = province.gameObject.transform.position;
                 }
             }
 

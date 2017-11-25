@@ -12,7 +12,6 @@ using UnityEngine;
 namespace Assets.TerraDefense.Implementations.Factions
 {
     public class Country : UnitOwner, ITimeAffected {
-        public string Name;
         public Alliance Alliance;
         private Dictionary<Province, int> _provincesUnderAttack;
         private Dictionary<Province, int> _threatenedProvinces;

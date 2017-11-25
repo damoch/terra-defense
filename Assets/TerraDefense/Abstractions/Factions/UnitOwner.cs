@@ -11,6 +11,7 @@ namespace Assets.TerraDefense.Abstractions.Factions
         public Color UnitColor;
         public int Credits;
         public List<Unit> AvaibleUnits;
+        public string Name;
 
         public List<Province> LostProvinces { get; set; }
 

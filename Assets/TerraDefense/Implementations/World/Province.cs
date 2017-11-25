@@ -14,9 +14,8 @@ namespace Assets.TerraDefense.Implementations.World
     {
         public float BattleDelay;
         public float AlertDelay { get; set; }
-        public List<Unit> EnemyUnits { get; set; }
-        public List<Unit> AlliedUnits { get; set; }
-        private BattleHandler _battleHandler;
+        public List<Unit> EnemyUnits;
+        public List<Unit> AlliedUnits;
 
         public float DefenseValue
         {
@@ -27,6 +26,9 @@ namespace Assets.TerraDefense.Implementations.World
         }
 
         public bool IsBattle { get; set; }
+
+        public BattleHandler BattleHandler { get; set; }
+
         public UnitOwner Owner;
         private UnitOwner _originalOwner;
         public int CreditsPerHour;
@@ -36,8 +38,6 @@ namespace Assets.TerraDefense.Implementations.World
             SetupTimeValues();
            
             IsBattle = false;
-            EnemyUnits = new List<Unit>();
-            AlliedUnits = new List<Unit>();
             #if UNITY_EDITOR
             if (BattleDelay == 0)
             {
@@ -49,7 +49,7 @@ namespace Assets.TerraDefense.Implementations.World
             InvokeRepeating("CheckSurrondings", AlertDelay, AlertDelay);
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRenderer.color = Owner.Color;
-            _battleHandler = new BattleHandler();
+            BattleHandler = new BattleHandler(this);
         }
 
         private void CheckSurrondings()
@@ -87,8 +87,10 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void HandleUnitEnter(Unit unitComponent)
         {
-            if(AlliedUnits != null && AlliedUnits.Contains(unitComponent) || 
-                EnemyUnits != null && EnemyUnits.Contains(unitComponent))return;
+            if(AlliedUnits == null)AlliedUnits = new List<Unit>();
+            if(EnemyUnits == null)EnemyUnits = new List<Unit>();
+            if(AlliedUnits.Contains(unitComponent) || 
+                EnemyUnits.Contains(unitComponent))return;
 
             if (unitComponent.GetType() == typeof(PlatformUnit))
             {
@@ -132,7 +134,7 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void SetSkirmishResult()
         {
-            var winner = _battleHandler.SetSkirmishResult(AlliedUnits, EnemyUnits);
+            var winner = BattleHandler.SetSkirmishResult(AlliedUnits, EnemyUnits);
             if (EnemyUnits.Count == 0 || !winner)return;
             var winningArmy = AlliedUnits.Count > 0 ? AlliedUnits : EnemyUnits;
             ChangeOwner(winner, winningArmy);
@@ -146,7 +148,7 @@ namespace Assets.TerraDefense.Implementations.World
             }
             else if (_originalOwner != null)
             {
-                _originalOwner.PropertyChangesOwner(this, Owner != _originalOwner);
+                _originalOwner.PropertyChangesOwner(this, proposedOwner != _originalOwner);
             }
             Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner;
 

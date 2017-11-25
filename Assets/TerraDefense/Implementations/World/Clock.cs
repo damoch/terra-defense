@@ -26,9 +26,9 @@ namespace Assets.TerraDefense.Implementations.World
                 {
                     affected.HourEvent();
                 }
-                catch 
+                catch (Exception ex)
                 {
-                    //
+                    Debug.Log(ex.Message);
                 }
             }
         }

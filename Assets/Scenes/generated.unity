@@ -240,9 +240,10 @@ MonoBehaviour:
     type: 2}
   AlienPlatformGameObject: {fileID: 1741497933629170, guid: 33e7e44100d66494b80d88e4db4f379e,
     type: 2}
-  MapSquareWidth: 8
+  MapSquareWidth: 16
   NumberOfCountries: 4
-  NumberOfInvaders: 3
+  NumberOfInvaders: 16
+  NumberOfStartUnits: 7
 --- !u!4 &1848625029
 Transform:
   m_ObjectHideFlags: 0

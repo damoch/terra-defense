@@ -100,8 +100,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BattleDelay: 0
+  EnemyUnits: []
+  AlliedUnits: []
   Owner: {fileID: 0}
-  CreditsPerHour: 0
+  CreditsPerHour: 5
 --- !u!212 &212431510759337010
 SpriteRenderer:
   m_ObjectHideFlags: 1
