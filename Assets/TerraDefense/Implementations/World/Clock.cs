@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Assets.TerraDefense.Abstractions.World;
 using UnityEngine;
 
@@ -19,9 +21,15 @@ namespace Assets.TerraDefense.Implementations.World
             GameDateTime = GameDateTime.AddHours(1);
             Debug.Log(GameDateTime);
             var objectsWithTag = GameObject.FindGameObjectsWithTag("TimeAffected");
-            for (var index = 0; index < objectsWithTag.Length; index++)
+            StartCoroutine(FinishHourTasks(objectsWithTag));
+
+        }
+
+        private IEnumerator FinishHourTasks(GameObject[] tasks)
+        {
+            for (var index = 0; index < tasks.Length; index++)
             {
-                var affected = objectsWithTag[index].GetComponent<ITimeAffected>();
+                var affected = tasks[index].GetComponent<ITimeAffected>();
                 try
                 {
                     affected.HourEvent();
@@ -30,6 +38,7 @@ namespace Assets.TerraDefense.Implementations.World
                 {
                     Debug.Log(ex.Message);
                 }
+                yield return null;
             }
         }
     }

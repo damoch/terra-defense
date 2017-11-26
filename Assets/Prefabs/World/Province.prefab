@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b09f7abe6bfd654e80eb4e97f31f777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BattleDelay: 0
+  BattleDelay: 3
+  AlertDelay: 5
   EnemyUnits: []
   AlliedUnits: []
   Owner: {fileID: 0}

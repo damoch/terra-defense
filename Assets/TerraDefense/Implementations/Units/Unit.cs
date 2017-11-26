@@ -59,7 +59,7 @@ namespace Assets.TerraDefense.Implementations.Units
         public virtual void ModifyStatus(float value)
         {
             Status += value;
-            if (Status <= 0 && !Application.isEditor)
+            if (Status <= 0/* && !Application.isEditor*/)
             {
                 Destroy(gameObject);
             }

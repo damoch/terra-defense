@@ -6,6 +6,7 @@ using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.Utils;
 using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.World
@@ -13,7 +14,7 @@ namespace Assets.TerraDefense.Implementations.World
     public class Province : MonoBehaviour, ITimeAffected
     {
         public float BattleDelay;
-        public float AlertDelay { get; set; }
+        public float AlertDelay;
         public List<Unit> EnemyUnits;
         public List<Unit> AlliedUnits;
 
@@ -54,6 +55,12 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void CheckSurrondings()
         {
+            //StartCoroutine(ExecuteCheck());
+            NeighborhoodChecker.AddJobToQueue(this);
+        }
+
+        private IEnumerator ExecuteCheck()
+        {
             var hitColliders = Physics2D.OverlapCircleAll(transform.position, 100);
 
             foreach (var hitCollider in hitColliders)
@@ -64,7 +71,6 @@ namespace Assets.TerraDefense.Implementations.World
                     if (unit != null && Owner.IsEnemy(unit))
                     {
                         Owner.EnemyIsCloseToProperty(gameObject);
-                        return;
                     }
                 }
                 catch (Exception e)
@@ -73,7 +79,7 @@ namespace Assets.TerraDefense.Implementations.World
                 }
 
             }
-            
+            yield return null;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -122,20 +128,16 @@ namespace Assets.TerraDefense.Implementations.World
         {
             IsBattle = true;
             yield return new WaitForSeconds(BattleDelay);
-            SetSkirmishResult();
+            yield return SetSkirmishResult();
 
-            if (IsBattle)
-            {
-                Debug.Log("Battle rages on");
-                StartCoroutine("CommenceBattle");
-            }
-
+            if (!IsBattle) yield break;
+            StartCoroutine("CommenceBattle");
         }
 
-        private void SetSkirmishResult()
-        {
-            var winner = BattleHandler.SetSkirmishResult(AlliedUnits, EnemyUnits);
-            if (EnemyUnits.Count == 0 || !winner)return;
+        private IEnumerator SetSkirmishResult()
+        {   yield return BattleHandler.SetSkirmishResult(AlliedUnits, EnemyUnits);
+            var winner = BattleHandler.CurrentWinner;
+            if (EnemyUnits.Count == 0 || !winner)yield break;
             var winningArmy = AlliedUnits.Count > 0 ? AlliedUnits : EnemyUnits;
             ChangeOwner(winner, winningArmy);
         }
