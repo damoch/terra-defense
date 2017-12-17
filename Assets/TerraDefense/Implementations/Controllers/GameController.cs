@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Players;
 using Assets.TerraDefense.Implementations.Units;
@@ -42,10 +43,17 @@ namespace Assets.TerraDefense.Implementations.Controllers
             _provincesMap = new Dictionary<int, Dictionary<int, Province>>();
             _provincesPerCountry = Convert.ToInt32(Math.Pow(MapSquareWidth, 2) / NumberOfCountries);
 
+            SetupGameData();
             Initialize();
             CreateProvincesMap();
             CreateCountries();
             Invoke("CreateInvaders", 2f);
+        }
+
+        private void SetupGameData()
+        {
+            if (NewGameData.NumberOfInvaders != 0)
+                NumberOfInvaders = NewGameData.NumberOfInvaders;
         }
 
         private void CreateProvincesMap()
