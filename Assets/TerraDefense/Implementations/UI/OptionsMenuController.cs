@@ -24,6 +24,7 @@ namespace Assets.TerraDefense.Implementations.UI
         private int _defaultResolution = 0;
         private bool _defaultIsFullscreen = false;
         private float _defaultAudioValue = 0.5f;
+        private bool _changesSaved;
 
         public void OnEnable()
         {
@@ -43,10 +44,12 @@ namespace Assets.TerraDefense.Implementations.UI
             }
 
             ResetControls();
+            _changesSaved = false;
         }
 
         public void ReturnToMainMenuClicked()
         {
+            if (!_changesSaved) ResetControls();
             MainMenuObject.SetActive(true);
             gameObject.SetActive(false);
         }
@@ -78,6 +81,7 @@ namespace Assets.TerraDefense.Implementations.UI
             PlayerPrefs.SetFloat(AudioVolumeKey, audioVolume);
 
             Screen.SetResolution(resolutionX, resolutionY, isFullscreen);
+            _changesSaved = true;
         }
 
         public void OnAudioSliderValueChange(Single value)

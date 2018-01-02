@@ -1,12 +1,14 @@
 ﻿using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.World;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.Units
 {
-    public class Unit : MonoBehaviour, ITimeAffected
+    public class Unit : MonoBehaviour, ITimeAffected, ISaveLoad
     {
         protected Vector3 Target;
         public string UnitName;
@@ -77,6 +79,22 @@ namespace Assets.TerraDefense.Implementations.Units
         {
             var clock = FindObjectOfType<Clock>();
             UnitSpeed = UnitSpeed / clock.LengthOfHour;
+        }
+
+        public string GetSavableData()
+        {
+            var dictionary = new Dictionary<string, object>
+            {
+                { "position", transform.position }
+            };
+
+            return JsonUtility.ToJson(dictionary);
+        }
+
+        public void SetSavableData(string json)
+        {
+            var dictionary = JsonUtility.FromJson<Dictionary<string, object>>(json);
+            transform.position = (Vector3)dictionary["position"];
         }
     }
 }

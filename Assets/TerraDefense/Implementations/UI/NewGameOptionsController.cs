@@ -13,6 +13,7 @@ namespace Assets.TerraDefense.Implementations.UI
         public InputField NumberOfInvadersInput;
         public InputField NumberOfCountriesInput;
         public InputField NumberOfStartUnitsInput;
+        public InputField LengthOfHourInput;
         public string NewGameSceneName;
 
         private void Start()
@@ -33,6 +34,7 @@ namespace Assets.TerraDefense.Implementations.UI
             NewGameData.NumberOfInvaders = Int32.Parse(NumberOfInvadersInput.text);
             NewGameData.NumberOfCountries = Int32.Parse(NumberOfCountriesInput.text);
             NewGameData.NumberOfStartUnits = Int32.Parse(NumberOfStartUnitsInput.text);
+            NewGameData.LengthOfHour = float.Parse(LengthOfHourInput.text);
         }
     }
 }

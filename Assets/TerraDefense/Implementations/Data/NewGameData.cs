@@ -8,5 +8,6 @@ namespace Assets.TerraDefense.Implementations.Data
         public static int NumberOfInvaders;
         public static int NumberOfStartUnits;
         public static int NumberOfCountries;
+        public static float LengthOfHour;
     }
 }

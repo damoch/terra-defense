@@ -25,18 +25,26 @@ namespace Assets.TerraDefense.Implementations.Controllers
         public int NumberOfCountries;
         public int NumberOfInvaders;
         public int NumberOfStartUnits;
-        
+        public float LengthOfHour;
+
+        public KeyCode PauseKey;
+        public GameObject Menu;
+        public GameObject Options;
+        public GameObject NewGameOptions;
+
         private float _provinceHeight;
         private float _provinceWidth;
         private List<Province> _generatedProvinces;
         private int _provincesPerCountry;
         private Dictionary<int, Dictionary<int, Province>> _provincesMap;
+        private bool _gamePaused;
 
         public Player Player { get; set; }
         public Alliance Alliance { get; set; }
         public Aliens Aliens { get; set; }
         public Clock Clock { get; set; }
         public AIPlayer AiPlayer { get; set; }
+
         private void Start () {
             _provinceHeight = ProvinceGameObject.GetComponent<BoxCollider2D>().size.y * ProvinceGameObject.transform.localScale.y;
             _provinceWidth = ProvinceGameObject.GetComponent<BoxCollider2D>().size.x * ProvinceGameObject.transform.localScale.x;
@@ -52,8 +60,17 @@ namespace Assets.TerraDefense.Implementations.Controllers
 
         private void SetupGameData()
         {
-            if (NewGameData.NumberOfInvaders != 0)
+            if (NewGameData.NumberOfInvaders > 0)
                 NumberOfInvaders = NewGameData.NumberOfInvaders;
+
+            if (NewGameData.NumberOfCountries > 0)
+                NumberOfCountries = NewGameData.NumberOfCountries;
+
+            if (NewGameData.NumberOfStartUnits > 0)
+                NumberOfStartUnits = NewGameData.NumberOfStartUnits;
+
+            if (NewGameData.LengthOfHour > 0)
+                LengthOfHour = NewGameData.LengthOfHour;
         }
 
         private void CreateProvincesMap()
@@ -147,6 +164,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
             Player = Instantiate(PlayerGameObject).GetComponent<Player>();
             AiPlayer = Instantiate(AiPlayerGameObject).GetComponent<AIPlayer>();
             Clock = Instantiate(ClockGameObject).GetComponent<Clock>();
+            Clock.LengthOfHour = LengthOfHour;
             Aliens = Instantiate(AliensGameObject).GetComponent<Aliens>();
             AiPlayer.Aliens = Aliens;
             Alliance = Instantiate(AllianceGameObject).GetComponent<Alliance>();
@@ -160,5 +178,22 @@ namespace Assets.TerraDefense.Implementations.Controllers
             }
             return (x == 1);
         }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(PauseKey) && !_gamePaused)
+            {
+                Time.timeScale = 0;
+                _gamePaused = true;
+                Menu.SetActive(true);
+            }
+            else if(Input.GetKeyDown(PauseKey) && _gamePaused && !Options.activeInHierarchy && !NewGameOptions.activeInHierarchy)
+            {
+                Time.timeScale = 1;
+                _gamePaused = false;
+                Menu.SetActive(false);
+            }
+        }
+
     }
 }
