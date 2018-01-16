@@ -5,6 +5,7 @@ using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.World;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace Assets.TerraDefense.Implementations.Units
 {
@@ -21,7 +22,15 @@ namespace Assets.TerraDefense.Implementations.Units
         protected float InitialStatus;
         public int Cost;
         public UnitType UnitType;
-        
+
+        public int Priority
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
         public virtual void Start ()
         {
             if (Cost == 0)
@@ -81,20 +90,27 @@ namespace Assets.TerraDefense.Implementations.Units
             UnitSpeed = UnitSpeed / clock.LengthOfHour;
         }
 
-        public string GetSavableData()
+        public virtual Dictionary<string, object> GetSavableData()
         {
             var dictionary = new Dictionary<string, object>
             {
-                { "position", transform.position }
+                { "name", gameObject.name },
+                { "type", GetType().FullName  },
+                { "position", JsonConvert.SerializeObject(transform.position) },
+                { "unitSpeed", UnitSpeed.ToString() },
+                { "ownerName", Owner.Name }
             };
-
-            return JsonUtility.ToJson(dictionary);
+            return dictionary;
         }
 
-        public void SetSavableData(string json)
+        public virtual void SetSavableData(Dictionary<string, object> json)
         {
-            var dictionary = JsonUtility.FromJson<Dictionary<string, object>>(json);
-            transform.position = (Vector3)dictionary["position"];
+            transform.position = JsonConvert.DeserializeObject<Vector3>((string) json["position"]);
+            UnitSpeed = float.Parse((string)json["unitSpeed"]);
+            gameObject.AddComponent<SpriteRenderer>();
+            Owner = UnitOwner.GetByName((string)json["ownerName"]);
+            //transform.position = position;
+
         }
     }
 }

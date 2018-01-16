@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Factions;
+using Assets.TerraDefense.Implementations.IO;
 using Assets.TerraDefense.Implementations.Players;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
@@ -31,6 +33,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
         public GameObject Menu;
         public GameObject Options;
         public GameObject NewGameOptions;
+        public SaveLoadManager SaveLoadManager;
 
         private float _provinceHeight;
         private float _provinceWidth;
@@ -50,6 +53,17 @@ namespace Assets.TerraDefense.Implementations.Controllers
             _provinceWidth = ProvinceGameObject.GetComponent<BoxCollider2D>().size.x * ProvinceGameObject.transform.localScale.x;
             _provincesMap = new Dictionary<int, Dictionary<int, Province>>();
             _provincesPerCountry = Convert.ToInt32(Math.Pow(MapSquareWidth, 2) / NumberOfCountries);
+
+            if (PlayerPrefs.HasKey("StartInstruction"))
+            {
+                var option = (StartInstruction)Enum.Parse(typeof(StartInstruction), PlayerPrefs.GetString("StartInstruction"));
+                switch (option)
+                {
+                    case StartInstruction.LoadGame:
+                        SaveLoadManager.LoadGame();
+                        return;
+                }
+            }
 
             SetupGameData();
             Initialize();

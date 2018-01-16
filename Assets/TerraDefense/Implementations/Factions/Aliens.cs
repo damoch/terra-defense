@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.Factions
 {
-    public class Aliens : UnitOwner {
+    public class Aliens : UnitOwner, ISaveLoad {
         public float AvgAirAttackVal { get
         {
             return AvaibleUnits.Where(x => x.UnitType == UnitType.Air).Average(y => y.AirAttackValue);
@@ -19,6 +20,14 @@ namespace Assets.TerraDefense.Implementations.Factions
             get
             {
                 return AvaibleUnits.Where(x => x.UnitType == UnitType.Ground).Average(y => y.AttackValue);
+            }
+        }
+
+        public int Priority
+        {
+            get
+            {
+                return 0;
             }
         }
 
@@ -90,6 +99,22 @@ namespace Assets.TerraDefense.Implementations.Factions
         public override void PropertyChangesOwner(Province province, bool isLost)
         {
             throw new System.NotImplementedException();
+        }
+
+        public Dictionary<string, object> GetSavableData()
+        {
+            var dictionary = new Dictionary<string, object>
+            {
+                { "name", gameObject.name },
+                { "type", GetType().FullName  },
+                { "countryName", Name }
+            };
+            return dictionary;
+        }
+
+        public void SetSavableData(Dictionary<string, object> json)
+        {
+            Name = (string)json["countryName"];
         }
     }
 }

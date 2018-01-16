@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
@@ -29,5 +30,12 @@ namespace Assets.TerraDefense.Abstractions.Factions
         public abstract void EnemyIsCloseToProperty(GameObject caller);
 
         public abstract void PropertyChangesOwner(Province province, bool isLost);
+
+        public static UnitOwner GetByName(string name)
+        {
+            Debug.Break();
+            var owners = FindObjectsOfType<UnitOwner>();
+            return owners.FirstOrDefault(x => x.Name == name);
+        }
     }
 }

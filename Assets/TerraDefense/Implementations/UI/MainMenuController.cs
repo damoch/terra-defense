@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Assets.TerraDefense.Enums;
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.TerraDefense.Implementations.UI
 {
@@ -48,11 +50,24 @@ namespace Assets.TerraDefense.Implementations.UI
         }
         public void LoadGameButtonClicked()
         {
-
+            PlayerPrefs.SetString("StartInstruction", StartInstruction.LoadGame.ToString());
+            SceneManager.LoadScene("generated");
         }
         public void QuitButtonClicked()
         {
 
+        }
+
+        public void BringUpMainMenu()
+        {
+            gameObject.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+        public void TurnOffMenu()
+        {
+            gameObject.SetActive(false);
+            Time.timeScale = 1;
         }
     }
 }

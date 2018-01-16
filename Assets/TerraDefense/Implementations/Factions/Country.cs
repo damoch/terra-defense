@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.Factions
 {
-    public class Country : UnitOwner, ITimeAffected {
+    public class Country : UnitOwner, ITimeAffected, ISaveLoad {
         public Alliance Alliance;
         private Dictionary<Province, int> _provincesUnderAttack;
         private Dictionary<Province, int> _threatenedProvinces;
@@ -21,6 +23,15 @@ namespace Assets.TerraDefense.Implementations.Factions
         public int ProvinceLostPanic;
         public int PanicLevel { get; set; }
         public bool PanicEffect { get { return PanicLevel > Alliance.AveragePanic; } }
+
+        public int Priority
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
         public Country()
         {
             _handler = new CountryEventsHandler(this);
@@ -203,5 +214,23 @@ namespace Assets.TerraDefense.Implementations.Factions
             if (_threatenedProvinces.Keys.Contains(province)) _threatenedProvinces.Remove(province);
             if (_provincesUnderAttack.Keys.Contains(province)) _provincesUnderAttack.Remove(province);
         }
+
+        public Dictionary<string, object> GetSavableData()
+        {
+            var dictionary = new Dictionary<string, object>
+            {
+                { "name", gameObject.name },
+                { "type", GetType().FullName  },
+                { "countryName", Name }
+
+            };
+            return dictionary;
+        }
+
+        public void SetSavableData(Dictionary<string, object> json)
+        {
+            Name = (string)json["countryName"];
+        }
+
     }
 }

@@ -18,16 +18,20 @@ namespace Assets.TerraDefense.Implementations.Players
         public Camera Camera;
         private Country _handledCountry;
         public OrderType OrderType { get; set; }
+        public MainMenuController MenuController;
         
         public UIController UIController { get; set; }
         private void Start()
         {
+            Camera = Camera.main;
             UIController = FindObjectOfType<UIController>();
+            MenuController = FindObjectOfType<MainMenuController>();
+            MenuController.TurnOffMenu();
 
-            if (Camera == null)
-            {
-                Camera = Camera.main;
-            }
+
+            //if (Camera == null)
+            //{
+            //}
 
             OrderType = OrderType.None;
             
@@ -35,6 +39,14 @@ namespace Assets.TerraDefense.Implementations.Players
         }
         private void Update()
         {
+            if (Input.GetKey(KeyCode.Escape) && MenuController.gameObject.activeInHierarchy)
+                MenuController.TurnOffMenu();
+
+            if (Input.GetKey(KeyCode.Escape) && !MenuController.gameObject.activeInHierarchy)
+                MenuController.BringUpMainMenu();
+
+
+
             if (Input.GetMouseButton((int)MouseButton.LeftMouse))
             {
                 HandleLeftClick();
