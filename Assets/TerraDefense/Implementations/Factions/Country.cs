@@ -8,7 +8,6 @@ using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.Factions
@@ -215,21 +214,15 @@ namespace Assets.TerraDefense.Implementations.Factions
             if (_provincesUnderAttack.Keys.Contains(province)) _provincesUnderAttack.Remove(province);
         }
 
-        public Dictionary<string, object> GetSavableData()
+        public override Dictionary<string, string> GetSavableData()
         {
-            var dictionary = new Dictionary<string, object>
-            {
-                { "name", gameObject.name },
-                { "type", GetType().FullName  },
-                { "countryName", Name }
-
-            };
+            var dictionary = base.GetSavableData();
             return dictionary;
         }
 
-        public void SetSavableData(Dictionary<string, object> json)
+        public override void SetSavableData(Dictionary<string, string> json)
         {
-            Name = (string)json["countryName"];
+            base.SetSavableData(json);
         }
 
     }

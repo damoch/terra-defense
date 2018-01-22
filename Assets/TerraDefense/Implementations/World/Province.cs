@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.Utils;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.World
 {
-    public class Province : MonoBehaviour, ITimeAffected
+    public class Province : MonoBehaviour, ITimeAffected, ISaveLoad
     {
         public float BattleDelay;
         public float AlertDelay;
@@ -30,12 +32,18 @@ namespace Assets.TerraDefense.Implementations.World
 
         public BattleHandler BattleHandler { get; set; }
 
+        public int Priority => 2;
+
         public UnitOwner Owner;
         private UnitOwner _originalOwner;
         public int CreditsPerHour;
         private SpriteRenderer _spriteRenderer;
+        private string _originaOwnerName;
+        private string _ownerName;
         private void Start ()
         {
+            if (Owner == null) Owner = UnitOwner.GetByName(_ownerName);
+            if (_originalOwner == null) _originalOwner = UnitOwner.GetByName(_originaOwnerName);
             SetupTimeValues();
            
             IsBattle = false;
@@ -208,6 +216,25 @@ namespace Assets.TerraDefense.Implementations.World
         public void SetupTimeValues()
         {
             AlertDelay = FindObjectOfType<Clock>().LengthOfHour / 4;
+        }
+
+        public Dictionary<string, string> GetSavableData()
+        {
+            return new Dictionary<string, string>
+            {
+                { "name", gameObject.name },
+                { "type", GetType().FullName  },
+                { "originalOwner", _originalOwner.Name },
+                { "owner", Owner.Name },
+                { "position", JsonConvert.SerializeObject(transform.position) },
+            };
+        }
+
+        public void SetSavableData(Dictionary<string, string> json)
+        {
+            _originaOwnerName = json["originalOwner"];
+            _ownerName = json["owner"];
+            transform.position = JsonConvert.DeserializeObject<Vector3>(json["position"]);
         }
     }
 }

@@ -53,22 +53,23 @@ namespace Assets.TerraDefense.Implementations.World
             }
         }
 
-        public Dictionary<string, object> GetSavableData()
+        public Dictionary<string, string> GetSavableData()
         {
-            var result = new Dictionary<string, object>();
-
-            result.Add("lengthOfHour", LengthOfHour.ToString());
-            result.Add("gameDate", GameDateTime.ToString());
-            result.Add("name", gameObject.name);
-            result.Add("type", GetType().FullName);
+            var result = new Dictionary<string, string>
+            {
+                { "lengthOfHour", LengthOfHour.ToString() },
+                { "gameDate", GameDateTime.ToString() },
+                { "name", gameObject.name },
+                { "type", GetType().FullName }
+            };
 
             return result;
         }
 
-        public void SetSavableData(Dictionary<string, object> json)
+        public void SetSavableData(Dictionary<string, string> json)
         {
-            GameDateTime = DateTime.Parse((string)json["gameDate"]);
-            LengthOfHour = float.Parse((string)json["lengthOfHour"]);
+            GameDateTime = DateTime.Parse(json["gameDate"]);
+            LengthOfHour = float.Parse(json["lengthOfHour"]);
             InvokeRepeating("HourEvent", LengthOfHour, LengthOfHour);
 
         }

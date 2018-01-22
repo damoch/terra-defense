@@ -122,7 +122,7 @@ Prefab:
     - target: {fileID: 224595667172191030, guid: 6d996111b6b0eaa4788b745c279e9f0f,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 574
+      value: 576
       objectReference: {fileID: 0}
     - target: {fileID: 224595667172191030, guid: 6d996111b6b0eaa4788b745c279e9f0f,
         type: 2}
@@ -633,7 +633,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3140d3776afaa7f46b428f3d78431daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoSaveKey: 
+  AutoSaveKey: auto
+  LoadableObjects:
+  - {fileID: 1205978006855586, guid: 2575f9b89853b894f82bd2b8fb9a5739, type: 2}
+  - {fileID: 1741497933629170, guid: 33e7e44100d66494b80d88e4db4f379e, type: 2}
+  - {fileID: 1607881884291850, guid: 70f726bf590af184b837eae8a4cd453c, type: 2}
+  - {fileID: 1304727727867526, guid: 236f74b8b9dd75a4b8e5ea3d3d0c1b0f, type: 2}
+  - {fileID: 1865852552027482, guid: 35bb44b0cbd749446a16cb51dc27aa95, type: 2}
+  - {fileID: 1756237892879136, guid: b2fd5058aaa255b4ebf60b695e2d1ca5, type: 2}
 --- !u!4 &958330311
 Transform:
   m_ObjectHideFlags: 0
@@ -886,6 +893,10 @@ Prefab:
     - target: {fileID: 4088098323910500, guid: a725cf96bbc9840428437b997c5008eb, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1039821639771834, guid: a725cf96bbc9840428437b997c5008eb, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a725cf96bbc9840428437b997c5008eb, type: 2}

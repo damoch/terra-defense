@@ -22,17 +22,18 @@ namespace Assets.TerraDefense.Implementations.Units
         protected float InitialStatus;
         public int Cost;
         public UnitType UnitType;
-
+        private string _ownerName;
         public int Priority
         {
             get
             {
-                return 1;
+                return 3;
             }
         }
 
         public virtual void Start ()
         {
+            if (Owner == null) Owner = UnitOwner.GetByName(_ownerName);
             if (Cost == 0)
             {
                 Cost = 5;
@@ -90,9 +91,9 @@ namespace Assets.TerraDefense.Implementations.Units
             UnitSpeed = UnitSpeed / clock.LengthOfHour;
         }
 
-        public virtual Dictionary<string, object> GetSavableData()
+        public virtual Dictionary<string, string> GetSavableData()
         {
-            var dictionary = new Dictionary<string, object>
+            var dictionary = new Dictionary<string, string>
             {
                 { "name", gameObject.name },
                 { "type", GetType().FullName  },
@@ -103,12 +104,13 @@ namespace Assets.TerraDefense.Implementations.Units
             return dictionary;
         }
 
-        public virtual void SetSavableData(Dictionary<string, object> json)
+        public virtual void SetSavableData(Dictionary<string, string> json)
         {
-            transform.position = JsonConvert.DeserializeObject<Vector3>((string) json["position"]);
-            UnitSpeed = float.Parse((string)json["unitSpeed"]);
-            gameObject.AddComponent<SpriteRenderer>();
-            Owner = UnitOwner.GetByName((string)json["ownerName"]);
+            transform.position = JsonConvert.DeserializeObject<Vector3>( json["position"]);
+            UnitSpeed = float.Parse(json["unitSpeed"]);
+
+            //Owner = UnitOwner.GetByName((string)json["ownerName"]);
+            _ownerName = json["ownerName"];
             //transform.position = position;
 
         }

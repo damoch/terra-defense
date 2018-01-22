@@ -4,8 +4,8 @@ namespace Assets.TerraDefense.Abstractions.IO
 {
     public interface ISaveLoad
     {
-        Dictionary<string, object> GetSavableData();
-        void SetSavableData(Dictionary<string, object> json);
+        Dictionary<string, string> GetSavableData();
+        void SetSavableData(Dictionary<string, string> json);
         int Priority { get; }
     }
 }

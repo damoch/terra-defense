@@ -2,21 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Newtonsoft.Json;
 using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.World;
 
 namespace Assets.TerraDefense.Implementations.IO
 {
     public class SaveLoadManager : MonoBehaviour
     {
         public string AutoSaveKey;
+        public List<GameObject> LoadableObjects;
+
+        private Component GetLoadableObject(Type type)
+        {
+            var result = LoadableObjects.FirstOrDefault(x => x.GetComponent(type) != null);
+            return result != null ? Instantiate(result).GetComponent(type) : new GameObject().AddComponent(type);
+        }
+
         public void SaveGame()
         {
             var allObjects = FindObjectsOfType(typeof(MonoBehaviour));
-            var resultsList = new Dictionary<int, List<Dictionary<string, object>>>();
+            var resultsList = new Dictionary<int, List<Dictionary<string, string>>>();
             foreach(var obj in allObjects)
             {
                 var monoBehaviour = (MonoBehaviour)obj;
@@ -25,7 +32,7 @@ namespace Assets.TerraDefense.Implementations.IO
                 {
                     var priority = saveLoad.Priority;
                     if (!resultsList.ContainsKey(priority))
-                        resultsList.Add(priority, new List<Dictionary<string, object>>());
+                        resultsList.Add(priority, new List<Dictionary<string, string>>());
 
                     resultsList[priority].Add(saveLoad.GetSavableData());
                 }
@@ -41,7 +48,7 @@ namespace Assets.TerraDefense.Implementations.IO
             var gObjects = new List<GameObject>();
             var json = PlayerPrefs.GetString("autosave");
 
-            var list = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<string, object>>>>(json);
+            var list = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<string, string>>>>(json);
             var sortedPriorities = list.Keys.ToList();
             sortedPriorities.Sort();
 
@@ -50,18 +57,24 @@ namespace Assets.TerraDefense.Implementations.IO
                 var group = list[priority];
                 foreach(var saved in group)
                 {
-                    var gObject = new GameObject();
+                    var typeName = Type.GetType(saved["type"]);
+                    var gObject = GetLoadableObject(typeName).gameObject;
                     gObject.SetActive(false);
-                    gObject.name = (string)saved["name"];
-                    var typeName = Type.GetType((string)saved["type"]);
-                    var behaviour = gObject.AddComponent(typeName);
-                    behaviour.GetComponent<ISaveLoad>().SetSavableData(saved);
+                    gObject.name = saved["name"];
+                    gObject.GetComponent<ISaveLoad>().SetSavableData(saved);
                     gObjects.Add(gObject);
                 }
             }
 
 
-            gObjects.ForEach(x => x.SetActive(true));
+            foreach (var item in gObjects)
+            {
+                item.SetActive(true);
+                if (item.GetComponent<Province>())
+                {
+                    item.GetComponent<Province>().enabled = true;
+                }
+            }
             PlayerPrefs.SetString("StartInstruction", StartInstruction.NewGame.ToString());
         }
     }
