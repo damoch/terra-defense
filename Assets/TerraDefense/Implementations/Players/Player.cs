@@ -1,4 +1,7 @@
-﻿using Assets.TerraDefense.Enums;
+﻿using System.Collections.Generic;
+using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Abstractions.IO;
+using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.UI;
 using Assets.TerraDefense.Implementations.Units;
@@ -8,7 +11,7 @@ using UnityEngine.Experimental.UIElements;
 
 namespace Assets.TerraDefense.Implementations.Players
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, ISaveLoad
     {
         public float ZoomMin;
         public float ZoomMax;
@@ -19,15 +22,23 @@ namespace Assets.TerraDefense.Implementations.Players
         private Country _handledCountry;
         public OrderType OrderType { get; set; }
         public MainMenuController MenuController;
-        
+        private string _allianceName;
+
         public UIController UIController { get; set; }
+
+        public int Priority => 0;
+
         private void Start()
         {
             Camera = Camera.main;
             UIController = FindObjectOfType<UIController>();
             MenuController = FindObjectOfType<MainMenuController>();
             MenuController.TurnOffMenu();
-
+            Alliance = FindObjectOfType<Alliance>();
+            if(Alliance == null)
+            {
+                Alliance = (Alliance)UnitOwner.GetByName(_allianceName);
+            }
 
             //if (Camera == null)
             //{
@@ -161,6 +172,21 @@ namespace Assets.TerraDefense.Implementations.Players
             {
                 SelectedUnit = unitComponent;
             }
+        }
+
+        public Dictionary<string, string> GetSavableData()
+        {
+            return new Dictionary<string, string>
+            {
+                { "type", GetType().FullName },
+                { "name", gameObject.name },
+                { "alliance", Alliance.Name }
+            };
+        }
+
+        public void SetSavableData(Dictionary<string, string> json)
+        {
+            _allianceName = json["alliance"];
         }
     }
 }

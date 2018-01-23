@@ -6,6 +6,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.World;
+using System.IO;
 
 namespace Assets.TerraDefense.Implementations.IO
 {
@@ -38,8 +39,14 @@ namespace Assets.TerraDefense.Implementations.IO
                 }
             }
             var saveData = JsonConvert.SerializeObject(resultsList);
+
             Debug.Log(resultsList.Count);
-            PlayerPrefs.SetString("autosave", saveData);
+            PlayerPrefs.SetString(AutoSaveKey, saveData);
+
+#if DEBUG || UNITY_EDITOR
+            File.WriteAllText(System.Reflection.Assembly.GetExecutingAssembly().Location + AutoSaveKey + ".txt", saveData);
+            Debug.Log("File saved to " + System.Reflection.Assembly.GetExecutingAssembly().Location + AutoSaveKey + ".txt");
+#endif
         }
 
 

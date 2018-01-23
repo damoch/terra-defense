@@ -6,7 +6,6 @@ using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Units;
-using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 
@@ -22,14 +21,7 @@ namespace Assets.TerraDefense.Implementations.Factions
         public int ProvinceLostPanic;
         public int PanicLevel { get; set; }
         public bool PanicEffect { get { return PanicLevel > Alliance.AveragePanic; } }
-
-        public int Priority
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        private string _allianceName;
 
         public Country()
         {
@@ -37,6 +29,10 @@ namespace Assets.TerraDefense.Implementations.Factions
         }
 
         private void Start () {
+            if(Alliance == null)
+            {
+                Alliance = (Alliance)GetByName(_allianceName);
+            }
             _provincesUnderAttack = new Dictionary<Province, int>();
             _threatenedProvinces = new Dictionary<Province, int>();
             LostProvinces = new List<Province>();
@@ -217,12 +213,16 @@ namespace Assets.TerraDefense.Implementations.Factions
         public override Dictionary<string, string> GetSavableData()
         {
             var dictionary = base.GetSavableData();
+            dictionary.Add("panic", PanicLevel.ToString());
+            dictionary.Add("alliance", Alliance.Name);
             return dictionary;
         }
 
         public override void SetSavableData(Dictionary<string, string> json)
         {
             base.SetSavableData(json);
+            PanicLevel = int.Parse(json["panic"]);
+            _allianceName = json["alliance"]; 
         }
 
     }

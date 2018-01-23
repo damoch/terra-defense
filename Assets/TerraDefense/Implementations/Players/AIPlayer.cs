@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.Utils;
@@ -10,8 +11,11 @@ using UnityEngine;
 namespace Assets.TerraDefense.Implementations.Players
 {
     // ReSharper disable once InconsistentNaming
-    public class AIPlayer : MonoBehaviour {
+    public class AIPlayer : MonoBehaviour, ISaveLoad {
         public Aliens Aliens { get; set; }
+
+        public int Priority => 0;
+
         private List<Province> _provinces;
         private Dictionary<PlatformUnit, Province> _orders;
         private void Start ()
@@ -76,7 +80,21 @@ namespace Assets.TerraDefense.Implementations.Players
             platformUnit.TargetProvince = currentTarget;
             _orders[platformUnit] = currentTarget;
         }
+
+        public Dictionary<string, string> GetSavableData()
+        {
+            return new Dictionary<string, string>
+            {
+                { "type", GetType().FullName },
+                { "name", gameObject.name },
+            };
+        }
+
+        public void SetSavableData(Dictionary<string, string> json)
+        {
+            //throw new NotImplementedException();
+        }
         #endregion
-      
+
     }
 }

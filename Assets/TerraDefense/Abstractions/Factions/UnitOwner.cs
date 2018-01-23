@@ -18,7 +18,7 @@ namespace Assets.TerraDefense.Abstractions.Factions
 
         public List<Province> LostProvinces { get; set; }
 
-        public int Priority => 3;
+        public int Priority => 1;
 
         public abstract bool IsEnemy(Unit unit);
 

@@ -6,6 +6,7 @@ using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.Factions
@@ -14,8 +15,17 @@ namespace Assets.TerraDefense.Implementations.Factions
     {
         public List<Country> Countries;
         public double AveragePanic { get { return Countries.Average(a => a.PanicLevel); }  }
+        private List<string> _countryNames;
         private void Start () {
-		
+		    if(Countries == null || Countries.Count == 0)
+            {
+                Countries = new List<Country>();
+                foreach (var countr in _countryNames)
+                {
+                    Countries.Add((Country)GetByName(countr));
+                }
+                _countryNames = null;
+            }
         }
 
         public override bool IsEnemy(Unit unit)
@@ -84,6 +94,23 @@ namespace Assets.TerraDefense.Implementations.Factions
                 Subject = subject
             };
             handledCountry.ReceiveOrder(command);
+        }
+
+        public override Dictionary<string, string> GetSavableData()
+        {
+            var dictionary =  base.GetSavableData();
+
+            var countries = Countries.Select(x => x.Name).ToList();
+            dictionary.Add("countries", JsonConvert.SerializeObject(countries));
+
+            return dictionary;
+        }
+
+        public override void SetSavableData(Dictionary<string, string> json)
+        {
+            base.SetSavableData(json);
+            _countryNames = JsonConvert.DeserializeObject<List<string>>(json["countries"]);
+
         }
 
     }

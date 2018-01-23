@@ -96,13 +96,6 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public override Dictionary<string, string> GetSavableData()
         {
-            //var dictionary = new Dictionary<string, string>
-            //{
-            //    { "type", GetType().FullName },
-            //    { "name", gameObject.name },
-            //    { "type", GetType().FullName  },
-            //    { "countryName", Name }
-            //};
             var dictionary = base.GetSavableData();
             return dictionary;
         }

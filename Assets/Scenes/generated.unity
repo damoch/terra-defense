@@ -641,6 +641,8 @@ MonoBehaviour:
   - {fileID: 1304727727867526, guid: 236f74b8b9dd75a4b8e5ea3d3d0c1b0f, type: 2}
   - {fileID: 1865852552027482, guid: 35bb44b0cbd749446a16cb51dc27aa95, type: 2}
   - {fileID: 1756237892879136, guid: b2fd5058aaa255b4ebf60b695e2d1ca5, type: 2}
+  - {fileID: 1912471128485944, guid: 47ed927577a62ff4f9034af8aae90824, type: 2}
+  - {fileID: 1847574945800934, guid: c7a28b53f1cec28419fb481b8e0210f7, type: 2}
 --- !u!4 &958330311
 Transform:
   m_ObjectHideFlags: 0
@@ -1075,7 +1077,7 @@ MonoBehaviour:
   NumberOfCountries: 4
   NumberOfInvaders: 10
   NumberOfStartUnits: 7
-  LengthOfHour: 60
+  LengthOfHour: 5
   PauseKey: 27
   Menu: {fileID: 954652310}
   Options: {fileID: 1225814303}
