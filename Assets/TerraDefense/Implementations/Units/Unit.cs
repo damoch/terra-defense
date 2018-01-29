@@ -30,6 +30,8 @@ namespace Assets.TerraDefense.Implementations.Units
                 return 3;
             }
         }
+        public delegate void StatusDelegate(Unit unit);
+        public StatusDelegate OnStatusUpdate;
 
         public virtual void Start ()
         {
@@ -78,6 +80,7 @@ namespace Assets.TerraDefense.Implementations.Units
             var propertyModifier = Status / (float)InitialStatus;
             AttackValue  *= propertyModifier;
             DefenceValue *= propertyModifier;
+            OnStatusUpdate?.Invoke(this);
         }
 
         public void HourEvent()

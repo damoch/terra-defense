@@ -182,6 +182,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
             Aliens = Instantiate(AliensGameObject).GetComponent<Aliens>();
             AiPlayer.Aliens = Aliens;
             Alliance = Instantiate(AllianceGameObject).GetComponent<Alliance>();
+            FindObjectOfType<UI.UIController>().Setup();
         }
 
         private bool IsPowerOfTwo(int x)

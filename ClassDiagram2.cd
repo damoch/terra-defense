@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Assets.TerraDefense.Abstractions.Factions.UnitOwner" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oBAABAAIAABAAAAEAAAAIAUAAAAAAAIAAAAAhEAACAg=</HashCode>
+      <FileName>Assets\TerraDefense\Abstractions\Factions\UnitOwner.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Controllers.GameController" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASCACYAECEAwQgCIAQgCAQACIoIEAAQAAIAAYhCCgA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Controllers\GameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Data.NewGameData" Collapsed="true">
+    <Position X="11.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAQAAAIAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Data\NewGameData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Data.Order" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAoAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Data\Order.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Factions.Aliens" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IJAAAAAAAABAAAAgAAAAIAEAAAAAAAAAAAAAhEAACAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Factions\Aliens.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Factions.Alliance" Collapsed="true">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBAAABAAACBAkACAAAAAIQEAAAQAAAAAIAAAhEAACAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Factions\Alliance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Factions.Country" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IBAAAgABACBAiACAAIFCYAEAAAQAAAAAAAAChEQECAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Factions\Country.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Factions.CountryEventsHandler" Collapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAQAEAAAAAAAAAAIAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Factions\CountryEventsHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.IO.SaveLoadManager" Collapsed="true">
+    <Position X="13" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAQIAAAAAAAAAAAAQAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\IO\SaveLoadManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Players.AIPlayer" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Players\AIPlayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Players.Player" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAEACQAgAAkBgAIQAAAAAAQIAAAAAAAgAEAiAI=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Players\Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.UI.MainMenuController" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAACAAAAAAAAAQAAQAAQIAQABAAAQ=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\UI\MainMenuController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.UI.NewGameOptionsController" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACECACAAAAAAAAAgAAgBAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\UI\NewGameOptionsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.UI.OptionsMenuController" Collapsed="true">
+    <Position X="14.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IRAAAAAAAIgBIAQQAAAACACAIAAQAAAAAQAAAAIAGAI=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\UI\OptionsMenuController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.UI.UIController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAICCAAQCBMAAAAIQAAAQAAAAAACACEQAIAgA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\UI\UIController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Units.PlatformUnit" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEAAQABCIAAAAAAAIAAAAAAAAAQAAAEAACAAAAAgA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Units\PlatformUnit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Units.Unit" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCQADUACICEACEAAABADAAAAQABIAAAAAAgCAACAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Units\Unit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Utils.NeighborhoodChecker" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAEAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAEE=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Utils\NeighborhoodChecker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Utils.TdWorker" Collapsed="true">
+    <Position X="14.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Utils\TdWorker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.Utils.UtilsAndTools" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\Utils\UtilsAndTools.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.World.BattleHandler" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\World\BattleHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.World.Clock" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACQAAAACAAAACEAAAAAAAAAAAAAAAAAAAAgAAACAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\World\Clock.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.TerraDefense.Implementations.World.Province" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAQAADiADBAAACEABAABEAAAEQCAAAARAIAkCAAKAA=</HashCode>
+      <FileName>Assets\TerraDefense\Implementations\World\Province.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.127" Collapsed="true" />
+  </Class>
+  <Interface Name="Assets.TerraDefense.Abstractions.IO.ISaveLoad" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAgAAACAA=</HashCode>
+      <FileName>Assets\TerraDefense\Abstractions\IO\ISaveLoad.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.TerraDefense.Abstractions.World.ITimeAffected" Collapsed="true">
+    <Position X="9.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Abstractions\World\ITimeAffected.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Assets.TerraDefense.Enums.OrderType" Collapsed="true">
+    <Position X="7.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAQAAAAAAAAAAAAIAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Enums\OrderType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.TerraDefense.Enums.PlatformUnitMode" Collapsed="true">
+    <Position X="9.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Assets\TerraDefense\Enums\PlatformUnitMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.TerraDefense.Enums.StartInstruction" Collapsed="true">
+    <Position X="11.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Assets\TerraDefense\Enums\StartInstruction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.TerraDefense.Enums.UnitType" Collapsed="true">
+    <Position X="13" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Assets\TerraDefense\Enums\UnitType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

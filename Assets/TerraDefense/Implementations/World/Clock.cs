@@ -32,11 +32,11 @@ namespace Assets.TerraDefense.Implementations.World
             GameDateTime = GameDateTime.AddHours(1);
             Debug.Log(GameDateTime);
             var objectsWithTag = GameObject.FindGameObjectsWithTag("TimeAffected");
-            StartCoroutine(FinishHourTasks(objectsWithTag));
+            FinishHourTasks(objectsWithTag);
 
         }
 
-        private IEnumerator FinishHourTasks(GameObject[] tasks)
+        private void FinishHourTasks(GameObject[] tasks)
         {
             for (var index = 0; index < tasks.Length; index++)
             {
@@ -49,7 +49,6 @@ namespace Assets.TerraDefense.Implementations.World
                 {
                     Debug.Log(ex.Message);
                 }
-                yield return null;
             }
         }
 

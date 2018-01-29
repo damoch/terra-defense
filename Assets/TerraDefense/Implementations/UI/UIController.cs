@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
@@ -21,13 +22,21 @@ namespace Assets.TerraDefense.Implementations.UI
         public Button SendHelpToButton;
         public GameObject UnitInfoPanel;
         public GameObject OrderPanel;
+        public Text UnitStatusText;
         public Player Player { get; set; }
         public Clock Clock { get; set; }
         public Dictionary<Button, OrderType> OrderTypesForButtons { get; set; }
-        private void Start ()
+
+        public void Setup ()
         {
             Clock = FindObjectOfType<Clock>();
             Player = FindObjectOfType<Player>();
+
+            if (!Player.UIController)
+            {
+                Player.UIController = this;
+            }
+
             OrderTypesForButtons = new Dictionary<Button, OrderType>
             {
                 {AttackProvinceButton, OrderType.AttackProvince},
@@ -47,8 +56,7 @@ namespace Assets.TerraDefense.Implementations.UI
         public void SetUnitInfo(Unit unit)
         {
             UnitInfoPanel.SetActive(true);
-            UnitNameText.text = unit.name;
-            UnitFactionText.text = unit.Owner.name;
+            UpdateUnitStatus(unit);
         }
 
         public void DisableUnitInfoPanel()
@@ -57,11 +65,12 @@ namespace Assets.TerraDefense.Implementations.UI
             UnitInfoPanel.SetActive(false);
             UnitNameText.text = "";
             UnitFactionText.text = "";
+            UnitStatusText.text = "";
         }
 
         public void SetupTimeValues()
         {
-            throw new System.NotImplementedException();
+            HourEvent();
         }
 
         public void ShowCommandPanel(bool show)
@@ -81,6 +90,24 @@ namespace Assets.TerraDefense.Implementations.UI
             {
                 button.gameObject.SetActive(false);
             }
+        }
+
+        internal void ShowTeritoryPanel(Province province)
+        {
+            //throw new NotImplementedException();
+        }
+
+        internal void UpdateUnitStatus(Unit unit)
+        {
+            if(unit.Status <= 0)
+            {
+                DisableUnitInfoPanel();
+                Player.DeselectUnit();
+                return;
+            }
+            UnitNameText.text = unit.name;
+            UnitFactionText.text = unit.Owner.name;
+            UnitStatusText.text = "Status: " + unit.Status;
         }
     }
 }

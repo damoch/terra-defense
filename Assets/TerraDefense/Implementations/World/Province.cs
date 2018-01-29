@@ -43,7 +43,7 @@ namespace Assets.TerraDefense.Implementations.World
         private void Start ()
         {
             if (Owner == null) Owner = UnitOwner.GetByName(_ownerName);
-            if (_originalOwner == null) _originalOwner = UnitOwner.GetByName(_originaOwnerName);
+            if (_originaOwnerName != null) _originalOwner = UnitOwner.GetByName(_originaOwnerName);
             SetupTimeValues();
            
             IsBattle = false;
@@ -58,7 +58,7 @@ namespace Assets.TerraDefense.Implementations.World
             InvokeRepeating("CheckSurrondings", AlertDelay, AlertDelay);
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRenderer.color = Owner.Color;
-            BattleHandler = new BattleHandler(this);
+            BattleHandler = new BattleHandler();
         }
 
         private void CheckSurrondings()

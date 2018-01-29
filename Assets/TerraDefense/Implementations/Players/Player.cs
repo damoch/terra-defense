@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Enums;
@@ -31,13 +32,12 @@ namespace Assets.TerraDefense.Implementations.Players
         private void Start()
         {
             Camera = Camera.main;
-            UIController = FindObjectOfType<UIController>();
             MenuController = FindObjectOfType<MainMenuController>();
             MenuController.TurnOffMenu();
             Alliance = FindObjectOfType<Alliance>();
             if(Alliance == null)
             {
-                Alliance = (Alliance)UnitOwner.GetByName(_allianceName);
+                Alliance = FindObjectOfType<Alliance>();
             }
 
             //if (Camera == null)
@@ -135,25 +135,7 @@ namespace Assets.TerraDefense.Implementations.Players
                 var province = clickedObject.GetComponent<Province>();
                 if (province)
                 {
-                    if (!_handledCountry)
-                    {
-                        try
-                        {
-                            _handledCountry = (Country) province.Owner;
-                            UIController.ShowCommandPanel(true);
-                        }
-                        catch
-                        {
-                            
-                        }
-                    }
-                    else if(_handledCountry && OrderType != OrderType.None)
-                    {
-                        Alliance.SendCommandToCountry(OrderType, province.gameObject.GetComponent<MonoBehaviour>(), _handledCountry);
-                        OrderType = OrderType.None;
-                        UIController.ShowCommandPanel(false);
-                        _handledCountry = null;
-                    }
+                    SelectProvince(province);
                     return;
                 }
 
@@ -161,17 +143,54 @@ namespace Assets.TerraDefense.Implementations.Players
             else
             {
                 UIController.DisableUnitInfoPanel();
+                DeselectUnit();
             }
 
+        }
+
+        public void DeselectUnit()
+        {
+            if (SelectedUnit)
+            {
+                SelectedUnit.OnStatusUpdate -= UIController.UpdateUnitStatus;
+                SelectedUnit = null;
+            }
         }
 
         private void SelectUnit(Unit unitComponent)
         {
             UIController.SetUnitInfo(unitComponent);
+            unitComponent.OnStatusUpdate += UIController.UpdateUnitStatus;
             if (!Alliance.IsEnemy(unitComponent))
             {
                 SelectedUnit = unitComponent;
+                
             }
+        }
+
+        private void SelectProvince(Province province)
+        {
+            UIController.ShowTeritoryPanel(province);
+            if (!_handledCountry)
+            {
+                try
+                {
+                    _handledCountry = (Country)province.Owner;
+                    UIController.ShowCommandPanel(true);
+                }
+                catch
+                {
+
+                }
+            }
+            else if (_handledCountry && OrderType != OrderType.None)
+            {
+                Alliance.SendCommandToCountry(OrderType, province.gameObject.GetComponent<MonoBehaviour>(), _handledCountry);
+                OrderType = OrderType.None;
+                UIController.ShowCommandPanel(false);
+                _handledCountry = null;
+            }
+            return;
         }
 
         public Dictionary<string, string> GetSavableData()

@@ -13,12 +13,10 @@ namespace Assets.TerraDefense.Implementations.World
 {
     public class BattleHandler
     {
-        private readonly Province _province;
         public UnitOwner CurrentWinner { get; set; }
 
-        public BattleHandler(Province province)
+        public BattleHandler()
         {
-            _province = province;
         }
 
         public IEnumerator SetSkirmishResult(List<Unit> alliedUnits, List<Unit> enemyUnits)
