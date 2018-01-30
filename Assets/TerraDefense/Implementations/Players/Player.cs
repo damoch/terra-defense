@@ -20,7 +20,6 @@ namespace Assets.TerraDefense.Implementations.Players
         public Alliance Alliance;
         public Unit SelectedUnit;
         public Camera Camera;
-        private Country _handledCountry;
         public OrderType OrderType { get; set; }
         public MainMenuController MenuController;
         private string _allianceName;
@@ -142,23 +141,27 @@ namespace Assets.TerraDefense.Implementations.Players
             }
             else
             {
-                UIController.DisableUnitInfoPanel();
-                DeselectUnit();
+                //UIController.DisableUnitInfoPanel();
+                //DeselectUnit();
             }
 
         }
 
         public void DeselectUnit()
         {
-            if (SelectedUnit)
-            {
-                SelectedUnit.OnStatusUpdate -= UIController.UpdateUnitStatus;
-                SelectedUnit = null;
-            }
+            if (!SelectedUnit) return;
+            
+            SelectedUnit.OnStatusUpdate -= UIController.UpdateUnitStatus;
+            SelectedUnit = null;
+            UIController.DisableUnitInfoPanel();
+            
         }
 
         private void SelectUnit(Unit unitComponent)
         {
+            if (UIController.OrderPanelActive) return;
+            DeselectUnit();
+
             UIController.SetUnitInfo(unitComponent);
             unitComponent.OnStatusUpdate += UIController.UpdateUnitStatus;
             if (!Alliance.IsEnemy(unitComponent))
@@ -170,27 +173,15 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private void SelectProvince(Province province)
         {
-            UIController.ShowTeritoryPanel(province);
-            if (!_handledCountry)
+            if(OrderType != OrderType.None && SelectedUnit)
             {
-                try
-                {
-                    _handledCountry = (Country)province.Owner;
-                    UIController.ShowCommandPanel(true);
-                }
-                catch
-                {
-
-                }
-            }
-            else if (_handledCountry && OrderType != OrderType.None)
-            {
-                Alliance.SendCommandToCountry(OrderType, province.gameObject.GetComponent<MonoBehaviour>(), _handledCountry);
+                Alliance.SendCommandToCountry(OrderType, province, SelectedUnit.Owner as Country);
                 OrderType = OrderType.None;
-                UIController.ShowCommandPanel(false);
-                _handledCountry = null;
+                DeselectUnit();
+                return;
             }
-            return;
+            UIController.ShowTeritoryPanel(province);
+
         }
 
         public Dictionary<string, string> GetSavableData()

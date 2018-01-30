@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.Data
 {
-    public class Order : MonoBehaviour
+    public class Order
     {
         public MonoBehaviour Subject { get; set; }
         public OrderType OrderType { get; set; }

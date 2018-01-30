@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Players;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
@@ -26,7 +27,11 @@ namespace Assets.TerraDefense.Implementations.UI
         public Player Player { get; set; }
         public Clock Clock { get; set; }
         public Dictionary<Button, OrderType> OrderTypesForButtons { get; set; }
-
+        public Button CountryOptionsButton;
+        public Country HandledCountry { get; set; }
+        public GameObject HandledObject { get; set; }
+        public Button CancelButton;
+        public bool OrderPanelActive { get { return OrderPanel.activeInHierarchy; }  }
         public void Setup ()
         {
             Clock = FindObjectOfType<Clock>();
@@ -41,7 +46,8 @@ namespace Assets.TerraDefense.Implementations.UI
             {
                 {AttackProvinceButton, OrderType.AttackProvince},
                 {FortifyProvinceButton, OrderType.FortifyProvince},
-                {SendHelpToButton, OrderType.SendHelpTo}
+                {SendHelpToButton, OrderType.SendHelpTo},
+                {CancelButton, OrderType.None }
             };
             HourEvent();
             DisableUnitInfoPanel();
@@ -56,6 +62,7 @@ namespace Assets.TerraDefense.Implementations.UI
         public void SetUnitInfo(Unit unit)
         {
             UnitInfoPanel.SetActive(true);
+            CountryOptionsButton.gameObject.SetActive(unit.Owner.GetType() == typeof(Country));
             UpdateUnitStatus(unit);
         }
 
@@ -76,6 +83,8 @@ namespace Assets.TerraDefense.Implementations.UI
         public void ShowCommandPanel(bool show)
         {
             OrderPanel.SetActive(show);
+            if (UnitInfoPanel.activeInHierarchy) DisableUnitInfoPanel();
+            
             foreach (var button in OrderTypesForButtons.Keys)
             {
                 button.gameObject.SetActive(show);
@@ -86,10 +95,7 @@ namespace Assets.TerraDefense.Implementations.UI
         {
             Player.OrderType = OrderTypesForButtons[sender];
 
-            foreach (var button in OrderTypesForButtons.Keys.Where(a => !a.Equals(sender)))
-            {
-                button.gameObject.SetActive(false);
-            }
+            ShowCommandPanel(false);
         }
 
         internal void ShowTeritoryPanel(Province province)
@@ -108,6 +114,11 @@ namespace Assets.TerraDefense.Implementations.UI
             UnitNameText.text = unit.name;
             UnitFactionText.text = unit.Owner.name;
             UnitStatusText.text = "Status: " + unit.Status;
+        }
+
+        public void CountryOptionsClicked()
+        {
+            ShowCommandPanel(true);
         }
     }
 }

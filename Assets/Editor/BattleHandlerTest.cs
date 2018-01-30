@@ -63,7 +63,7 @@ namespace Assets.Editor
             };
             country.Name = "c1";
             aliens.Name = "aliens";
-            var battleHandler = new BattleHandler(province);
+            var battleHandler = new BattleHandler();
             var winner = battleHandler.SetSkirmishResult(alliedUnits, enemyUnits);
             //Assert.AreEqual(winner.Name, country.Name);
 
