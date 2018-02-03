@@ -22,6 +22,8 @@ namespace Assets.TerraDefense.Implementations.Factions
         public int PanicLevel { get; set; }
         public bool PanicEffect { get { return PanicLevel > Alliance.AveragePanic; } }
         private string _allianceName;
+        public delegate void BudgetUpdateDelegate();
+        public BudgetUpdateDelegate OnStatusUpdate;
 
         public Country()
         {
@@ -111,6 +113,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             {
                 _provincesUnderAttack.Add(province,0);
                 PanicLevel += EnemyAttackingProvincePanicValue;
+                OnStatusUpdate?.Invoke();
             }
             _provincesUnderAttack[province]++;
         }
@@ -124,6 +127,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             {
                 _threatenedProvinces.Add(province, 0);
                 PanicLevel += EnemyCloseToProvincePanicValue;
+                OnStatusUpdate?.Invoke();
             }
             _threatenedProvinces[province]++;
         }
@@ -184,6 +188,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             {
                 _provincesUnderAttack.Remove(province);
                 PanicLevel -= EnemyAttackingProvincePanicValue;
+                OnStatusUpdate?.Invoke();
             }
         }
 
@@ -205,7 +210,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             else LostProvinces.Remove(province);
 
             PanicLevel += isLost ? ProvinceLostPanic : -ProvinceLostPanic;
-
+            OnStatusUpdate?.Invoke();
             if (_threatenedProvinces.Keys.Contains(province)) _threatenedProvinces.Remove(province);
             if (_provincesUnderAttack.Keys.Contains(province)) _provincesUnderAttack.Remove(province);
         }

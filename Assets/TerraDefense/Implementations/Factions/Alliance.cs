@@ -14,7 +14,7 @@ namespace Assets.TerraDefense.Implementations.Factions
     public class Alliance : UnitOwner, ITimeAffected
     {
         public List<Country> Countries;
-        public double AveragePanic { get { return Countries.Average(a => a.PanicLevel); }  }
+        public double AveragePanic { get { return Countries != null && Countries.Count > 0 ? Countries.Average(a => a.PanicLevel) : 0; }  }
         private List<string> _countryNames;
         private void Start () {
 		    if(Countries == null || Countries.Count == 0)

@@ -117,5 +117,10 @@ namespace Assets.TerraDefense.Implementations.Units
             //transform.position = position;
 
         }
+        public void ChangeOwner(UnitOwner newOwner)
+        {
+            Owner = newOwner;
+            GetComponent<SpriteRenderer>().color = Owner.UnitColor;
+        }
     }
 }

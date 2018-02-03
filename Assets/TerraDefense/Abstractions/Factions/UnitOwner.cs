@@ -3,7 +3,6 @@ using System.Linq;
 using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Assets.TerraDefense.Abstractions.Factions

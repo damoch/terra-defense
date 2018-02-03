@@ -63,6 +63,6 @@ MonoBehaviour:
   - {fileID: 114342459257155596, guid: 7765d3c13d262f2459eb4c74fd866467, type: 2}
   Name: Country0
   Alliance: {fileID: 0}
-  EnemyCloseToProvincePanicValue: 0
-  EnemyAttackingProvincePanicValue: 0
-  ProvinceLostPanic: 0
+  EnemyCloseToProvincePanicValue: 2
+  EnemyAttackingProvincePanicValue: 8
+  ProvinceLostPanic: 15

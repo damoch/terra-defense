@@ -210,7 +210,7 @@ namespace Assets.TerraDefense.Implementations.World
             {
                 Owner.Credits += CreditsPerHour;
             }
-            Owner.Credits += CreditsPerHour;
+           // Owner.Credits += CreditsPerHour;
         }
 
         public void SetupTimeValues()

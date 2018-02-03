@@ -32,6 +32,12 @@ namespace Assets.TerraDefense.Implementations.UI
         public GameObject HandledObject { get; set; }
         public Button CancelButton;
         public bool OrderPanelActive { get { return OrderPanel.activeInHierarchy; }  }
+        public Text CountryName;
+        public Text CountryBudget;
+        public Text CountryPanic;
+        public Text GlobalPanicText;
+        public Text CountryPanicEffectText;
+        public Button TakeControlButton;
         public void Setup ()
         {
             Clock = FindObjectOfType<Clock>();
@@ -53,6 +59,11 @@ namespace Assets.TerraDefense.Implementations.UI
             DisableUnitInfoPanel();
         }
 
+        private void FixedUpdate()
+        {
+            GlobalPanicText.text = "Global panic value: " + ((int)Player?.Alliance?.AveragePanic).ToString();
+        }
+
         public void HourEvent()
         {
             var value = Clock.GameDateTime;
@@ -63,6 +74,18 @@ namespace Assets.TerraDefense.Implementations.UI
         {
             UnitInfoPanel.SetActive(true);
             CountryOptionsButton.gameObject.SetActive(unit.Owner.GetType() == typeof(Country));
+            TakeControlButton.gameObject.SetActive(unit.Owner.GetType() == typeof(Country));
+            if (HandledCountry)
+            {
+                HandledCountry.OnStatusUpdate -= UpdateCountryValues;
+                HandledCountry = null;
+            }
+            HandledCountry = unit.Owner.GetType() == typeof(Country) ? (Country)unit.Owner : null;
+            if (HandledCountry)
+            {
+                HandledCountry.OnStatusUpdate += UpdateCountryValues;
+                UpdateCountryValues();
+            }
             UpdateUnitStatus(unit);
         }
 
@@ -119,6 +142,22 @@ namespace Assets.TerraDefense.Implementations.UI
         public void CountryOptionsClicked()
         {
             ShowCommandPanel(true);
+            UpdateCountryValues();
+        }
+
+        private void UpdateCountryValues()
+        {
+            if (!HandledCountry) return;
+            CountryName.text = "Country name: " + HandledCountry.Name;
+            CountryBudget.text = "Budget: " + HandledCountry.Credits;
+            CountryPanic.text = "Panic level: " + HandledCountry.PanicLevel;
+            CountryPanicEffectText.gameObject.SetActive(HandledCountry.PanicEffect);
+            SendHelpToButton.gameObject.SetActive(!HandledCountry.PanicEffect);
+        }
+        public void TakeControlOverUnit()
+        {
+            Player.SelectedUnit.ChangeOwner(Player.Alliance);
+            TakeControlButton.gameObject.SetActive(false);
         }
     }
 }

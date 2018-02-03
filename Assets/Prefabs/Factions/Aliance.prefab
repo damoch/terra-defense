@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Color: {r: 0, g: 0, b: 0, a: 0}
-  UnitColor: {r: 0, g: 0, b: 0, a: 0}
+  UnitColor: {r: 0.7629817, g: 1, b: 0.09558821, a: 1}
   Credits: 0
   AvaibleUnits: []
   Name: AL0

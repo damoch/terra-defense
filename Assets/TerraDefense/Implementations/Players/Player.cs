@@ -104,7 +104,7 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private void HandleRightClick()
         {
-            if (SelectedUnit != null)
+            if (SelectedUnit != null && SelectedUnit.Owner == Alliance)
             {
                 SelectedUnit.SetNewTarget(GetMouseToWorldCoordinates());
             }
@@ -169,6 +169,11 @@ namespace Assets.TerraDefense.Implementations.Players
                 SelectedUnit = unitComponent;
                 
             }
+        }
+
+        internal void TakeHandledUnitUnderControl()
+        {
+            SelectedUnit.ChangeOwner(Alliance);
         }
 
         private void SelectProvince(Province province)
