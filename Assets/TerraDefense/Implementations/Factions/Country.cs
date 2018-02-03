@@ -19,11 +19,25 @@ namespace Assets.TerraDefense.Implementations.Factions
         public int EnemyCloseToProvincePanicValue;
         public int EnemyAttackingProvincePanicValue;
         public int ProvinceLostPanic;
-        public int PanicLevel { get; set; }
+        public int PanicLevel { get
+            {
+                return _panicLevel;
+            } set
+            {
+                if (_panicLevel + value < 0)
+                    _panicLevel = 0;
+                else
+                    _panicLevel = value;
+            }
+        }
         public bool PanicEffect { get { return PanicLevel > Alliance.AveragePanic; } }
         private string _allianceName;
         public delegate void BudgetUpdateDelegate();
         public BudgetUpdateDelegate OnStatusUpdate;
+        private int _hourNumber;
+        public int TaxHour;
+        public float TaxValue;
+        private int _panicLevel;
 
         public Country()
         {
@@ -134,6 +148,15 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public void HourEvent()
         {
+            _hourNumber++;
+            if (_hourNumber > TaxHour)
+            {
+                _hourNumber = 0;
+                if (!PanicEffect)
+                {
+                    Alliance.PayTax(Credits * (TaxValue / 100));
+                }
+            }
             CheckProvincesStatus();
             var playerUnits = GetPlayerControllableUnits();
             var provinceUnderAttack = GetProvinceWithHighestValue(_provincesUnderAttack);
@@ -230,5 +253,13 @@ namespace Assets.TerraDefense.Implementations.Factions
             _allianceName = json["alliance"]; 
         }
 
+
+        public void ReceiveInternationalHelp(int value)
+        {
+            var panicDropValue = PanicLevel * (float)value / Credits;
+            Credits += value;
+            PanicLevel -= (int)panicDropValue;
+            OnStatusUpdate();
+        }
     }
 }

@@ -171,11 +171,6 @@ namespace Assets.TerraDefense.Implementations.Players
             }
         }
 
-        internal void TakeHandledUnitUnderControl()
-        {
-            SelectedUnit.ChangeOwner(Alliance);
-        }
-
         private void SelectProvince(Province province)
         {
             if(OrderType != OrderType.None && SelectedUnit)

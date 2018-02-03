@@ -66,3 +66,5 @@ MonoBehaviour:
   EnemyCloseToProvincePanicValue: 2
   EnemyAttackingProvincePanicValue: 8
   ProvinceLostPanic: 15
+  TaxHour: 8
+  TaxValue: 10

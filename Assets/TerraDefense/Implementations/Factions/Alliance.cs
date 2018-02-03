@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.World;
@@ -16,6 +17,8 @@ namespace Assets.TerraDefense.Implementations.Factions
         public List<Country> Countries;
         public double AveragePanic { get { return Countries != null && Countries.Count > 0 ? Countries.Average(a => a.PanicLevel) : 0; }  }
         private List<string> _countryNames;
+        public delegate void UpdateAllianceFoundsDelegate(float value);
+        public UpdateAllianceFoundsDelegate OnFoundsUpdate;
         private void Start () {
 		    if(Countries == null || Countries.Count == 0)
             {
@@ -113,5 +116,10 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         }
 
+        internal void PayTax(float value)
+        {
+            Credits += (int)value;
+            OnFoundsUpdate(Credits);
+        }
     }
 }

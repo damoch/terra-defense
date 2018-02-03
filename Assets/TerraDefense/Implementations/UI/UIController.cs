@@ -38,6 +38,8 @@ namespace Assets.TerraDefense.Implementations.UI
         public Text GlobalPanicText;
         public Text CountryPanicEffectText;
         public Button TakeControlButton;
+        public Text AllianceFoundsText;
+        public InputField CreditsInputField;
         public void Setup ()
         {
             Clock = FindObjectOfType<Clock>();
@@ -47,7 +49,6 @@ namespace Assets.TerraDefense.Implementations.UI
             {
                 Player.UIController = this;
             }
-
             OrderTypesForButtons = new Dictionary<Button, OrderType>
             {
                 {AttackProvinceButton, OrderType.AttackProvince},
@@ -57,6 +58,13 @@ namespace Assets.TerraDefense.Implementations.UI
             };
             HourEvent();
             DisableUnitInfoPanel();
+
+            
+        }
+
+        private void FoundsUpdate(float value)
+        {
+            AllianceFoundsText.text = "Alliance fouds: " + value;
         }
 
         private void FixedUpdate()
@@ -68,6 +76,12 @@ namespace Assets.TerraDefense.Implementations.UI
         {
             var value = Clock.GameDateTime;
             DateTimeText.text = value.Hour + ":00, " + value.Day + "/" + value.Month + "/" + value.Year;
+
+            if(Player.Alliance && Player.Alliance.OnFoundsUpdate == null)
+            {
+                Player.Alliance.OnFoundsUpdate += FoundsUpdate;
+                FoundsUpdate(Player.Alliance.Credits);
+            }
         }
 
         public void SetUnitInfo(Unit unit)
@@ -150,14 +164,27 @@ namespace Assets.TerraDefense.Implementations.UI
             if (!HandledCountry) return;
             CountryName.text = "Country name: " + HandledCountry.Name;
             CountryBudget.text = "Budget: " + HandledCountry.Credits;
-            CountryPanic.text = "Panic level: " + HandledCountry.PanicLevel;
+            CountryPanic.text = "Panic level: " + HandledCountry.PanicLevel + (Player.Alliance.AveragePanic > 0 ? " (" + HandledCountry.PanicLevel / Player.Alliance.AveragePanic + "% of global)" : "");
             CountryPanicEffectText.gameObject.SetActive(HandledCountry.PanicEffect);
             SendHelpToButton.gameObject.SetActive(!HandledCountry.PanicEffect);
+            FortifyProvinceButton.gameObject.SetActive(!HandledCountry.PanicEffect);
+            AttackProvinceButton.gameObject.SetActive(!HandledCountry.PanicEffect);
         }
         public void TakeControlOverUnit()
         {
             Player.SelectedUnit.ChangeOwner(Player.Alliance);
+            HandledCountry.OnStatusUpdate -= UpdateCountryValues;
+            HandledCountry = null;
             TakeControlButton.gameObject.SetActive(false);
+        }
+
+        public void SendCreditsClicked()
+        {
+            var moneyToSend = int.Parse(CreditsInputField.text);
+            if (moneyToSend > Player.Alliance.Credits) return;
+            Player.Alliance.Credits -= moneyToSend;
+            HandledCountry.ReceiveInternationalHelp(moneyToSend);
+            FoundsUpdate(Player.Alliance.Credits);
         }
     }
 }

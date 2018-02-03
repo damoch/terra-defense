@@ -205,6 +205,7 @@ namespace Assets.TerraDefense.Implementations.World
                 {
                     country.Credits += CreditsPerHour;
                 }
+                country.OnStatusUpdate?.Invoke();
             }
             catch (InvalidCastException e)
             {
