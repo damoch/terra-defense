@@ -40,6 +40,8 @@ namespace Assets.TerraDefense.Implementations.World
         private SpriteRenderer _spriteRenderer;
         private string _originaOwnerName;
         private string _ownerName;
+        public delegate void OwnerChangeDelegate();
+        public OwnerChangeDelegate OnOwnerChange;
         private void Start ()
         {
             if (Owner == null) Owner = UnitOwner.GetByName(_ownerName);
@@ -171,6 +173,7 @@ namespace Assets.TerraDefense.Implementations.World
             AlliedUnits = winningArmy;
             EnemyUnits = new List<Unit>();
             IsBattle = false;
+            OnOwnerChange?.Invoke();
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -236,6 +239,13 @@ namespace Assets.TerraDefense.Implementations.World
             _originaOwnerName = json["originalOwner"];
             _ownerName = json["owner"];
             transform.position = JsonConvert.DeserializeObject<Vector3>(json["position"]);
+        }
+
+        public static List<Province> FindProvincesFor(UnitOwner owner)
+        {
+            var all = FindObjectsOfType<Province>().ToList();
+            if (owner == null) return all;
+            return all.Where(x => x.Owner == owner).ToList();
         }
     }
 }

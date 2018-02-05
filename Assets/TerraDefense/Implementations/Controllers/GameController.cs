@@ -5,6 +5,7 @@ using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.IO;
 using Assets.TerraDefense.Implementations.Players;
+using Assets.TerraDefense.Implementations.UI;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
@@ -89,6 +90,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
 
         private void CreateProvincesMap()
         {
+            var uiController = FindObjectOfType<UIController>();
             for (var x = 0; x < MapSquareWidth; x++)
             {
                 _provincesMap.Add(x, new Dictionary<int, Province>());
@@ -96,6 +98,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 {
                     var province = Instantiate(ProvinceGameObject).GetComponent<Province>();
                     province.gameObject.transform.position = new Vector2(x * _provinceWidth, -y * _provinceHeight);
+                    province.OnOwnerChange += uiController.UpdateAliensVictoryProgressText;
                     _provincesMap[x].Add(y, province);
                 }
             }

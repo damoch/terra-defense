@@ -10,6 +10,12 @@ using UnityEngine;
 namespace Assets.TerraDefense.Implementations.Factions
 {
     public class Aliens : UnitOwner, ISaveLoad {
+        public static Aliens Instance;
+
+        private void Start()
+        {
+            Instance = this;
+        }
         public float AvgAirAttackVal { get
         {
             return AvaibleUnits.Where(x => x.UnitType == UnitType.Air).Average(y => y.AirAttackValue);

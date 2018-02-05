@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Players;
 using Assets.TerraDefense.Implementations.Units;
+using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,6 +42,10 @@ namespace Assets.TerraDefense.Implementations.UI
         public Button TakeControlButton;
         public Text AllianceFoundsText;
         public InputField CreditsInputField;
+        public Text AliensVictoryProgressText;
+        private int _numberOfAliens;
+        private int _destroyedInvaders = -1;
+        public Text HumansVictoryProgressText;
         public void Setup ()
         {
             Clock = FindObjectOfType<Clock>();
@@ -58,7 +64,8 @@ namespace Assets.TerraDefense.Implementations.UI
             };
             HourEvent();
             DisableUnitInfoPanel();
-
+            _numberOfAliens = FindObjectOfType<GameController>().NumberOfInvaders;
+            UpdateHumanVictoryProgressText();
             
         }
 
@@ -164,7 +171,7 @@ namespace Assets.TerraDefense.Implementations.UI
             if (!HandledCountry) return;
             CountryName.text = "Country name: " + HandledCountry.Name;
             CountryBudget.text = "Budget: " + HandledCountry.Credits;
-            CountryPanic.text = "Panic level: " + HandledCountry.PanicLevel + (Player.Alliance.AveragePanic > 0 ? " (" + HandledCountry.PanicLevel / Player.Alliance.AveragePanic + "% of global)" : "");
+            CountryPanic.text = "Panic level: " + HandledCountry.PanicLevel + (Player.Alliance.AveragePanic > 0 ? " (" + ((HandledCountry.PanicLevel / Player.Alliance.AveragePanic) * 100).ToString().Split(',')[0] + "% of global)" : "");
             CountryPanicEffectText.gameObject.SetActive(HandledCountry.PanicEffect);
             SendHelpToButton.gameObject.SetActive(!HandledCountry.PanicEffect);
             FortifyProvinceButton.gameObject.SetActive(!HandledCountry.PanicEffect);
@@ -176,6 +183,18 @@ namespace Assets.TerraDefense.Implementations.UI
             HandledCountry.OnStatusUpdate -= UpdateCountryValues;
             HandledCountry = null;
             TakeControlButton.gameObject.SetActive(false);
+        }
+
+        public void UpdateAliensVictoryProgressText()
+        {
+            var percentage = (int)((Province.FindProvincesFor(Aliens.Instance).Count / (float)Province.FindProvincesFor(null).Count) * 100);
+            AliensVictoryProgressText.text = "Aliens conquered " + percentage + "% of planet";
+        }
+
+        public void UpdateHumanVictoryProgressText()
+        {
+            _destroyedInvaders++;
+            HumansVictoryProgressText.text = "Destroyed motherships: " + _destroyedInvaders + "/" + _numberOfAliens;
         }
 
         public void SendCreditsClicked()
