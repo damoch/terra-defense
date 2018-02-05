@@ -11,10 +11,14 @@ namespace Assets.TerraDefense.Implementations.Factions
 {
     public class Aliens : UnitOwner, ISaveLoad {
         public static Aliens Instance;
-
+        private List<Unit> _airUnits;
+        private List<Unit> _groundUnits;
         private void Start()
         {
             Instance = this;
+
+            _airUnits = AvaibleUnits.Where(x => x.UnitType == UnitType.Air).ToList();
+            _groundUnits = AvaibleUnits.Where(x => x.UnitType == UnitType.Ground).ToList();
         }
         public float AvgAirAttackVal { get
         {
@@ -65,19 +69,22 @@ namespace Assets.TerraDefense.Implementations.Factions
 
             var totalAirAttack = friends.Sum(x => x.AirAttackValue);
 
-            if (totalAirAttack < enemyAircraftsCount * AvgAirAttackVal)
+            if (totalAirAttack < enemyAircraftsCount * AvgAirAttackVal && _airUnits.Exists(x => x.Cost <= Credits))
             {
-                var airUnits = AvaibleUnits.Where(x => x.UnitType == UnitType.Air).ToList();
-                airUnits.Sort((x,y) => x.AirAttackValue.CompareTo(y.AirAttackValue));
-                instance = Instantiate(airUnits[0].gameObject, spawnPosition, Quaternion.identity);
+                _airUnits.Sort((x,y) => x.AirAttackValue.CompareTo(y.AirAttackValue));
+                instance = Instantiate(_airUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition, Quaternion.identity);
+            }
+            else if(_groundUnits.Exists(x => x.Cost <= Credits))
+            {
+                _groundUnits.Sort((x,y) => x.AttackValue.CompareTo(y.AttackValue));
+                instance = Instantiate(_groundUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition, Quaternion.identity);
             }
             else
             {
-                var groundUnits = AvaibleUnits.Where(x => x.UnitType == UnitType.Ground).ToList();
-                groundUnits.Sort((x,y) => x.AttackValue.CompareTo(y.AttackValue));
-                instance = Instantiate(groundUnits[0].gameObject, spawnPosition, Quaternion.identity);
+                return null;
             }
             instance.GetComponent<Unit>().Owner = this;
+            Credits -= instance.GetComponent<Unit>().Cost;
             return instance;
         }
 

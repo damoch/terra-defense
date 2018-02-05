@@ -15,6 +15,8 @@ namespace Assets.TerraDefense.Implementations.Units
         public Province TargetProvince { get; set; }
         public Province CurrentProvince { get; set; }
         public PlatformUnitMode PlatformUnitMode { get; set; }
+        public Action OnDestroyed { get; internal set; }
+
         public override void Start()
         {
             TargetProvince = null;
@@ -86,7 +88,7 @@ namespace Assets.TerraDefense.Implementations.Units
 
             if (ShouldBuildMoreUnits())
             {
-                Units.Add(AliensOwner.ProduceUnit(this).GetComponent<Unit>());
+                Units.Add(AliensOwner.ProduceUnit(this)?.GetComponent<Unit>());
             }
             else if (!ShouldMove())
             {
@@ -138,6 +140,7 @@ namespace Assets.TerraDefense.Implementations.Units
                         platform.Units.AddRange(Units);
                     }
                 }
+                OnDestroyed?.Invoke();
                 Destroy(gameObject);
             }
             var propertyModifier = Status / (float)InitialStatus;

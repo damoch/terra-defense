@@ -114,6 +114,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 var platform = Instantiate(AlienPlatformGameObject).GetComponent<PlatformUnit>();
                 platform.AliensOwner = Aliens;
                 platform.transform.position = province.transform.position;
+                platform.OnDestroyed += FindObjectOfType<UI.UIController>().UpdateHumanVictoryProgressText;
             }
         }
 
