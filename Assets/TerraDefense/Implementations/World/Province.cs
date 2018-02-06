@@ -42,6 +42,15 @@ namespace Assets.TerraDefense.Implementations.World
         private string _ownerName;
         public delegate void OwnerChangeDelegate();
         public OwnerChangeDelegate OnOwnerChange;
+        public Action UiHandle;
+        public string Name { get; set; }
+        public float AttackValue
+        {
+            get
+            {
+                return EnemyUnits != null ? EnemyUnits.Sum(a => a.AttackValue) : 0;
+            }
+        }
         private void Start ()
         {
             if (Owner == null) Owner = UnitOwner.GetByName(_ownerName);
@@ -132,6 +141,7 @@ namespace Assets.TerraDefense.Implementations.World
             {
                 AlliedUnits.Add(unitComponent);
             }
+            UiHandle?.Invoke();
         }
 
         public IEnumerator CommenceBattle()
@@ -169,6 +179,7 @@ namespace Assets.TerraDefense.Implementations.World
             //    _originalOwner = proposedOwner;
             //}
             //Owner = _originalOwner == null && proposedOwner.GetType() == typeof(Aliens) ? proposedOwner;
+            UiHandle?.Invoke();
             _spriteRenderer.color = Owner.Color;
             AlliedUnits = winningArmy;
             EnemyUnits = new List<Unit>();
@@ -195,6 +206,7 @@ namespace Assets.TerraDefense.Implementations.World
 
             var listToRemove = Owner.IsEnemy(unitComponent) ? EnemyUnits : AlliedUnits;
             listToRemove.Remove(unitComponent);
+            UiHandle?.Invoke();
         }
 
         public void HourEvent()

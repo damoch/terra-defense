@@ -46,6 +46,11 @@ namespace Assets.TerraDefense.Implementations.UI
         private int _numberOfAliens;
         private int _destroyedInvaders = -1;
         public Text HumansVictoryProgressText;
+        private Province _provinceHandled;
+        public Text ProvinceNameText;
+        public Text ProvinceDefenseValueText;
+        public Text ProvinceAttackValueText;
+        public GameObject ProvinceDataPanel;
         public void Setup ()
         {
             Clock = FindObjectOfType<Clock>();
@@ -142,11 +147,6 @@ namespace Assets.TerraDefense.Implementations.UI
             ShowCommandPanel(false);
         }
 
-        internal void ShowTeritoryPanel(Province province)
-        {
-            //throw new NotImplementedException();
-        }
-
         internal void UpdateUnitStatus(Unit unit)
         {
             if(unit.Status <= 0)
@@ -204,6 +204,45 @@ namespace Assets.TerraDefense.Implementations.UI
             Player.Alliance.Credits -= moneyToSend;
             HandledCountry.ReceiveInternationalHelp(moneyToSend);
             FoundsUpdate(Player.Alliance.Credits);
+        }
+
+        public void SetProvinceData(Province province)
+        {
+            if (_provinceHandled) UnsetProvince();
+            _provinceHandled = province;
+            _provinceHandled.UiHandle += UpdateProvinceData;
+
+            if (HandledCountry)
+            {
+                HandledCountry.OnStatusUpdate -= UpdateCountryValues;
+                HandledCountry = null;
+            }
+            HandledCountry = province.Owner.GetType() == typeof(Country) ? (Country)province.Owner : null;
+            if (HandledCountry)
+            {
+                HandledCountry.OnStatusUpdate += UpdateCountryValues;
+                UpdateCountryValues();
+            }
+
+            UpdateProvinceData();
+        }
+
+        private void UnsetProvince()
+        {
+            _provinceHandled.UiHandle -= UpdateProvinceData;
+            _provinceHandled = null;
+
+            ProvinceDataPanel.SetActive(false);
+        }
+
+        private void UpdateProvinceData()
+        {
+            if (!_provinceHandled) return;
+            ProvinceDataPanel.SetActive(true);
+            ProvinceNameText.text = "Name: " + _provinceHandled.Name;
+            ProvinceDefenseValueText.text = "Defense strength: " + _provinceHandled.DefenseValue;
+            ProvinceAttackValueText.gameObject.SetActive(_provinceHandled.AttackValue > 0);
+            ProvinceAttackValueText.text = "Attack strength: " + _provinceHandled.AttackValue;
         }
     }
 }

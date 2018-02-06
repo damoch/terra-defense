@@ -180,7 +180,7 @@ namespace Assets.TerraDefense.Implementations.Players
                 DeselectUnit();
                 return;
             }
-            UIController.ShowTeritoryPanel(province);
+            UIController.SetProvinceData(province);
 
         }
 
