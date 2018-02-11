@@ -32,6 +32,7 @@ namespace Assets.TerraDefense.Implementations.Units
             InvokeRepeating("DecideNextMove", 1f, 1f);
             SetupTimeValues();
             GetComponent<SpriteRenderer>().color = AliensOwner.UnitColor;
+            InitialStatus = Status;
             PlatformUnitMode = PlatformUnitMode.Attack;
         }
 

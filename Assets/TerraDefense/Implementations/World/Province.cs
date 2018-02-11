@@ -51,6 +51,8 @@ namespace Assets.TerraDefense.Implementations.World
                 return EnemyUnits != null ? EnemyUnits.Sum(a => a.AttackValue) : 0;
             }
         }
+        public float EnemyEnterDamageFactor;
+        public float FriendlyStayRepairFactor;
         private void Start ()
         {
             if (Owner == null) Owner = UnitOwner.GetByName(_ownerName);
@@ -125,6 +127,8 @@ namespace Assets.TerraDefense.Implementations.World
 
             if (Owner.IsEnemy(unitComponent))
             {
+                if(unitComponent.UnitType == Enums.UnitType.Ground && unitComponent.Owner != _originalOwner)
+                    unitComponent.ModifyStatus(unitComponent.Status * -EnemyEnterDamageFactor);
                 EnemyUnits.Add(unitComponent);
                 Owner.EnemyIsAttackingProperty(gameObject);
                 if (!AlliedUnits.Any())
@@ -224,8 +228,10 @@ namespace Assets.TerraDefense.Implementations.World
             }
             catch (InvalidCastException e)
             {
-                Owner.Credits += CreditsPerHour;
+                Owner.Credits += CreditsPerHour / 4;
             }
+            if (IsBattle || AlliedUnits.Count == 0 || AlliedUnits[0].Owner == Aliens.Instance) return;
+            AlliedUnits.Where(x => x.IsHurt).ToList().ForEach(y => y.ModifyStatus(y.Status * FriendlyStayRepairFactor));
            // Owner.Credits += CreditsPerHour;
         }
 

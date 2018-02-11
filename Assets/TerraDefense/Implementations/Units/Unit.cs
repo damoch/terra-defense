@@ -32,6 +32,7 @@ namespace Assets.TerraDefense.Implementations.Units
         }
         public delegate void StatusDelegate(Unit unit);
         public StatusDelegate OnStatusUpdate;
+        public bool IsHurt { get { return Status < InitialStatus; } }
 
         public virtual void Start ()
         {
