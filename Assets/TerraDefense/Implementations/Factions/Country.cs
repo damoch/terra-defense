@@ -115,6 +115,8 @@ namespace Assets.TerraDefense.Implementations.Factions
             Credits -= unit.Cost;
             var instance = Instantiate(unit.gameObject, spawnPosition, Quaternion.identity);
             instance.GetComponent<Unit>().Owner = this;
+            var trigger = Instantiate(UnitTriggerObject, spawnPosition, Quaternion.identity);
+            trigger.transform.parent = instance.transform;
             return instance;
         }
 

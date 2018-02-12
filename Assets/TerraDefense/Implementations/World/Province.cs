@@ -77,7 +77,7 @@ namespace Assets.TerraDefense.Implementations.World
         private void CheckSurrondings()
         {
             //StartCoroutine(ExecuteCheck());
-            NeighborhoodChecker.AddJobToQueue(this);
+           // NeighborhoodChecker.AddJobToQueue(this);
         }
 
         private IEnumerator ExecuteCheck()
@@ -105,10 +105,19 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            
             var unitComponent = other.gameObject.GetComponent<Unit>();
             if (unitComponent != null)
             {
                 HandleUnitEnter(unitComponent);
+            }
+            if (other.tag != "TriggerZone") return;
+
+            var closeEnemy = other.gameObject.transform.parent.gameObject.GetComponent<Unit>();
+            if (closeEnemy && Owner.IsEnemy(closeEnemy))
+            {
+                Debug.Log("close Enemy!");
+                Owner.EnemyIsCloseToProperty(gameObject);
             }
         }
 

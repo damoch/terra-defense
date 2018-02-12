@@ -88,6 +88,10 @@ namespace Assets.TerraDefense.Implementations.Factions
                 return null;
             }
             instance.GetComponent<Unit>().Owner = this;
+
+            var trigger = Instantiate(UnitTriggerObject, instance.transform.position, Quaternion.identity);
+            trigger.transform.parent = instance.transform;
+
             Credits -= instance.GetComponent<Unit>().Cost;
             return instance;
         }

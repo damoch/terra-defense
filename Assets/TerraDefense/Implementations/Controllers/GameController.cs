@@ -44,10 +44,12 @@ namespace Assets.TerraDefense.Implementations.Controllers
         private bool _gamePaused;
 
         public Player Player { get; set; }
-        public Alliance Alliance { get; set; }
+        public Alliance AllianceInstance { get; set; }
         public Aliens Aliens { get; set; }
         public Clock Clock { get; set; }
         public AIPlayer AiPlayer { get; set; }
+
+        public GameObject UnitTriggerObject;
 
         private void Start () {
             _provinceHeight = ProvinceGameObject.GetComponent<BoxCollider2D>().size.y * ProvinceGameObject.transform.localScale.y;
@@ -115,6 +117,8 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 platform.AliensOwner = Aliens;
                 platform.transform.position = province.transform.position;
                 platform.OnDestroyed += FindObjectOfType<UI.UIController>().UpdateHumanVictoryProgressText;
+                var trigger = Instantiate(UnitTriggerObject, platform.gameObject.transform.position, Quaternion.identity);
+                trigger.transform.parent = platform.gameObject.transform;
             }
         }
 
@@ -131,6 +135,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 var unitColor = new Color(Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255);
                 var provinces = new List<Province>();
                 var country = Instantiate(CountryGameObject).GetComponent<Country>();
+                country.UnitTriggerObject = UnitTriggerObject;
                 country.Color = color;
                 country.UnitColor = unitColor;
                 country.Credits = 100;
@@ -138,8 +143,8 @@ namespace Assets.TerraDefense.Implementations.Controllers
 #if UNITY_EDITOR
                 country.gameObject.name = "Country" + i;
 #endif
-                country.Alliance = Alliance;
-                Alliance.Countries.Add(country);
+                country.Alliance = AllianceInstance;
+                AllianceInstance.Countries.Add(country);
 
                 for (var x = startX; x < startX + countryWidth; x++)
                 {
@@ -172,6 +177,9 @@ namespace Assets.TerraDefense.Implementations.Controllers
                         province.AlliedUnits = new List<Unit>();
                     province.AlliedUnits.Add(unit);
                     unit.gameObject.transform.position = province.gameObject.transform.position;
+
+                    var trigger = Instantiate(UnitTriggerObject, unit.gameObject.transform.position, Quaternion.identity);
+                    trigger.transform.parent = unit.gameObject.transform;
                 }
             }
 
@@ -184,8 +192,10 @@ namespace Assets.TerraDefense.Implementations.Controllers
             Clock = Instantiate(ClockGameObject).GetComponent<Clock>();
             Clock.LengthOfHour = LengthOfHour;
             Aliens = Instantiate(AliensGameObject).GetComponent<Aliens>();
+            Aliens.UnitTriggerObject = UnitTriggerObject;
             AiPlayer.Aliens = Aliens;
-            Alliance = Instantiate(AllianceGameObject).GetComponent<Alliance>();
+            AllianceInstance = Instantiate(AllianceGameObject).GetComponent<Alliance>();
+            AllianceInstance.UnitTriggerObject = UnitTriggerObject;
             FindObjectOfType<UI.UIController>().Setup();
         }
 

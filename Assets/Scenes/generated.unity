@@ -2877,7 +2877,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1380840898
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3993,6 +3993,8 @@ MonoBehaviour:
   Options: {fileID: 1225814303}
   NewGameOptions: {fileID: 1763953311}
   SaveLoadManager: {fileID: 958330310}
+  UnitTriggerObject: {fileID: 1665686175310870, guid: 91e9e18740e32eb439f8fe783633b474,
+    type: 2}
 --- !u!4 &1848625029
 Transform:
   m_ObjectHideFlags: 0

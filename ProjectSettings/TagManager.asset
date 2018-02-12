@@ -6,6 +6,7 @@ TagManager:
   tags:
   - TimeAffected
   - MainMenu
+  - TriggerZone
   layers:
   - Default
   - TransparentFX
