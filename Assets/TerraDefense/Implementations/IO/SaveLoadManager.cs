@@ -53,7 +53,7 @@ namespace Assets.TerraDefense.Implementations.IO
         public void LoadGame()
         {
             var gObjects = new List<GameObject>();
-            var json = PlayerPrefs.GetString("autosave");
+            var json = PlayerPrefs.GetString(AutoSaveKey);
 
             var list = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<string, string>>>>(json);
             var sortedPriorities = list.Keys.ToList();
