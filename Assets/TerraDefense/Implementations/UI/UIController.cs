@@ -244,5 +244,10 @@ namespace Assets.TerraDefense.Implementations.UI
             ProvinceAttackValueText.gameObject.SetActive(_provinceHandled.AttackValue > 0);
             ProvinceAttackValueText.text = "Attack strength: " + _provinceHandled.AttackValue;
         }
+
+        public void CloseProvincePanelClicked()
+        {
+            UnsetProvince();
+        }
     }
 }

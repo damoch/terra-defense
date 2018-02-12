@@ -110,7 +110,7 @@ namespace Assets.TerraDefense.Implementations.Factions
 
             foreach (var playerUnit in playerUnits)
             {
-                playerUnit.Owner = orderSubject;
+                playerUnit.ChangeOwner(orderSubject);
                 playerUnit.SetNewTarget(UtilsAndTools.FindNearestProvince(orderSubject).transform.position);
             }
         }

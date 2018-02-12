@@ -63,11 +63,15 @@ namespace Assets.TerraDefense.Implementations.Factions
             var spawnPosition = pu.gameObject.transform.position;
             if (!pu.TargetProvince) return null;
             var enemies = pu.TargetProvince.AlliedUnits;
+
+            if (pu.Units == null)
+                pu.Units = new List<Unit>();
+
             var friends = pu.Units;
 
             var enemyAircraftsCount = enemies.Count(x => x.UnitType == UnitType.Air);
 
-            var totalAirAttack = friends.Sum(x => x.AirAttackValue);
+            var totalAirAttack = friends.Where(x => x != null).Sum(x => x.AirAttackValue);
 
             if (totalAirAttack < enemyAircraftsCount * AvgAirAttackVal && _airUnits.Exists(x => x.Cost <= Credits))
             {

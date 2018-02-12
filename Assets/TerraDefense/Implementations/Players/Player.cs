@@ -104,6 +104,17 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private void HandleRightClick()
         {
+            var gameObject = GetClickedObject();
+            if (!gameObject) return;
+            var province = gameObject.GetComponent<Province>();
+
+            if (province && OrderType != OrderType.None)
+            {
+                Alliance.SendCommandToCountry(OrderType, province, UIController.HandledCountry);
+                OrderType = OrderType.None;
+                DeselectUnit();
+                return;
+            }
             if (SelectedUnit != null && SelectedUnit.Owner == Alliance)
             {
                 SelectedUnit.SetNewTarget(GetMouseToWorldCoordinates());
@@ -119,32 +130,23 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private void HandleLeftClick()
         {
-            var screenToWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var hit = Physics2D.Raycast(new Vector2(screenToWorld.x, screenToWorld.y), Vector2.zero, 0f);
-            if (hit.transform != null)
+            var gameObject = GetClickedObject();
+            if (gameObject)
             {
-                var clickedObject = hit.transform.gameObject;
-                var unit = clickedObject.GetComponent<Unit>();
+                var unit = gameObject.GetComponent<Unit>();
                 if (unit)
                 {
                     SelectUnit(unit);
                     return;
                 }
 
-                var province = clickedObject.GetComponent<Province>();
+                var province = gameObject.GetComponent<Province>();
                 if (province)
                 {
                     SelectProvince(province);
                     return;
                 }
-
             }
-            else
-            {
-                //UIController.DisableUnitInfoPanel();
-                //DeselectUnit();
-            }
-
         }
 
         public void DeselectUnit()
@@ -173,15 +175,7 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private void SelectProvince(Province province)
         {
-            if(OrderType != OrderType.None && SelectedUnit)
-            {
-                Alliance.SendCommandToCountry(OrderType, province, SelectedUnit.Owner as Country);
-                OrderType = OrderType.None;
-                DeselectUnit();
-                return;
-            }
             UIController.SetProvinceData(province);
-
         }
 
         public Dictionary<string, string> GetSavableData()
@@ -197,6 +191,15 @@ namespace Assets.TerraDefense.Implementations.Players
         public void SetSavableData(Dictionary<string, string> json)
         {
             _allianceName = json["alliance"];
+        }
+
+        private GameObject GetClickedObject()
+        {
+            var screenToWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var hit = Physics2D.Raycast(new Vector2(screenToWorld.x, screenToWorld.y), Vector2.zero, 0f);
+
+            return hit.transform?.gameObject;
+            
         }
     }
 }
