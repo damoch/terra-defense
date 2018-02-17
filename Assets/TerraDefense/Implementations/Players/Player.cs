@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Assets.TerraDefense.Abstractions.Factions;
+﻿using System.Collections.Generic;
 using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Factions;
