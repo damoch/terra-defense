@@ -6,6 +6,7 @@ using Assets.TerraDefense.Implementations.UI;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Experimental.UIElements;
 
 namespace Assets.TerraDefense.Implementations.Players
@@ -128,6 +129,7 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private void HandleLeftClick()
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             var gameObject = GetClickedObject();
             if (gameObject)
             {
