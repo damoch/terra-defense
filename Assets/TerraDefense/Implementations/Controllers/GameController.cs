@@ -23,7 +23,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
         public GameObject CountryGameObject;
         public GameObject ProvinceGameObject;
         public GameObject AlienPlatformGameObject;
-        public int MapSquareWidth;
+        public int MapSquareHeight;
 
         public int NumberOfCountries;
         public int NumberOfInvaders;
@@ -39,7 +39,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
         private float _provinceHeight;
         private float _provinceWidth;
         private List<Province> _generatedProvinces;
-        private int _provincesPerCountry;
+        public int ProvincesPerCountry;
         private Dictionary<int, Dictionary<int, Province>> _provincesMap;
         private bool _gamePaused;
 
@@ -48,14 +48,38 @@ namespace Assets.TerraDefense.Implementations.Controllers
         public Aliens Aliens { get; set; }
         public Clock Clock { get; set; }
         public AIPlayer AiPlayer { get; set; }
+        public int MapSquareLength { get; private set; }
 
         public GameObject UnitTriggerObject;
+        private int _countryWidth;
 
         private void Start () {
+
+            _countryWidth = (int)(Math.Sqrt(ProvincesPerCountry));
+
+
+            var mapArea = NumberOfCountries * ProvincesPerCountry;
+            if (NumberOfCountries == 1)
+            {
+                MapSquareLength = MapSquareHeight = _countryWidth;
+            }
+            else if(NumberOfCountries == ProvincesPerCountry)
+            {
+                MapSquareLength = MapSquareHeight = NumberOfCountries * _countryWidth;//fucking bug
+            }
+            else if (Math.Sqrt(mapArea) % 2 == 0)
+            {
+                MapSquareLength = MapSquareHeight = (NumberOfCountries / 2) * _countryWidth;
+            }
+            else
+            {
+                MapSquareLength = (NumberOfCountries / 2) * _countryWidth;
+                MapSquareHeight = 2 * _countryWidth;
+            }
+
             _provinceHeight = ProvinceGameObject.GetComponent<BoxCollider2D>().size.y * ProvinceGameObject.transform.localScale.y;
             _provinceWidth = ProvinceGameObject.GetComponent<BoxCollider2D>().size.x * ProvinceGameObject.transform.localScale.x;
             _provincesMap = new Dictionary<int, Dictionary<int, Province>>();
-            _provincesPerCountry = Convert.ToInt32(Math.Pow(MapSquareWidth, 2) / NumberOfCountries);
 
             if (PlayerPrefs.HasKey("StartInstruction"))
             {
@@ -93,10 +117,10 @@ namespace Assets.TerraDefense.Implementations.Controllers
         private void CreateProvincesMap()
         {
             var uiController = FindObjectOfType<UIController>();
-            for (var x = 0; x < MapSquareWidth; x++)
+            for (var x = 0; x < MapSquareLength; x++)
             {
                 _provincesMap.Add(x, new Dictionary<int, Province>());
-                for (var y = 0; y < MapSquareWidth; y++)
+                for (var y = 0; y < MapSquareHeight; y++)
                 {
                     var province = Instantiate(ProvinceGameObject).GetComponent<Province>();
                     province.gameObject.transform.position = new Vector2(x * _provinceWidth, -y * _provinceHeight);
@@ -110,8 +134,8 @@ namespace Assets.TerraDefense.Implementations.Controllers
         {
             for (var i = 0; i < NumberOfInvaders; i++)
             {
-                var x = Random.Range(0, MapSquareWidth);
-                var y = Random.Range(0, MapSquareWidth);
+                var x = Random.Range(0, MapSquareHeight);
+                var y = Random.Range(0, MapSquareHeight);
                 var province = _provincesMap[x][y];
                 var platform = Instantiate(AlienPlatformGameObject).GetComponent<PlatformUnit>();
                 platform.AliensOwner = Aliens;
@@ -127,7 +151,6 @@ namespace Assets.TerraDefense.Implementations.Controllers
             _generatedProvinces = new List<Province>();
             var startX = 0;
             var startY = 0;
-            var countryWidth = Convert.ToInt32(Math.Sqrt(_provincesPerCountry));
 
             for (var i = 0; i < NumberOfCountries; i++)
             {
@@ -146,9 +169,9 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 country.Alliance = AllianceInstance;
                 AllianceInstance.Countries.Add(country);
 
-                for (var x = startX; x < startX + countryWidth; x++)
+                for (var x = startX; x < startX + _countryWidth; x++)
                 {
-                    for (var y = startY; y < startY + countryWidth; y++)
+                    for (var y = startY; y < startY + _countryWidth; y++)
                     {
                         _provincesMap[x][y].Owner = country;
                         _provincesMap[x][y].enabled = true;
@@ -159,11 +182,12 @@ namespace Assets.TerraDefense.Implementations.Controllers
                     }
 
                 }
-                if (startX < MapSquareWidth - startX) startX += countryWidth;
-                else
+                startX += _countryWidth;
+                
+                if(startX > (MapSquareLength - _countryWidth))
                 {
                     startX = 0;
-                    startY += countryWidth;
+                    startY += _countryWidth;
                 }
 
                 for (var u = 0; u < NumberOfStartUnits; u++)
@@ -199,7 +223,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
             FindObjectOfType<UI.UIController>().Setup();
         }
 
-        private bool IsPowerOfTwo(int x)
+        private bool IsPowerOfTwo(double x)
         {
             while (((x % 2) == 0) && x > 1)
             {

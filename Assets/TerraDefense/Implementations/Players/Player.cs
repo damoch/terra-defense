@@ -54,8 +54,6 @@ namespace Assets.TerraDefense.Implementations.Players
             if (Input.GetKey(KeyCode.Escape) && !MenuController.gameObject.activeInHierarchy)
                 MenuController.BringUpMainMenu();
 
-
-
             if (Input.GetMouseButton((int)MouseButton.LeftMouse))
             {
                 HandleLeftClick();

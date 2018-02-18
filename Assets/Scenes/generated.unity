@@ -2329,6 +2329,21 @@ Prefab:
       propertyPath: SaveLoadManager
       value: 
       objectReference: {fileID: 958330310}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: NumberOfCountries
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: ProvincesPerCountry
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: NumberOfInvaders
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5dd6317ae0cfb3499161e7156225e69, type: 2}
   m_IsPrefabParent: 0
