@@ -63,14 +63,6 @@ namespace Assets.TerraDefense.Implementations.Controllers
             {
                 MapSquareLength = MapSquareHeight = _countryWidth;
             }
-            else if(NumberOfCountries == ProvincesPerCountry)
-            {
-                MapSquareLength = MapSquareHeight = NumberOfCountries * _countryWidth;//fucking bug
-            }
-            else if (Math.Sqrt(mapArea) % 2 == 0)
-            {
-                MapSquareLength = MapSquareHeight = (NumberOfCountries / 2) * _countryWidth;
-            }
             else
             {
                 MapSquareLength = (NumberOfCountries / 2) * _countryWidth;
@@ -134,7 +126,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
         {
             for (var i = 0; i < NumberOfInvaders; i++)
             {
-                var x = Random.Range(0, MapSquareHeight);
+                var x = Random.Range(0, MapSquareLength);
                 var y = Random.Range(0, MapSquareHeight);
                 var province = _provincesMap[x][y];
                 var platform = Instantiate(AlienPlatformGameObject).GetComponent<PlatformUnit>();
