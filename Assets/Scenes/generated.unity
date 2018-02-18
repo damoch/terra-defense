@@ -427,7 +427,7 @@ Prefab:
     - target: {fileID: 224595667172191030, guid: 6d996111b6b0eaa4788b745c279e9f0f,
         type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224595667172191030, guid: 6d996111b6b0eaa4788b745c279e9f0f,
         type: 2}
@@ -742,6 +742,69 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 296067377}
+--- !u!1 &313574734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 313574736}
+  - component: {fileID: 313574735}
+  m_Layer: 0
+  m_Name: MapGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &313574735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 313574734}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931251358d28be14199c393281d54d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NumberOfInvaders: 5
+  NumberOfCountries: 6
+  NumberOfStartUnits: 7
+  LengthOfHour: 10
+  ProvincesPerCountry: 4
+  PlayerGameObject: {fileID: 1847574945800934, guid: c7a28b53f1cec28419fb481b8e0210f7,
+    type: 2}
+  AiPlayerGameObject: {fileID: 1912471128485944, guid: 47ed927577a62ff4f9034af8aae90824,
+    type: 2}
+  ClockGameObject: {fileID: 1984101340555714, guid: 98e910d128924ed428f96efb24e0fc80,
+    type: 2}
+  AliensGameObject: {fileID: 1304727727867526, guid: 236f74b8b9dd75a4b8e5ea3d3d0c1b0f,
+    type: 2}
+  AllianceGameObject: {fileID: 1607881884291850, guid: 70f726bf590af184b837eae8a4cd453c,
+    type: 2}
+  CountryGameObject: {fileID: 1865852552027482, guid: 35bb44b0cbd749446a16cb51dc27aa95,
+    type: 2}
+  ProvinceGameObject: {fileID: 1756237892879136, guid: b2fd5058aaa255b4ebf60b695e2d1ca5,
+    type: 2}
+  AlienPlatformGameObject: {fileID: 1741497933629170, guid: 33e7e44100d66494b80d88e4db4f379e,
+    type: 2}
+  UnitTriggerObject: {fileID: 1665686175310870, guid: 91e9e18740e32eb439f8fe783633b474,
+    type: 2}
+--- !u!4 &313574736
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 313574734}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.957361, y: -4.7172446, z: -0.010813294}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &314620629
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,46 +927,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 314620629}
---- !u!1 &329138362
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 329138364}
-  - component: {fileID: 329138363}
-  m_Layer: 0
-  m_Name: JobExecuter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &329138363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 329138362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38ab886b4cf8b0b4d9b7abf3444327e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &329138364
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 329138362}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.410103, y: -26.385908, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &352320569
 Prefab:
   m_ObjectHideFlags: 0
@@ -941,7 +964,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4254876534931028, guid: c91a79f07f05de940a5513125e07936b, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c91a79f07f05de940a5513125e07936b, type: 2}
@@ -1092,7 +1115,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &381392638
 GameObject:
@@ -2332,18 +2355,23 @@ Prefab:
     - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
         type: 2}
       propertyPath: NumberOfCountries
-      value: 18
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
         type: 2}
       propertyPath: ProvincesPerCountry
-      value: 16
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
         type: 2}
       propertyPath: NumberOfInvaders
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: Generator
+      value: 
+      objectReference: {fileID: 313574735}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5dd6317ae0cfb3499161e7156225e69, type: 2}
   m_IsPrefabParent: 0
@@ -3076,7 +3104,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4095847068207610, guid: 5f06c31d084de60479f8e7a79d7486bf, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f06c31d084de60479f8e7a79d7486bf, type: 2}
@@ -3144,7 +3172,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1417527189 stripped
 AudioSource:
@@ -3746,7 +3774,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4088098323910500, guid: a725cf96bbc9840428437b997c5008eb, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1039821639771834, guid: a725cf96bbc9840428437b997c5008eb, type: 2}
       propertyPath: m_IsActive
