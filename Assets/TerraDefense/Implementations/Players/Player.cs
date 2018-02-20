@@ -101,6 +101,7 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private void HandleRightClick()
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             var gameObject = GetClickedObject();
             if (!gameObject) return;
             var province = gameObject.GetComponent<Province>();
