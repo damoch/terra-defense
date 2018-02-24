@@ -10,6 +10,7 @@ namespace Assets.TerraDefense.Implementations.UI
         public GameObject NewGameOptions;
         public GameObject Options;
         public AudioSource MusicSource;
+        public GameObject SaveLoadPanel;
 
         private void Start()
         {
@@ -50,8 +51,8 @@ namespace Assets.TerraDefense.Implementations.UI
         }
         public void LoadGameButtonClicked()
         {
-            PlayerPrefs.SetString("StartInstruction", StartInstruction.LoadGame.ToString());
-            SceneManager.LoadScene("generated");
+            SaveLoadPanel.SetActive(true);
+            gameObject.SetActive(false);
         }
         public void QuitButtonClicked()
         {

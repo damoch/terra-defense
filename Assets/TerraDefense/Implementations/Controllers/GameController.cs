@@ -45,7 +45,8 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 switch (option)
                 {
                     case StartInstruction.LoadGame:
-                        SaveLoadManager.LoadGame();
+                        if (!PlayerPrefs.HasKey(SaveLoadManager.LoadGameNameKey)) return;
+                        SaveLoadManager.LoadGame(PlayerPrefs.GetString(SaveLoadManager.LoadGameNameKey));
                         return;
                 }
 
