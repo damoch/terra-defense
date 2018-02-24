@@ -14,7 +14,7 @@ namespace Assets.TerraDefense.Implementations.IO
     {
         public string AutoSaveKey;
         public List<GameObject> LoadableObjects;
-
+        public string FileExtension;
         private Component GetLoadableObject(Type type)
         {
             var result = LoadableObjects.FirstOrDefault(x => x.GetComponent(type) != null);
@@ -41,7 +41,13 @@ namespace Assets.TerraDefense.Implementations.IO
             var saveData = JsonConvert.SerializeObject(resultsList);
 
             Debug.Log(resultsList.Count);
-            PlayerPrefs.SetString(AutoSaveKey, saveData);
+            //PlayerPrefs.SetString(AutoSaveKey, saveData);
+            var savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName;
+
+            if (!Directory.Exists(savePath))
+                Directory.CreateDirectory(savePath);
+            savePath += Path.DirectorySeparatorChar + AutoSaveKey + FileExtension;
+            File.WriteAllText(savePath, saveData);
 
 #if DEBUG || UNITY_EDITOR
             File.WriteAllText(System.Reflection.Assembly.GetExecutingAssembly().Location + AutoSaveKey + ".txt", saveData);
@@ -52,8 +58,10 @@ namespace Assets.TerraDefense.Implementations.IO
 
         public void LoadGame()
         {
+            var loadPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName + Path.DirectorySeparatorChar + AutoSaveKey + FileExtension;
+            if (!File.Exists(loadPath)) return;
             var gObjects = new List<GameObject>();
-            var json = PlayerPrefs.GetString(AutoSaveKey);
+            var json = File.ReadAllText(loadPath);
 
             var list = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<string, string>>>>(json);
             var sortedPriorities = list.Keys.ToList();
