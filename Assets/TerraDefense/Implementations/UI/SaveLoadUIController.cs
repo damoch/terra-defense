@@ -46,7 +46,7 @@ namespace Assets.TerraDefense.Implementations.UI
             if (itemsCount <= 0) return;
             for (var i = enumerator; i < ScrollViewContent.childCount; i++)
             {
-                ScrollViewContent.GetChild(i).gameObject.SetActive(false);
+                 ScrollViewContent.GetChild(i).gameObject.SetActive(false);
             }
         }
 

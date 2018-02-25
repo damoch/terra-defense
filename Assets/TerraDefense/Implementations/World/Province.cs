@@ -7,7 +7,6 @@ using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Units;
-using Assets.TerraDefense.Implementations.Utils;
 using Newtonsoft.Json;
 using UnityEngine;
 

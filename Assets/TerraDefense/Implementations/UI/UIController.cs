@@ -69,7 +69,7 @@ namespace Assets.TerraDefense.Implementations.UI
             };
             HourEvent();
             DisableUnitInfoPanel();
-            _numberOfAliens = FindObjectOfType<GameController>().NumberOfInvaders;
+            _numberOfAliens = FindObjectOfType<GameController>().Generator.NumberOfInvaders;
             UpdateHumanVictoryProgressText();
             
         }
