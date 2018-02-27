@@ -60,4 +60,5 @@ MonoBehaviour:
   - {fileID: 114342459257155596, guid: e9e00eda8fe1b494b8ec2f4656364ce6, type: 2}
   - {fileID: 114466127011558798, guid: 33e7e44100d66494b80d88e4db4f379e, type: 2}
   Name: Aliens
-  UnitTriggerObject: {fileID: 0}
+  UnitTriggerObject: {fileID: 1665686175310870, guid: 91e9e18740e32eb439f8fe783633b474,
+    type: 2}

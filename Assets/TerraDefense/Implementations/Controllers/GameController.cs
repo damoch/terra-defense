@@ -25,15 +25,20 @@ namespace Assets.TerraDefense.Implementations.Controllers
         
         public MapGenerator Generator;
         private void Start () {
-
+            //PlayerPrefs.DeleteAll(); //fix loading problems
             if (PlayerPrefs.HasKey("StartInstruction"))
             {
                 var option = (StartInstruction)Enum.Parse(typeof(StartInstruction), PlayerPrefs.GetString("StartInstruction"));
                 switch (option)
                 {
                     case StartInstruction.LoadGame:
-                        if (!PlayerPrefs.HasKey(SaveLoadManager.LoadGameNameKey)) return;
+                        if (SaveLoadManager.LoadGameNameKey == null || !PlayerPrefs.HasKey(SaveLoadManager.LoadGameNameKey))
+                        {
+                            Debug.LogError("Load failed");
+                            break;
+                        }
                         SaveLoadManager.LoadGame(PlayerPrefs.GetString(SaveLoadManager.LoadGameNameKey));
+                        PlayerPrefs.DeleteKey(SaveLoadManager.LoadGameNameKey);
                         return;
                 }
 

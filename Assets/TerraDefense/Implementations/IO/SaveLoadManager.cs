@@ -17,7 +17,7 @@ namespace Assets.TerraDefense.Implementations.IO
         public List<GameObject> LoadableObjects;
         public string FileExtension;
 
-        public string LoadGameNameKey { get; internal set; }
+        public string LoadGameNameKey;
 
         private Component GetLoadableObject(Type type)
         {
@@ -67,6 +67,8 @@ namespace Assets.TerraDefense.Implementations.IO
         public void LoadGame(string fileName)
         {
             if (fileName == null || fileName == "") fileName = AutoSaveKey;
+            if(fileName.Contains(' '))
+                fileName = fileName.Split(' ')[0];
             var loadPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName + Path.DirectorySeparatorChar + fileName + FileExtension;
             if (!File.Exists(loadPath)) return;
             var gObjects = new List<GameObject>();
@@ -109,7 +111,14 @@ namespace Assets.TerraDefense.Implementations.IO
         public List<string> GetAllSaveNames()
         {
             var saveDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName;
-            return Directory.GetFileSystemEntries(saveDirectoryPath).Where(x => Path.GetExtension(x).Equals(FileExtension)).Select(y => Path.GetFileNameWithoutExtension(y)).ToList();
+            var fileList =  Directory.GetFileSystemEntries(saveDirectoryPath).Where(x => Path.GetExtension(x).Equals(FileExtension)).ToList();
+            var result = new List<string>();
+            foreach (var item in fileList)
+            {
+                var lastAccessTime = File.GetLastAccessTime(item);              
+                result.Add(Path.GetFileNameWithoutExtension(item) + " " + lastAccessTime.ToShortDateString() + " " + lastAccessTime.ToShortTimeString());
+            }
+            return result;
         }
 
         private string Crypt(string text)

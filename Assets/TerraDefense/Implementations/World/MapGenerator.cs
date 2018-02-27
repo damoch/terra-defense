@@ -44,7 +44,7 @@ namespace Assets.TerraDefense.Implementations.World
 
         public GameObject UnitTriggerObject;
         private List<Province> _generatedProvinces;
-
+        public Camera MinimapCamera;
         private void Start()
         {
             SetupGameData();

@@ -81,13 +81,8 @@ namespace Assets.TerraDefense.Implementations.UI
 
         private void FixedUpdate()
         {
-            try
-            {
+            if(GlobalPanicText && Player && Player.Alliance)
                 GlobalPanicText.text = "Global panic value: " + ((int)Player?.Alliance?.AveragePanic).ToString() ?? "";
-            }catch(Exception ex)
-            {
-                Debug.Log(ex);
-            }
         }
 
         public void HourEvent()
