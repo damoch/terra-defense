@@ -3,6 +3,7 @@ using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
@@ -76,12 +77,12 @@ namespace Assets.TerraDefense.Implementations.Factions
             if (totalAirAttack < enemyAircraftsCount * AvgAirAttackVal && _airUnits.Exists(x => x.Cost <= Credits))
             {
                 _airUnits.Sort((x,y) => x.AirAttackValue.CompareTo(y.AirAttackValue));
-                instance = Instantiate(_airUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition, Quaternion.identity);
+                instance = GameController.GetUnitInstance(_airUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition);//, Quaternion.identity);
             }
             else if(_groundUnits.Exists(x => x.Cost <= Credits))
             {
                 _groundUnits.Sort((x,y) => x.AttackValue.CompareTo(y.AttackValue));
-                instance = Instantiate(_groundUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition, Quaternion.identity);
+                instance = GameController.GetUnitInstance(_groundUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition);//Instantiate(_groundUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition, Quaternion.identity);
             }
             else
             {

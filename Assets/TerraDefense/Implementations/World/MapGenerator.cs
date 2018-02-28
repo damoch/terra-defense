@@ -3,6 +3,7 @@ using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Players;
 using Assets.TerraDefense.Implementations.UI;
 using Assets.TerraDefense.Implementations.Units;
+using GController =  Assets.TerraDefense.Implementations.Controllers.GameController;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -112,7 +113,7 @@ namespace Assets.TerraDefense.Implementations.World
                 var x = Random.Range(0, MapSquareLength);
                 var y = Random.Range(0, MapSquareHeight);
                 var province = _provincesMap[x][y];
-                var platform = Instantiate(AlienPlatformGameObject).GetComponent<PlatformUnit>();
+                var platform = GController.GetUnitInstance(AlienPlatformGameObject, Vector2.zero).GetComponent<PlatformUnit>();
                 platform.AliensOwner = Aliens;
                 platform.transform.position = province.transform.position;
                 platform.OnDestroyed += FindObjectOfType<UI.UIController>().UpdateHumanVictoryProgressText;
@@ -168,7 +169,7 @@ namespace Assets.TerraDefense.Implementations.World
                 for (var u = 0; u < NumberOfStartUnits; u++)
                 {
                     var unit =
-                        Instantiate(country.AvaibleUnits[Random.Range(0, country.AvaibleUnits.Count - 1)].gameObject)
+                        GController.GetUnitInstance(country.AvaibleUnits[Random.Range(0, country.AvaibleUnits.Count - 1)].gameObject,  Vector2.zero)
                             .GetComponent<Unit>();
                     unit.Owner = country;
                     var province = provinces[Random.Range(0, provinces.Count - 1)];

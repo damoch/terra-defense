@@ -37,7 +37,8 @@ namespace Assets.TerraDefense.Implementations.World
                 try
                 {
                     var unit = losingArmy[i];
-                    unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue);
+                    if(!unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue))
+                        losingArmy[i] = null;
 
                 }
                 catch (Exception e)
@@ -47,7 +48,7 @@ namespace Assets.TerraDefense.Implementations.World
                 yield return null;
             }
 #if UNITY_EDITOR
-            losingArmy.RemoveAll(x => x.Status <= 0);
+            losingArmy.RemoveAll(x => x == null);
 #endif
             if (losingArmy.Count > 0)
             {
@@ -59,7 +60,8 @@ namespace Assets.TerraDefense.Implementations.World
                     try
                     {
                         var unit = winningArmy[i];
-                        unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -counterValue : -counterAirValue);
+                        if (!unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue))
+                            winningArmy[i] = null;
 
                     }
                     catch (Exception e)
@@ -70,7 +72,7 @@ namespace Assets.TerraDefense.Implementations.World
                 }
 
 #if UNITY_EDITOR
-                winningArmy.RemoveAll(x => x.Status <= 0);
+                winningArmy.RemoveAll(x => x == null);
 #endif
             }
 

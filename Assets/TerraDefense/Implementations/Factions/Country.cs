@@ -4,6 +4,7 @@ using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
@@ -113,7 +114,7 @@ namespace Assets.TerraDefense.Implementations.Factions
                 return null;
             }
             Credits -= unit.Cost;
-            var instance = Instantiate(unit.gameObject, spawnPosition, Quaternion.identity);
+            var instance = GameController.GetUnitInstance(unit.gameObject, spawnPosition);//, Quaternion.identity);
             instance.GetComponent<Unit>().Owner = this;
             var trigger = Instantiate(UnitTriggerObject, spawnPosition, Quaternion.identity);
             trigger.transform.parent = instance.transform;

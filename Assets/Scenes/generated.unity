@@ -3684,6 +3684,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.size
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4535219708129026, guid: a5dd6317ae0cfb3499161e7156225e69, type: 2}
       propertyPath: m_LocalPosition.x
       value: -7.0202627
@@ -3756,6 +3761,71 @@ Prefab:
       propertyPath: Generator
       value: 
       objectReference: {fileID: 313574735}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[0]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: e9e00eda8fe1b494b8ec2f4656364ce6,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[1]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: 39940f7e5f381674dbfefbfda95156b1,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[2]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: 0014c6842b869c14889e98c978e787d4,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[3]
+      value: 
+      objectReference: {fileID: 1741497933629170, guid: 33e7e44100d66494b80d88e4db4f379e,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[4]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: 2575f9b89853b894f82bd2b8fb9a5739,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[5]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: 4eaea6728a768784ea0a8d68b3664ec3,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[6]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: 3dc9d89089a2d2c4a8328a1a69989609,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[7]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: b894f0a7f26c9584eb0feedab9a43be9,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[8]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: 87a7325201fc3bb468572f08321888f3,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: UnitsInGame.Array.data[9]
+      value: 
+      objectReference: {fileID: 1205978006855586, guid: 7765d3c13d262f2459eb4c74fd866467,
+        type: 2}
+    - target: {fileID: 114244393136045138, guid: a5dd6317ae0cfb3499161e7156225e69,
+        type: 2}
+      propertyPath: BasePoolSize
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5dd6317ae0cfb3499161e7156225e69, type: 2}
   m_IsPrefabParent: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
@@ -127,7 +128,7 @@ namespace Assets.TerraDefense.Implementations.Units
             return TargetProvince.DefenseValue + 1 > sum && !ShouldMove();
         }
 
-        public override void ModifyStatus(float value)
+        public override bool ModifyStatus(float value)
         {
             Status += value;
             if (Status <= 0)
@@ -141,12 +142,15 @@ namespace Assets.TerraDefense.Implementations.Units
                         platform.Units.AddRange(Units);
                     }
                 }
+                Units.Clear();
                 OnDestroyed?.Invoke();
-                Destroy(gameObject);
+                GameController.RemoveUnit(gameObject);
+                return false;
             }
             var propertyModifier = Status / (float)InitialStatus;
             AttackValue *= propertyModifier;
             DefenceValue *= propertyModifier;
+            return true;
         }
     }
 }

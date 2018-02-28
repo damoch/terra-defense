@@ -73,35 +73,6 @@ namespace Assets.TerraDefense.Implementations.World
             BattleHandler = new BattleHandler();
         }
 
-        private void CheckSurrondings()
-        {
-            //StartCoroutine(ExecuteCheck());
-           // NeighborhoodChecker.AddJobToQueue(this);
-        }
-
-        private IEnumerator ExecuteCheck()
-        {
-            var hitColliders = Physics2D.OverlapCircleAll(transform.position, 100);
-
-            foreach (var hitCollider in hitColliders)
-            {
-                var unit = hitCollider.gameObject.GetComponent<Unit>();
-                try
-                {
-                    if (unit != null && Owner.IsEnemy(unit))
-                    {
-                        Owner.EnemyIsCloseToProperty(gameObject);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e.Message);
-                }
-
-            }
-            yield return null;
-        }
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             

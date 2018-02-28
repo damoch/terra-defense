@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
+using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
@@ -47,7 +48,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             if (AvaibleUnits[0].Cost <= Credits)
             {
                 Credits -= AvaibleUnits[0].Cost;
-                var instance = Instantiate(AvaibleUnits[0].gameObject, spawnPosition, Quaternion.identity);
+                var instance = GameController.GetUnitInstance(AvaibleUnits[0].gameObject, spawnPosition);//, Quaternion.identity);
                 instance.GetComponent<Unit>().Owner = this;
                 return instance;
             }

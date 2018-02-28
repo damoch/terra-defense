@@ -6,6 +6,7 @@ using Assets.TerraDefense.Implementations.World;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using Assets.TerraDefense.Implementations.Controllers;
 
 namespace Assets.TerraDefense.Implementations.Units
 {
@@ -71,17 +72,19 @@ namespace Assets.TerraDefense.Implementations.Units
             Target = newTarget;
         }
         
-        public virtual void ModifyStatus(float value)
+        public virtual bool ModifyStatus(float value)
         {
             Status += value;
             if (Status <= 0/* && !Application.isEditor*/)
             {
-                Destroy(gameObject);
+                GameController.RemoveUnit(gameObject);//Destroy(gameObject);
+                return false;
             }
             var propertyModifier = Status / (float)InitialStatus;
             AttackValue  *= propertyModifier;
             DefenceValue *= propertyModifier;
             OnStatusUpdate?.Invoke(this);
+            return true;
         }
 
         public void HourEvent()

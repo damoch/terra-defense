@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Data;
 using Assets.TerraDefense.Implementations.Factions;
@@ -21,10 +22,15 @@ namespace Assets.TerraDefense.Implementations.Controllers
         public SaveLoadManager SaveLoadManager;
         
         public int ProvincesPerCountry;
+        public List<GameObject> UnitsInGame;
         private bool _gamePaused;
+        private static Dictionary<string, Stack<GameObject>> _unitsPool;
+        private static List<GameObject> _unitPrototypes;
+        public int BasePoolSize;
         
         public MapGenerator Generator;
         private void Start () {
+            PrepareUnitPools();
             //PlayerPrefs.DeleteAll(); //fix loading problems
             if (PlayerPrefs.HasKey("StartInstruction"))
             {
@@ -47,8 +53,27 @@ namespace Assets.TerraDefense.Implementations.Controllers
            
         }
 
+        private void PrepareUnitPools()
+        {
+            _unitsPool = new Dictionary<string, Stack<GameObject>>();
+            _unitPrototypes = new List<GameObject>();
+            foreach(var unitType in UnitsInGame)
+            {
+                if (!_unitsPool.Keys.Contains(unitType.GetComponent<Unit>().UnitName))
+                {
+                    _unitsPool.Add(unitType.GetComponent<Unit>().UnitName, new Stack<GameObject>());
+                    _unitPrototypes.Add(unitType);
+                }
+                for(var i = 0; i < BasePoolSize; i++)
+                {
+                    var unit = Instantiate(unitType);
+                    unit.SetActive(false);
+                    _unitsPool[unitType.GetComponent<Unit>().UnitName].Push(unit);
+                }
 
-    
+            }
+        }
+
         private bool IsPowerOfTwo(double x)
         {
             while (((x % 2) == 0) && x > 1)
@@ -72,6 +97,29 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 _gamePaused = false;
                 Menu.SetActive(false);
             }
+        }
+
+        public static GameObject GetUnitInstance(GameObject prototype, Vector3 worldCoordinates)
+        {
+            var unitName = prototype.GetComponent<Unit>().UnitName;
+            GameObject result;
+            if (_unitsPool[unitName].Count == 0)result = Instantiate(_unitPrototypes.FirstOrDefault(x => x.GetComponent<Unit>().UnitName == unitName));
+            else result = _unitsPool[prototype.GetComponent<Unit>().UnitName].Pop();
+            result.transform.position = worldCoordinates;
+            result.SetActive(true);
+            return result;
+        }
+
+        public static void RemoveUnit(GameObject unit)
+        {
+            unit.SetActive(false);
+            unit.transform.position = Vector2.zero;
+            var prototype = _unitPrototypes.First(x => x.GetComponent<Unit>().UnitName == unit.GetComponent<Unit>().UnitName).GetComponent<Unit>();
+            unit.GetComponent<Unit>().Status = prototype.Status;
+            unit.GetComponent<Unit>().AirAttackValue = prototype.AirAttackValue;
+            unit.GetComponent<Unit>().AttackValue = prototype.AttackValue;
+            unit.GetComponent<Unit>().DefenceValue = prototype.DefenceValue;
+            _unitsPool[prototype.UnitName].Push(unit);
         }
 
     }
