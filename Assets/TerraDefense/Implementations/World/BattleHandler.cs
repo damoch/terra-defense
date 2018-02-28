@@ -47,9 +47,9 @@ namespace Assets.TerraDefense.Implementations.World
                 }
                 yield return null;
             }
-#if UNITY_EDITOR
+
             losingArmy.RemoveAll(x => x == null);
-#endif
+
             if (losingArmy.Count > 0)
             {
                 var counterValue = losingArmy.Sum(x => x.AttackValue);
@@ -71,9 +71,9 @@ namespace Assets.TerraDefense.Implementations.World
                     yield return null;
                 }
 
-#if UNITY_EDITOR
+
                 winningArmy.RemoveAll(x => x == null);
-#endif
+
             }
 
 
