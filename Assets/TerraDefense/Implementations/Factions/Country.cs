@@ -199,7 +199,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             return dictToSearch.Keys.Count == 0 ? null : dictToSearch.First(a => a.Value == dictToSearch.Values.Max()).Key;
         }
 
-        public void SetupTimeValues()
+        public void SetupTimeValues(float seconds)
         {
             //throw new System.NotImplementedException();
         }

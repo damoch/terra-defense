@@ -106,6 +106,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
             if (_unitsPool[unitName].Count == 0)result = Instantiate(_unitPrototypes.FirstOrDefault(x => x.GetComponent<Unit>().UnitName == unitName));
             else result = _unitsPool[prototype.GetComponent<Unit>().UnitName].Pop();
             result.transform.position = worldCoordinates;
+            result.GetComponent<Unit>().SetNewTarget(worldCoordinates);
             result.SetActive(true);
             return result;
         }
@@ -119,6 +120,8 @@ namespace Assets.TerraDefense.Implementations.Controllers
             unit.GetComponent<Unit>().AirAttackValue = prototype.AirAttackValue;
             unit.GetComponent<Unit>().AttackValue = prototype.AttackValue;
             unit.GetComponent<Unit>().DefenceValue = prototype.DefenceValue;
+            unit.GetComponent<Unit>().Owner = null;
+            //unit.GetComponent<Unit>().SetNewTarget(Vector2.zero);
             _unitsPool[prototype.UnitName].Push(unit);
         }
 

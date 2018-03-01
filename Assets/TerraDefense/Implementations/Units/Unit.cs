@@ -43,7 +43,6 @@ namespace Assets.TerraDefense.Implementations.Units
                 Cost = 5;
             }
             Target = transform.position;
-            SetupTimeValues();
             InitialStatus = Status;
             GetComponent<SpriteRenderer>().color = Owner.UnitColor;
         }
@@ -92,10 +91,9 @@ namespace Assets.TerraDefense.Implementations.Units
             Debug.Log("Test");
         }
 
-        public void SetupTimeValues()
+        public void SetupTimeValues(float seconds)
         {
-            var clock = FindObjectOfType<Clock>();
-            UnitSpeed = UnitSpeed / clock.LengthOfHour;
+            UnitSpeed = UnitSpeed / seconds;
         }
 
         public virtual Dictionary<string, string> GetSavableData()

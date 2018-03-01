@@ -60,7 +60,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             Debug.Log(Name);
         }
 
-        public void SetupTimeValues()
+        public void SetupTimeValues(float seconds)
         {
             //throw new NotImplementedException();
         }

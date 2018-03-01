@@ -10,6 +10,7 @@ namespace Assets.TerraDefense.Implementations.World
     public class Clock : MonoBehaviour, ISaveLoad
     {
         public DateTime GameDateTime { get; set; }
+        private float _currentTime;
 
         public int Priority
         {
@@ -23,8 +24,19 @@ namespace Assets.TerraDefense.Implementations.World
         
         private void Start () {
 		    GameDateTime = new DateTime(2075,4,5,6,0,0);
-            if(LengthOfHour > 0)
-                InvokeRepeating("HourEvent", LengthOfHour, LengthOfHour);
+            _currentTime = 0;
+            //if(LengthOfHour > 0)
+            //    InvokeRepeating("HourEvent", LengthOfHour, LengthOfHour);
+        }
+
+        private void Update()
+        {
+            _currentTime += Time.deltaTime;
+            if(_currentTime >= LengthOfHour)
+            {
+                HourEvent();
+                _currentTime = 0;
+            }
         }
 
         private void HourEvent()
@@ -56,6 +68,7 @@ namespace Assets.TerraDefense.Implementations.World
         {
             var result = new Dictionary<string, string>
             {
+                { "currentTime", _currentTime.ToString() },
                 { "lengthOfHour", LengthOfHour.ToString() },
                 { "gameDate", GameDateTime.ToString() },
                 { "name", gameObject.name },
@@ -67,6 +80,7 @@ namespace Assets.TerraDefense.Implementations.World
 
         public void SetSavableData(Dictionary<string, string> json)
         {
+            _currentTime = (json.ContainsKey("currentTime") ? float.Parse(json["currentTime"]) : 0f);
             GameDateTime = DateTime.Parse(json["gameDate"]);
             LengthOfHour = float.Parse(json["lengthOfHour"]);
             InvokeRepeating("HourEvent", LengthOfHour, LengthOfHour);

@@ -3,6 +3,6 @@
     public interface ITimeAffected
     {
         void HourEvent();
-        void SetupTimeValues();
+        void SetupTimeValues(float hourLength);
     }
 }

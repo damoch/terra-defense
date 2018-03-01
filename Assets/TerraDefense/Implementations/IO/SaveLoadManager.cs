@@ -8,16 +8,18 @@ using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.World;
 using System.IO;
 using System.Text;
+using Assets.TerraDefense.Abstractions.World;
 
 namespace Assets.TerraDefense.Implementations.IO
 {
-    public class SaveLoadManager : MonoBehaviour
+    public class SaveLoadManager : MonoBehaviour, ITimeAffected
     {
         public string AutoSaveKey;
         public List<GameObject> LoadableObjects;
         public string FileExtension;
 
         public string LoadGameNameKey;
+        public int HoursToAutoSave;
 
         private Component GetLoadableObject(Type type)
         {
@@ -131,6 +133,16 @@ namespace Assets.TerraDefense.Implementations.IO
         {
             return Encoding.Unicode.GetString(
                      Convert.FromBase64String(text));
+        }
+
+        public void HourEvent()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void SetupTimeValues(float seconds)
+        {
+            //throw new NotImplementedException();
         }
     }
 

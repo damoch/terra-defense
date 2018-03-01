@@ -56,7 +56,6 @@ namespace Assets.TerraDefense.Implementations.World
         {
             if (Owner == null) Owner = UnitOwner.GetByName(_ownerName);
             if (_originaOwnerName != null) _originalOwner = UnitOwner.GetByName(_originaOwnerName);
-            SetupTimeValues();
            
             IsBattle = false;
             #if UNITY_EDITOR
@@ -214,7 +213,7 @@ namespace Assets.TerraDefense.Implementations.World
            // Owner.Credits += CreditsPerHour;
         }
 
-        public void SetupTimeValues()
+        public void SetupTimeValues(float seconds)
         {
             AlertDelay = FindObjectOfType<Clock>().LengthOfHour / 4;
         }

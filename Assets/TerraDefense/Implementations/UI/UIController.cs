@@ -125,7 +125,7 @@ namespace Assets.TerraDefense.Implementations.UI
             UnitStatusText.text = "";
         }
 
-        public void SetupTimeValues()
+        public void SetupTimeValues(float seconds)
         {
             HourEvent();
         }
