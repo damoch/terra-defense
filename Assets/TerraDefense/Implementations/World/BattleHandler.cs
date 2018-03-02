@@ -24,8 +24,21 @@ namespace Assets.TerraDefense.Implementations.World
             yield return null;
 
             var damageValue = Math.Abs(totalDefense - totalAttack);
-            var losingArmy = totalAttack > totalDefense ? alliedUnits : enemyUnits;
-            var winningArmy = totalAttack <= totalDefense ? alliedUnits : enemyUnits;
+
+            List<Unit> losingArmy;
+            List<Unit> winningArmy;
+            if(totalAttack > totalDefense)
+            {
+                winningArmy = enemyUnits;
+                losingArmy = alliedUnits;
+            }
+            else
+            {
+                winningArmy = alliedUnits;
+                losingArmy = enemyUnits;
+            }
+            //var losingArmy = totalAttack > totalDefense ? alliedUnits : enemyUnits;
+            //var winningArmy = totalAttack <= totalDefense ? alliedUnits : enemyUnits;
             yield return null;
             var totalAirAttack = enemyUnits.Sum(unit => unit.AirAttackValue);
             var totalAirDefense = alliedUnits.Sum(unit => unit.AirAttackValue);
@@ -37,9 +50,7 @@ namespace Assets.TerraDefense.Implementations.World
                 try
                 {
                     var unit = losingArmy[i];
-                    if(!unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue))
-                        losingArmy[i] = null;
-
+                    unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue);
                 }
                 catch (Exception e)
                 {
@@ -48,7 +59,7 @@ namespace Assets.TerraDefense.Implementations.World
                 yield return null;
             }
 
-            losingArmy.RemoveAll(x => x == null);
+            losingArmy.RemoveAll(x => !x.gameObject.activeInHierarchy);
 
             if (losingArmy.Count > 0)
             {
@@ -60,9 +71,7 @@ namespace Assets.TerraDefense.Implementations.World
                     try
                     {
                         var unit = winningArmy[i];
-                        if (!unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue))
-                            winningArmy[i] = null;
-
+                        unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue);                      
                     }
                     catch (Exception e)
                     {
@@ -72,7 +81,7 @@ namespace Assets.TerraDefense.Implementations.World
                 }
 
 
-                winningArmy.RemoveAll(x => x == null);
+                winningArmy.RemoveAll(x => !x.gameObject.activeInHierarchy);
 
             }
 

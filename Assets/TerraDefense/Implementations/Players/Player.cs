@@ -181,7 +181,6 @@ namespace Assets.TerraDefense.Implementations.Players
         {
             return new Dictionary<string, string>
             {
-                { "type", GetType().FullName },
                 { "name", gameObject.name },
                 { "alliance", Alliance.Name }
             };

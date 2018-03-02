@@ -18,20 +18,29 @@ namespace Assets.TerraDefense.Implementations.UI
         public RectTransform ScrollViewContent;
         public Button OriginalObj;
         public InputField SaveName;
+        public Button SaveButton;
+        public bool CanSave;
         private void Awake()
         {
             OnActivation();
         }
         public void OnActivation()
         {
+            SaveName.gameObject.SetActive(CanSave);
+            SaveButton.gameObject.SetActive(CanSave);
             var filenames = SaveLoadManager.GetAllSaveNames();
             var itemsCount = ScrollViewContent.childCount;
             var enumerator = 0;
+            var baseY = -15;
             foreach(var fileName in filenames)
             {
                 Button button;
                 if (itemsCount > 0) button = ScrollViewContent.GetChild(enumerator++).GetComponent<Button>();
-                else  button = Instantiate(OriginalObj);
+                else
+                { 
+                    button = Instantiate(OriginalObj);
+                    button.transform.position = new Vector2(0, baseY);
+                }
                 button.name = fileName;
                 button.GetComponentInChildren<Text>().text = fileName;
                 button.onClick.AddListener(delegate
@@ -42,6 +51,7 @@ namespace Assets.TerraDefense.Implementations.UI
                 if(button.transform.parent == null)button.transform.SetParent(ScrollViewContent, false);
                 button.gameObject.SetActive(true);
                 itemsCount--;
+                baseY -= 30;
             }
             if (itemsCount <= 0) return;
             for (var i = enumerator; i < ScrollViewContent.childCount; i++)

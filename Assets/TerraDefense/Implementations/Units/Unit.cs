@@ -101,7 +101,6 @@ namespace Assets.TerraDefense.Implementations.Units
             var dictionary = new Dictionary<string, string>
             {
                 { "name", gameObject.name },
-                { "type", GetType().FullName  },
                 { "position", JsonConvert.SerializeObject(transform.position) },
                 { "unitSpeed", UnitSpeed.ToString() },
                 { "ownerName", Owner.Name }
@@ -121,6 +120,7 @@ namespace Assets.TerraDefense.Implementations.Units
         }
         public void ChangeOwner(UnitOwner newOwner)
         {
+            GetComponent<SpriteRenderer>().color = Color.white;
             Owner = newOwner;
             GetComponent<SpriteRenderer>().color = Owner.UnitColor;
         }

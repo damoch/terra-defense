@@ -72,7 +72,6 @@ namespace Assets.TerraDefense.Implementations.World
                 { "lengthOfHour", LengthOfHour.ToString() },
                 { "gameDate", GameDateTime.ToString() },
                 { "name", gameObject.name },
-                { "type", GetType().FullName }
             };
 
             return result;

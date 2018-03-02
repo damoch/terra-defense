@@ -66,7 +66,6 @@ namespace Assets.TerraDefense.Implementations.World
             #endif
 
             _originalOwner = Owner;
-            InvokeRepeating("CheckSurrondings", AlertDelay, AlertDelay);
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRenderer.color = Owner.Color;
             BattleHandler = new BattleHandler();
@@ -223,7 +222,6 @@ namespace Assets.TerraDefense.Implementations.World
             return new Dictionary<string, string>
             {
                 { "name", gameObject.name },
-                { "type", GetType().FullName  },
                 { "originalOwner", _originalOwner.Name },
                 { "owner", Owner.Name },
                 { "position", JsonConvert.SerializeObject(transform.position) },

@@ -44,7 +44,6 @@ namespace Assets.TerraDefense.Abstractions.Factions
         {
             var resultDict = new Dictionary<string, string>
             {
-                { "type", GetType().FullName },
                 { "name", gameObject.name },
                 { "countryName", Name },
                 { "credits", Credits.ToString() },

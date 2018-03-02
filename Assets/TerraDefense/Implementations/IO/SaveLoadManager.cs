@@ -20,7 +20,7 @@ namespace Assets.TerraDefense.Implementations.IO
 
         public string LoadGameNameKey;
         public int HoursToAutoSave;
-
+        private int _currentHour = 0;
         private Component GetLoadableObject(Type type)
         {
             var result = LoadableObjects.FirstOrDefault(x => x.GetComponent(type) != null);
@@ -42,7 +42,10 @@ namespace Assets.TerraDefense.Implementations.IO
                     if (!resultsList.ContainsKey(priority))
                         resultsList.Add(priority, new List<Dictionary<string, string>>());
 
-                    resultsList[priority].Add(saveLoad.GetSavableData());
+                    var data = saveLoad.GetSavableData();
+                    data.Add("type", saveLoad.GetType().ToString());
+
+                    resultsList[priority].Add(data);
                 }
             }
             var saveData = JsonConvert.SerializeObject(resultsList);
@@ -64,6 +67,7 @@ namespace Assets.TerraDefense.Implementations.IO
             File.WriteAllText(System.Reflection.Assembly.GetExecutingAssembly().Location + fileName + ".txt", saveData);
             Debug.Log("File saved to " + System.Reflection.Assembly.GetExecutingAssembly().Location + AutoSaveKey + ".txt");
 #endif
+            Debug.Log("Saved game " + savePath);
         }
 
         public void LoadGame(string fileName)
@@ -137,7 +141,9 @@ namespace Assets.TerraDefense.Implementations.IO
 
         public void HourEvent()
         {
-            //throw new NotImplementedException();
+            if (++_currentHour < HoursToAutoSave) return;
+            _currentHour = 0;
+            SaveGame(AutoSaveKey);
         }
 
         public void SetupTimeValues(float seconds)
