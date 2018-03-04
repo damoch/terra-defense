@@ -11,6 +11,7 @@ namespace Assets.TerraDefense.Implementations.UI
         public GameObject Options;
         public AudioSource MusicSource;
         public GameObject SaveLoadPanel;
+        public bool IsMenuActive { get { return Time.timeScale == 1; }}
 
         private void Start()
         {
@@ -56,19 +57,30 @@ namespace Assets.TerraDefense.Implementations.UI
         }
         public void QuitButtonClicked()
         {
-
+            Application.Quit();
         }
 
         public void BringUpMainMenu()
         {
-            gameObject.SetActive(true);
-            Time.timeScale = 0;
+            if (!IsMenuActive)
+            {
+                gameObject.SetActive(true);
+                Time.timeScale = 0;
+            }
         }
 
         public void TurnOffMenu()
         {
-            gameObject.SetActive(false);
-            Time.timeScale = 1;
+            if (IsMenuActive)
+            {
+                gameObject.SetActive(false);
+                Time.timeScale = 1;
+            }
+        }
+
+        public void ExitToMenu()
+        {
+            SceneManager.LoadScene("mainMenu");
         }
     }
 }

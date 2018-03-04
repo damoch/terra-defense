@@ -112,10 +112,8 @@ namespace Assets.TerraDefense.Implementations.Units
         {
             transform.position = JsonConvert.DeserializeObject<Vector3>( json["position"]);
             UnitSpeed = float.Parse(json["unitSpeed"]);
-
-            //Owner = UnitOwner.GetByName((string)json["ownerName"]);
+            
             _ownerName = json["ownerName"];
-            //transform.position = position;
 
         }
         public void ChangeOwner(UnitOwner newOwner)

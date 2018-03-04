@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Players;
 using Assets.TerraDefense.Implementations.Units;
-using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
 using UnityEngine.UI;
@@ -201,10 +198,15 @@ namespace Assets.TerraDefense.Implementations.UI
         public void SendCreditsClicked()
         {
             var moneyToSend = int.Parse(CreditsInputField.text);
-            if (moneyToSend > Player.Alliance.Credits) return;
+            if (moneyToSend > Player.Alliance.Credits)
+            {
+                CreditsInputField.text = Player.Alliance.Credits.ToString();
+                return;
+            }
             Player.Alliance.Credits -= moneyToSend;
             HandledCountry.ReceiveInternationalHelp(moneyToSend);
             FoundsUpdate(Player.Alliance.Credits);
+            CreditsInputField.text = "0";
         }
 
         public void SetProvinceData(Province province)

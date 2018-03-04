@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Enums;
-using Assets.TerraDefense.Implementations.Data;
-using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.IO;
-using Assets.TerraDefense.Implementations.Players;
-using Assets.TerraDefense.Implementations.UI;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.TerraDefense.Implementations.Controllers
 {
@@ -38,13 +35,16 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 switch (option)
                 {
                     case StartInstruction.LoadGame:
-                        if (SaveLoadManager.LoadGameNameKey == null || !PlayerPrefs.HasKey(SaveLoadManager.LoadGameNameKey))
+                        if (SaveLoadManager.LoadGameNameKey == null || 
+                            !PlayerPrefs.HasKey(SaveLoadManager.LoadGameNameKey) || 
+                            !SaveLoadManager.LoadGame(PlayerPrefs.GetString(SaveLoadManager.LoadGameNameKey)))
                         {
+                            
                             Debug.LogError("Load failed");
+                            PlayerPrefs.DeleteKey(SaveLoadManager.LoadGameNameKey);
+                            SceneManager.LoadScene("mainMenu");
                             break;
                         }
-                        SaveLoadManager.LoadGame(PlayerPrefs.GetString(SaveLoadManager.LoadGameNameKey));
-                        PlayerPrefs.DeleteKey(SaveLoadManager.LoadGameNameKey);
                         return;
                 }
 

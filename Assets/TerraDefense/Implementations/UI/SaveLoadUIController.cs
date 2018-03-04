@@ -1,11 +1,5 @@
 ﻿using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.IO;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,11 +14,12 @@ namespace Assets.TerraDefense.Implementations.UI
         public InputField SaveName;
         public Button SaveButton;
         public bool CanSave;
+        public GameObject MainMenu;
         private void Awake()
         {
-            OnActivation();
+            ReloadSaveList();
         }
-        public void OnActivation()
+        public void ReloadSaveList()
         {
             SaveName.gameObject.SetActive(CanSave);
             SaveButton.gameObject.SetActive(CanSave);
@@ -70,7 +65,14 @@ namespace Assets.TerraDefense.Implementations.UI
         public void OnSaveGameClicked()
         {
             SaveLoadManager.SaveGame(SaveName.text);
-            OnActivation();
+            SaveName.text = "";
+            ReloadSaveList();
+        }
+
+        public void GoBackClicked()
+        {
+            gameObject.SetActive(false);
+            MainMenu.SetActive(true);
         }
     }
 }

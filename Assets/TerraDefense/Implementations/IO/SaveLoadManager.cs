@@ -70,21 +70,38 @@ namespace Assets.TerraDefense.Implementations.IO
             Debug.Log("Saved game " + savePath);
         }
 
-        public void LoadGame(string fileName)
+        public bool LoadGame(string fileName)
         {
             if (fileName == null || fileName == "") fileName = AutoSaveKey;
             if(fileName.Contains(' '))
                 fileName = fileName.Split(' ')[0];
             var loadPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName + Path.DirectorySeparatorChar + fileName + FileExtension;
-            if (!File.Exists(loadPath)) return;
+            if (!File.Exists(loadPath)) return false;
             var gObjects = new List<GameObject>();
-            var json = File.ReadAllText(loadPath);
+            string json;
+            try
+            {
+                json = File.ReadAllText(loadPath);
+            }
+            catch(Exception ex)
+            {
+                Debug.Log(ex);
+                return false;
+            }
 
 #if !DEBUG            
             json = Derypt(saveData);
 #endif      
-
-            var list = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<string, string>>>>(json);
+            Dictionary<int, List<Dictionary<string, string>>> list;
+            try
+            {
+                list = JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<string, string>>>>(json);
+            }
+            catch(Exception ex)
+            {
+                Debug.Log(ex);
+                return false;
+            }
             var sortedPriorities = list.Keys.ToList();
             sortedPriorities.Sort();
 
@@ -112,6 +129,7 @@ namespace Assets.TerraDefense.Implementations.IO
                 }
             }
             PlayerPrefs.SetString("StartInstruction", StartInstruction.NewGame.ToString());
+            return true;
         }
 
         public List<string> GetAllSaveNames()
