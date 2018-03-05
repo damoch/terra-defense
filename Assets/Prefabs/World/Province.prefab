@@ -167,6 +167,7 @@ MonoBehaviour:
   FriendlyStayRepairFactor: 0.025
   DefensePosition: {fileID: 4390330778923972}
   AttackPosition: {fileID: 4868143735097278}
+  NewUnitOffset: 1
 --- !u!212 &212431510759337010
 SpriteRenderer:
   m_ObjectHideFlags: 1
