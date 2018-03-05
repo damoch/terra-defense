@@ -2,7 +2,6 @@
 using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
-using Assets.TerraDefense.Implementations.World;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
@@ -12,7 +11,7 @@ namespace Assets.TerraDefense.Implementations.Units
 {
     public class Unit : MonoBehaviour, ITimeAffected, ISaveLoad
     {
-        protected Vector3 Target;
+        public Vector3 Target;
         public string UnitName;
         public UnitOwner Owner;
         public float Status;

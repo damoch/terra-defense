@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
+using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.World;
 using UnityEngine;
@@ -9,7 +10,10 @@ namespace Assets.TerraDefense.Implementations.Utils
 {
     public class UtilsAndTools : MonoBehaviour
     {
-
+        public static Province FindNearestProvince(Country caller)
+        {
+            return FindObjectsOfType<Province>()?.FirstOrDefault(x => x.Owner == caller);
+        }
         public static Province FindNearestProvince(MonoBehaviour caller)
         {
             var possibleTargets = FindObjectsOfType<Province>().ToList();

@@ -52,8 +52,14 @@ namespace Assets.TerraDefense.Implementations.World
         }
         public float EnemyEnterDamageFactor;
         public float FriendlyStayRepairFactor;
+        public Transform DefensePosition;
+        public Transform AttackPosition;
+        private Collider2D _provinceBounds;
+        public float NewUnitOffset;
+
         private void Start ()
         {
+            _provinceBounds = GetComponent<Collider2D>();
             if (Owner == null) Owner = UnitOwner.GetByName(_ownerName);
             if (_originaOwnerName != null) _originalOwner = UnitOwner.GetByName(_originaOwnerName);
            
@@ -104,6 +110,7 @@ namespace Assets.TerraDefense.Implementations.World
 
             if (Owner.IsEnemy(unitComponent))
             {
+                unitComponent.SetNewTarget(GetNewUnitPosition(EnemyUnits.Count(), AttackPosition));
                 if(unitComponent.UnitType == Enums.UnitType.Ground && unitComponent.Owner != _originalOwner)
                     unitComponent.ModifyStatus(unitComponent.Status * -EnemyEnterDamageFactor);
                 EnemyUnits.Add(unitComponent);
@@ -120,6 +127,7 @@ namespace Assets.TerraDefense.Implementations.World
             }
             else 
             {
+                if (_provinceBounds.bounds.Contains(unitComponent.Target)) unitComponent.SetNewTarget(GetNewUnitPosition(AlliedUnits.Count(), DefensePosition));
                 AlliedUnits.Add(unitComponent);
             }
             UiHandle?.Invoke();
@@ -154,15 +162,15 @@ namespace Assets.TerraDefense.Implementations.World
                 _originalOwner.PropertyChangesOwner(this, proposedOwner != _originalOwner);
             }
             Owner = proposedOwner.GetType() == typeof(Aliens) ? proposedOwner : _originalOwner;
-
-            //if (_originalOwner == null && proposedOwner.GetType() == typeof(Country))
-            //{
-            //    _originalOwner = proposedOwner;
-            //}
-            //Owner = _originalOwner == null && proposedOwner.GetType() == typeof(Aliens) ? proposedOwner;
+            
             UiHandle?.Invoke();
             _spriteRenderer.color = Owner.Color;
             AlliedUnits = winningArmy;
+            var i = 0;
+            foreach (var un in AlliedUnits)
+            {
+                un.SetNewTarget(GetNewUnitPosition(i++, DefensePosition));
+            }
             EnemyUnits = new List<Unit>();
             IsBattle = false;
             OnOwnerChange?.Invoke();
@@ -240,6 +248,11 @@ namespace Assets.TerraDefense.Implementations.World
             var all = FindObjectsOfType<Province>().ToList();
             if (owner == null) return all;
             return all.Where(x => x.Owner == owner).ToList();
+        }
+
+        private Vector3 GetNewUnitPosition(int unitCount, Transform originPoint)
+        {
+            return new Vector3(originPoint.position.x + NewUnitOffset * unitCount, originPoint.position.y);
         }
     }
 }

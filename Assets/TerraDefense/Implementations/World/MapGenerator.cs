@@ -176,8 +176,9 @@ namespace Assets.TerraDefense.Implementations.World
                     if (province.AlliedUnits == null)
                         province.AlliedUnits = new List<Unit>();
                     province.AlliedUnits.Add(unit);
+                    unit.SetNewTarget(province.gameObject.transform.position);
                     unit.gameObject.transform.position = province.gameObject.transform.position;
-
+                    
                     var trigger = Instantiate(UnitTriggerObject, unit.gameObject.transform.position, Quaternion.identity);
                     trigger.transform.parent = unit.gameObject.transform;
                 }

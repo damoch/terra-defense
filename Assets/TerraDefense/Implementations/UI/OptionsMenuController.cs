@@ -87,7 +87,6 @@ namespace Assets.TerraDefense.Implementations.UI
         public void OnAudioSliderValueChange(Single value)
         {
             MusicSource.volume = AudioVolumeSlider.value;
-            Debug.Log(MusicSource.volume);
         }
     }
 
