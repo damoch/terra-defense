@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9242f8999c495a74b9ee1f332e8d6129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {x: 0, y: 0, z: 0}
   UnitName: ALien Platform Unit
   Owner: {fileID: 0}
   Status: 100

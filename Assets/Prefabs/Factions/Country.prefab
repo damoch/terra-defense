@@ -69,5 +69,5 @@ MonoBehaviour:
   ProvinceLostPanic: 15
   TaxHour: 8
   TaxValue: 10
-  MinimalUnitCount: 12
+  MinimalUnitCount: 5
   MinimalUnitCountOffset: 2
