@@ -52,9 +52,10 @@ namespace Assets.TerraDefense.Implementations.Players
         private void FixOrders(List<PlatformUnit> platforms)
         {
 
-            foreach (var ordersKey in _orders.Keys)
+            for (var i = 0; i < _orders.Count(); i++)
             {
-                if (!platforms.Contains(ordersKey))
+                var ordersKey = _orders.Keys.ToList()[i];
+                if (!platforms.Contains(ordersKey) || !ordersKey.CurrentProvince)
 
 
                     try

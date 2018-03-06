@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.IO;
@@ -32,14 +33,15 @@ namespace Assets.TerraDefense.Implementations.Factions
             }
         }
         public bool PanicEffect { get { return PanicLevel > Alliance.AveragePanic; } }
+
         private string _allianceName;
-        public delegate void BudgetUpdateDelegate();
-        public BudgetUpdateDelegate OnStatusUpdate;
+        public Action OnStatusUpdate;
         private int _hourNumber;
         public int TaxHour;
         public float TaxValue;
         private int _panicLevel;
-
+        public int MinimalUnitCount;
+        public int MinimalUnitCountOffset;
         public Country()
         {
             _handler = new CountryEventsHandler(this);
@@ -114,7 +116,7 @@ namespace Assets.TerraDefense.Implementations.Factions
                 return null;
             }
             Credits -= unit.Cost;
-            var instance = GameController.GetUnitInstance(unit.gameObject, spawnPosition);//, Quaternion.identity);
+            var instance = GameController.GetUnitInstance(unit.gameObject, spawnPosition);
             instance.GetComponent<Unit>().Owner = this;
             var trigger = Instantiate(UnitTriggerObject, spawnPosition, Quaternion.identity);
             trigger.transform.parent = instance.transform;
@@ -165,6 +167,12 @@ namespace Assets.TerraDefense.Implementations.Factions
             var provinceUnderAttack = GetProvinceWithHighestValue(_provincesUnderAttack);
             var provinceWithEnemiesNear = GetProvinceWithHighestValue(_threatenedProvinces);
             var lostProvince = LostProvinces.Count > 0 ? LostProvinces[0] : null;
+
+            if (playerUnits.Count() < MinimalUnitCount + UnityEngine.Random.Range(0, MinimalUnitCountOffset))
+            {
+                ProduceUnit(Utils.UtilsAndTools.FindNearestProvince(this).transform.position);
+                return;
+            }
 
             if (lostProvince != null)
             {
@@ -220,7 +228,7 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public override void PropertyChangesOwner(Province province, bool isLost)
         {
-            if (FindObjectsOfType<Province>().Count(x => x.Owner == this) == 0)
+            if (FindObjectsOfType<Province>().Where(x => x.Owner == this).Count() == 0)
             {
                 Alliance.Countries.Remove(this);
                 var units = FindObjectsOfType<Unit>().Where(x => x.Owner == this).ToList();

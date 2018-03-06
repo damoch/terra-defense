@@ -217,6 +217,8 @@ namespace Assets.TerraDefense.Implementations.World
             }
             if (IsBattle || AlliedUnits.Count == 0 || AlliedUnits[0].Owner == Aliens.Instance) return;
             AlliedUnits.Where(x => x.IsHurt).ToList().ForEach(y => y.ModifyStatus(y.Status * FriendlyStayRepairFactor));
+            EnemyUnits.Where(x => x.gameObject.GetComponent<PlatformUnit>() != null && x.gameObject.GetComponent<PlatformUnit>().CurrentProvince == null).ToList().ForEach(y => y.gameObject.GetComponent<PlatformUnit>().CurrentProvince = this);
+            AlliedUnits.Where(x => x.gameObject.GetComponent<PlatformUnit>() != null && x.gameObject.GetComponent<PlatformUnit>().CurrentProvince == null).ToList().ForEach(y => y.gameObject.GetComponent<PlatformUnit>().CurrentProvince = this);
            // Owner.Credits += CreditsPerHour;
         }
 

@@ -116,7 +116,7 @@ namespace Assets.TerraDefense.Implementations.World
                 var platform = GController.GetUnitInstance(AlienPlatformGameObject, Vector2.zero).GetComponent<PlatformUnit>();
                 platform.AliensOwner = Aliens;
                 platform.transform.position = province.transform.position;
-                platform.OnDestroyed += FindObjectOfType<UI.UIController>().UpdateHumanVictoryProgressText;
+                platform.OnDestroyed += FindObjectOfType<UIController>().UpdateHumanVictoryProgressText;
                 var trigger = Instantiate(UnitTriggerObject, platform.gameObject.transform.position, Quaternion.identity);
                 trigger.transform.parent = platform.gameObject.transform;
             }

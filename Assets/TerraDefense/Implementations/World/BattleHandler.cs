@@ -37,8 +37,6 @@ namespace Assets.TerraDefense.Implementations.World
                 winningArmy = alliedUnits;
                 losingArmy = enemyUnits;
             }
-            //var losingArmy = totalAttack > totalDefense ? alliedUnits : enemyUnits;
-            //var winningArmy = totalAttack <= totalDefense ? alliedUnits : enemyUnits;
             yield return null;
             var totalAirAttack = enemyUnits.Sum(unit => unit.AirAttackValue);
             var totalAirDefense = alliedUnits.Sum(unit => unit.AirAttackValue);
@@ -61,29 +59,29 @@ namespace Assets.TerraDefense.Implementations.World
 
             losingArmy.RemoveAll(x => !x.gameObject.activeInHierarchy);
 
-            if (losingArmy.Count > 0)
-            {
-                var counterValue = losingArmy.Sum(x => x.AttackValue);
-                var counterAirValue = losingArmy.Sum(x => x.AirAttackValue);
+            //if (losingArmy.Count > 0)
+            //{
+            //    var counterValue = losingArmy.Average(x => x.AttackValue);
+            //    var counterAirValue = losingArmy.Average(x => x.AirAttackValue);
 
-                for (var i = 0; i < winningArmy.Count; i++)
-                {
-                    try
-                    {
-                        var unit = winningArmy[i];
-                        unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -damageValue : -airDamageValue);                      
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.Log(e);
-                    }
-                    yield return null;
-                }
+            //    for (var i = 0; i < winningArmy.Count; i++)
+            //    {
+            //        try
+            //        {
+            //            var unit = winningArmy[i];
+            //            unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -counterValue : -counterAirValue);                      
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Debug.Log(e);
+            //        }
+            //        yield return null;
+            //    }
 
 
-                winningArmy.RemoveAll(x => !x.gameObject.activeInHierarchy);
+            //    winningArmy.RemoveAll(x => !x.gameObject.activeInHierarchy);
 
-            }
+            //}
 
 
             if (losingArmy.Count != 0)

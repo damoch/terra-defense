@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Utils;
@@ -15,7 +14,6 @@ namespace Assets.TerraDefense.Implementations.Units
         public List<Unit> Units { get; set; }
         public Province TargetProvince { get; set; }
         public Province CurrentProvince { get; set; }
-        public PlatformUnitMode PlatformUnitMode { get; set; }
         public Action OnDestroyed { get; internal set; }
 
         public override void Start()
@@ -33,31 +31,9 @@ namespace Assets.TerraDefense.Implementations.Units
             InvokeRepeating("DecideNextMove", 1f, 1f);
             GetComponent<SpriteRenderer>().color = AliensOwner.UnitColor;
             InitialStatus = Status;
-            PlatformUnitMode = PlatformUnitMode.Attack;
         }
 
         private void DecideNextMove()
-        {
-            switch (PlatformUnitMode)
-            {
-                case PlatformUnitMode.Attack:
-                    DecideInAttackMode();
-                    break;
-                case PlatformUnitMode.Defense:
-                    DecideInDefenseMode();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-           
-        }
-
-        private void DecideInDefenseMode()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void DecideInAttackMode()
         {
             if (CurrentProvince != null && CurrentProvince.Owner == AliensOwner)
             {
@@ -106,6 +82,8 @@ namespace Assets.TerraDefense.Implementations.Units
                     }
                 }
             }
+
+
         }
 
         private bool ShouldBuildMoreUnits()
