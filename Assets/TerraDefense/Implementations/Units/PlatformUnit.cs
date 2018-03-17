@@ -36,6 +36,16 @@ namespace Assets.TerraDefense.Implementations.Units
 
         private void DecideNextMove()
         {
+            if (!gameObject.activeInHierarchy) return;
+            if(CurrentProvince.IsBattle) 
+            {
+                if (Units.Count == 0) Units.Add(AliensOwner.ProduceUnit(this)?.GetComponent<Unit>());
+                foreach(var unit in Units)
+                {
+                    unit?.SetNewTarget(CurrentProvince.transform.position);
+                }
+                return;
+            }
             if (CurrentProvince != null && CurrentProvince.Owner == AliensOwner && Units.Count > 0 && AliensOwner.ProduceReserves)
             {
                 var units = CurrentProvince.AlliedUnits.Where(x => x != this).ToList();
@@ -47,7 +57,7 @@ namespace Assets.TerraDefense.Implementations.Units
             }
             if (TargetProvince == null || TargetProvince.Owner == AliensOwner) return;
 
-            if (UtilsAndTools.GetDistance(this, TargetProvince) > 6f)
+            if (UtilsAndTools.GetDistance(CurrentProvince, TargetProvince) > 6f)
             {
                 var target = UtilsAndTools.FindNearestProvince(TargetProvince);
                 foreach (var unit in Units)

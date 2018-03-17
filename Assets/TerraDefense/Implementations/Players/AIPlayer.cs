@@ -18,10 +18,8 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private List<Province> _provinces;
         private Dictionary<PlatformUnit, Province> _orders;
-        private bool _finalAttackConducted;
         private void Start ()
         {
-            _finalAttackConducted = false;
             _orders = new Dictionary<PlatformUnit, Province>();
             Aliens = FindObjectOfType<Aliens>();
             _provinces = FindObjectsOfType<Province>().ToList();
@@ -33,7 +31,7 @@ namespace Assets.TerraDefense.Implementations.Players
             #region AI
             if(Aliens.UnitsInReserve.Count > 0) Aliens.UnitsInReserve?.RemoveAll(x => x == null || !x.gameObject.activeInHierarchy);
             var units = Aliens.GetPlayerControllableUnits();
-            if (units.Count == 0 && !_finalAttackConducted) {
+            if (units.Count == 0) {
                 FinalAttack();
                 return;
             }
@@ -66,7 +64,6 @@ namespace Assets.TerraDefense.Implementations.Players
             {
                 unit.SetNewTarget(targets[UnityEngine.Random.Range(0, targets.Count)].transform.position);
             }
-            _finalAttackConducted = true;
         }
 
         private void FixOrders(List<PlatformUnit> platforms)
@@ -113,13 +110,11 @@ namespace Assets.TerraDefense.Implementations.Players
             return new Dictionary<string, string>
             {
                 { "name", gameObject.name },
-                { "finalAttackConducted", _finalAttackConducted.ToString() }
             };
         }
 
         public void SetSavableData(Dictionary<string, string> json)
         {
-            _finalAttackConducted = bool.Parse(json["finalAttackConducted"]);
         }
         #endregion
 

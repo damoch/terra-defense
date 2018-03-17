@@ -15,7 +15,7 @@ namespace Assets.TerraDefense.Implementations.Factions
         private List<Unit> _airUnits;
         private List<Unit> _groundUnits;
         public List<Unit> UnitsInReserve;
-        public bool ProduceReserves { get { return _airUnits?.Count > 0 && _groundUnits?.Count > 0 && _groundUnits.Sum(x => x.Cost) + _airUnits.Sum(x => x.Cost) > Credits; } }
+        public bool ProduceReserves { get { return _airUnits?.Count > 0 && _groundUnits?.Count > 0 && _groundUnits.Sum(x => x.Cost) < Credits; } }
         private void Start()
         {
             Instance = this;

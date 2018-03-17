@@ -228,6 +228,7 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public override void PropertyChangesOwner(Province province, bool isLost)
         {
+            Debug.Log("provs left" + FindObjectsOfType<Province>().Where(x => x.Owner == this).Count());
             if (FindObjectsOfType<Province>().Where(x => x.Owner == this).Count() == 0)
             {
                 Alliance.Countries.Remove(this);
@@ -235,7 +236,7 @@ namespace Assets.TerraDefense.Implementations.Factions
                 for (var index = 0; index < units.Count; index++)
                 {
                     var unit = units[index];
-                    Destroy(unit.gameObject);
+                    GameController.RemoveUnit(unit.gameObject);
                 }
                 Destroy(gameObject);
             }
