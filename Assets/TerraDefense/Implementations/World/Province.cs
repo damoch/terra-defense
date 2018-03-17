@@ -110,7 +110,7 @@ namespace Assets.TerraDefense.Implementations.World
 
             if (Owner.IsEnemy(unitComponent))
             {
-                unitComponent.SetNewTarget(GetNewUnitPosition(EnemyUnits.Count(), AttackPosition));
+                //unitComponent.SetNewTarget(GetNewUnitPosition(EnemyUnits.Count(), AttackPosition));
                 if(unitComponent.UnitType == Enums.UnitType.Ground && unitComponent.Owner != _originalOwner)
                     unitComponent.ModifyStatus(unitComponent.Status * -EnemyEnterDamageFactor);
                 EnemyUnits.Add(unitComponent);
@@ -127,7 +127,7 @@ namespace Assets.TerraDefense.Implementations.World
             }
             else 
             {
-                if (_provinceBounds.bounds.Contains(unitComponent.Target)) unitComponent.SetNewTarget(GetNewUnitPosition(AlliedUnits.Count(), DefensePosition));
+                //if (_provinceBounds.bounds.Contains(unitComponent.Target)) unitComponent.SetNewTarget(GetNewUnitPosition(AlliedUnits.Count(), DefensePosition));
                 AlliedUnits.Add(unitComponent);
             }
             UiHandle?.Invoke();
@@ -166,11 +166,11 @@ namespace Assets.TerraDefense.Implementations.World
             UiHandle?.Invoke();
             _spriteRenderer.color = Owner.Color;
             AlliedUnits = winningArmy;
-            var i = 0;
-            foreach (var un in AlliedUnits)
-            {
-                un.SetNewTarget(GetNewUnitPosition(i++, DefensePosition));
-            }
+            //var i = 0;
+            //foreach (var un in AlliedUnits)
+            //{
+            //    un.SetNewTarget(GetNewUnitPosition(i++, DefensePosition));
+            //}
             EnemyUnits = new List<Unit>();
             IsBattle = false;
             OnOwnerChange?.Invoke();
@@ -187,12 +187,6 @@ namespace Assets.TerraDefense.Implementations.World
 
         private void HandleUnitExit(Unit unitComponent)
         {
-            if (unitComponent.GetType() == typeof(PlatformUnit))
-            {
-                var unit = (PlatformUnit)unitComponent;
-                unit.CurrentProvince = null;
-            }
-
             var listToRemove = Owner.IsEnemy(unitComponent) ? EnemyUnits : AlliedUnits;
             listToRemove.Remove(unitComponent);
             UiHandle?.Invoke();
@@ -252,9 +246,9 @@ namespace Assets.TerraDefense.Implementations.World
             return all.Where(x => x.Owner == owner).ToList();
         }
 
-        private Vector3 GetNewUnitPosition(int unitCount, Transform originPoint)
-        {
-            return new Vector3(originPoint.position.x + NewUnitOffset * unitCount, originPoint.position.y);
-        }
+        //private Vector3 GetNewUnitPosition(int unitCount, Transform originPoint)
+        //{
+        //    return new Vector3(originPoint.position.x + NewUnitOffset * unitCount, originPoint.position.y);
+        //}
     }
 }

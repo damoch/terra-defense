@@ -18,8 +18,10 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private List<Province> _provinces;
         private Dictionary<PlatformUnit, Province> _orders;
+        private bool _finalAttackConducted;
         private void Start ()
         {
+            _finalAttackConducted = false;
             _orders = new Dictionary<PlatformUnit, Province>();
             Aliens = FindObjectOfType<Aliens>();
             _provinces = FindObjectsOfType<Province>().ToList();
@@ -29,7 +31,13 @@ namespace Assets.TerraDefense.Implementations.Players
         private void MakeNextMove()
         {
             #region AI
+            if(Aliens.UnitsInReserve.Count > 0) Aliens.UnitsInReserve?.RemoveAll(x => x == null || !x.gameObject.activeInHierarchy);
             var units = Aliens.GetPlayerControllableUnits();
+            if (units.Count == 0 && !_finalAttackConducted) {
+                FinalAttack();
+                return;
+            }
+
             var platforms = new List<PlatformUnit>();
             foreach (var unit in units)
             {
@@ -47,6 +55,18 @@ namespace Assets.TerraDefense.Implementations.Players
                     FindTargetFor(platformUnit);
                 }
             }
+        }
+
+        private void FinalAttack()
+        {
+            var units = FindObjectsOfType<Unit>().Where(x => x.Owner == Aliens);
+            if (units.Count() == 0) return;
+            var targets = GetValidTargets();
+            foreach (var unit in units)
+            {
+                unit.SetNewTarget(targets[UnityEngine.Random.Range(0, targets.Count)].transform.position);
+            }
+            _finalAttackConducted = true;
         }
 
         private void FixOrders(List<PlatformUnit> platforms)
@@ -72,14 +92,20 @@ namespace Assets.TerraDefense.Implementations.Players
 
         private void FindTargetFor(PlatformUnit platformUnit)
         {
-            var alreadyAttacked = _orders.Values.ToList();
-            var validTargets = _provinces.Where(p => !p.Owner.Equals(Aliens) && !alreadyAttacked.Contains(p)).ToList();
-            
-            if(validTargets.Count == 0)return;
+            var validTargets = GetValidTargets();
+
+            if (validTargets.Count == 0) return;
 
             var currentTarget = UtilsAndTools.FindNearestProvince(platformUnit, validTargets);
             platformUnit.TargetProvince = currentTarget;
             _orders[platformUnit] = currentTarget;
+        }
+
+        private List<Province> GetValidTargets()
+        {
+            var alreadyAttacked = _orders.Values.ToList();
+            var validTargets = _provinces.Where(p => !p.Owner.Equals(Aliens) && !alreadyAttacked.Contains(p)).ToList();
+            return validTargets;
         }
 
         public Dictionary<string, string> GetSavableData()
@@ -87,12 +113,13 @@ namespace Assets.TerraDefense.Implementations.Players
             return new Dictionary<string, string>
             {
                 { "name", gameObject.name },
+                { "finalAttackConducted", _finalAttackConducted.ToString() }
             };
         }
 
         public void SetSavableData(Dictionary<string, string> json)
         {
-            //throw new NotImplementedException();
+            _finalAttackConducted = bool.Parse(json["finalAttackConducted"]);
         }
         #endregion
 

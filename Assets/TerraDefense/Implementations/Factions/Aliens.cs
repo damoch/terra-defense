@@ -14,12 +14,17 @@ namespace Assets.TerraDefense.Implementations.Factions
         public static Aliens Instance;
         private List<Unit> _airUnits;
         private List<Unit> _groundUnits;
+        public List<Unit> UnitsInReserve;
+        public bool ProduceReserves { get { return _airUnits?.Count > 0 && _groundUnits?.Count > 0 && _groundUnits.Sum(x => x.Cost) + _airUnits.Sum(x => x.Cost) > Credits; } }
         private void Start()
         {
             Instance = this;
-
+            UnitsInReserve = new List<Unit>();
             _airUnits = AvaibleUnits.Where(x => x.UnitType == UnitType.Air).ToList();
+            _airUnits.Sort((x, y) => x.AirAttackValue.CompareTo(y.AirAttackValue));
+
             _groundUnits = AvaibleUnits.Where(x => x.UnitType == UnitType.Ground).ToList();
+            _groundUnits.Sort((x, y) => x.AttackValue.CompareTo(y.AttackValue));
         }
         public float AvgAirAttackVal { get
         {
@@ -53,9 +58,7 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public override GameObject ProduceUnit(Vector2 spawnPosition)
         {
-            var instance = Instantiate(AvaibleUnits[0].gameObject, spawnPosition, Quaternion.identity);
-            instance.GetComponent<Unit>().Owner = this;
-            return instance;
+            throw new System.Exception("This method shall not be called!");
         }
 
         public GameObject ProduceUnit(PlatformUnit pu)
@@ -76,17 +79,25 @@ namespace Assets.TerraDefense.Implementations.Factions
 
             if (totalAirAttack < enemyAircraftsCount * AvgAirAttackVal && _airUnits.Exists(x => x.Cost <= Credits))
             {
-                _airUnits.Sort((x,y) => x.AirAttackValue.CompareTo(y.AirAttackValue));
-                instance = GameController.GetUnitInstance(_airUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition);//, Quaternion.identity);
+                var avaibleAirUnits = _airUnits.Where(x => x.Cost < Credits).ToList();
+                if (avaibleAirUnits.Count == 0) return null;
+                avaibleAirUnits.Sort((x, y) => x.AirAttackValue.CompareTo(y.AirAttackValue));
+                instance = GameController.GetUnitInstance(avaibleAirUnits.First().gameObject, spawnPosition);//, Quaternion.identity);
             }
             else if(_groundUnits.Exists(x => x.Cost <= Credits))
             {
-                _groundUnits.Sort((x,y) => x.AttackValue.CompareTo(y.AttackValue));
-                instance = GameController.GetUnitInstance(_groundUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition);//Instantiate(_groundUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition, Quaternion.identity);
+                var avGroundUnits = _groundUnits.Where(x => x.Cost < Credits).ToList();
+                if (avGroundUnits.Count == 0) return null;
+                avGroundUnits.Sort((x, y) => y.AttackValue.CompareTo(x.AttackValue));
+                instance = GameController.GetUnitInstance(avGroundUnits.First().gameObject, spawnPosition);//Instantiate(_groundUnits.First(x => x.Cost <= Credits).gameObject, spawnPosition, Quaternion.identity);
             }
             else
             {
-                return null;
+                if (UnitsInReserve.Count == 0) return null;
+                var unit = UnitsInReserve.First();
+                UnitsInReserve.Remove(unit);
+                unit?.SetNewTarget(pu.transform.position);
+                return unit.gameObject;
             }
             instance.GetComponent<Unit>().Owner = this;
 

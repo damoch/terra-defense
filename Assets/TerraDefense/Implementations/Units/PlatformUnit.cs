@@ -13,7 +13,8 @@ namespace Assets.TerraDefense.Implementations.Units
         public Aliens AliensOwner { get; set; }
         public List<Unit> Units { get; set; }
         public Province TargetProvince { get; set; }
-        public Province CurrentProvince { get; set; }
+        [SerializeField]
+        public Province CurrentProvince;// { get; set; }
         public Action OnDestroyed { get; internal set; }
 
         public override void Start()
@@ -35,12 +36,12 @@ namespace Assets.TerraDefense.Implementations.Units
 
         private void DecideNextMove()
         {
-            if (CurrentProvince != null && CurrentProvince.Owner == AliensOwner)
+            if (CurrentProvince != null && CurrentProvince.Owner == AliensOwner && Units.Count > 0 && AliensOwner.ProduceReserves)
             {
                 var units = CurrentProvince.AlliedUnits.Where(x => x != this).ToList();
                 if (units.Count == 0)
                 {
-                    AliensOwner.ProduceUnit(this);
+                    AliensOwner.UnitsInReserve.Add(AliensOwner.ProduceUnit(this)?.GetComponent<Unit>());
                     return;
                 }
             }
@@ -110,15 +111,7 @@ namespace Assets.TerraDefense.Implementations.Units
             Status += value;
             if (Status <= 0)
             {
-                var units = AliensOwner.GetPlayerControllableUnits();
-                foreach (var unit in units)
-                {
-                    var platform = (PlatformUnit) unit;
-                    if (platform != this)
-                    {
-                        platform.Units.AddRange(Units);
-                    }
-                }
+                AliensOwner.UnitsInReserve.AddRange(Units);
                 Units.Clear();
                 OnDestroyed?.Invoke();
                 GameController.RemoveUnit(gameObject);
