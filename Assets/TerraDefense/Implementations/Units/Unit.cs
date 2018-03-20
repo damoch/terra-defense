@@ -80,6 +80,7 @@ namespace Assets.TerraDefense.Implementations.Units
             }
             var propertyModifier = Status / (float)InitialStatus;
             AttackValue  *= propertyModifier;
+            AirAttackValue *= propertyModifier;
             DefenceValue *= propertyModifier;
             OnStatusUpdate?.Invoke(this);
             return true;

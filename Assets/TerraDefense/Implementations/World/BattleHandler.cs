@@ -27,7 +27,8 @@ namespace Assets.TerraDefense.Implementations.World
 
             List<Unit> losingArmy;
             List<Unit> winningArmy;
-            if(totalAttack > totalDefense)
+            var attackersWon = totalAttack > totalDefense;
+            if (attackersWon)
             {
                 winningArmy = enemyUnits;
                 losingArmy = alliedUnits;
@@ -59,41 +60,48 @@ namespace Assets.TerraDefense.Implementations.World
 
             losingArmy.RemoveAll(x => !x.gameObject.activeInHierarchy);
 
-            //if (losingArmy.Count > 0)
-            //{
-            //    var counterValue = losingArmy.Average(x => x.AttackValue);
-            //    var counterAirValue = losingArmy.Average(x => x.AirAttackValue);
-
-            //    for (var i = 0; i < winningArmy.Count; i++)
-            //    {
-            //        try
-            //        {
-            //            var unit = winningArmy[i];
-            //            unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -counterValue : -counterAirValue);                      
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Debug.Log(e);
-            //        }
-            //        yield return null;
-            //    }
+            if (losingArmy.Count > 0)
+            {
+                float counterValue;
+                if (attackersWon)
+                    counterValue = losingArmy.Average(x => x.DefenceValue);
+                else
+                    counterValue = losingArmy.Average(x => x.AttackValue);
 
 
-            //    winningArmy.RemoveAll(x => !x.gameObject.activeInHierarchy);
+                var counterAirValue = losingArmy.Average(x => x.AirAttackValue);
 
-            //}
+                for (var i = 0; i < winningArmy.Count; i++)
+                {
+                    try
+                    {
+                        var unit = winningArmy[i];
+                        unit.ModifyStatus(unit.UnitType == UnitType.Ground ? -counterValue : -counterAirValue);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                    }
+                    yield return null;
+                }
+
+
+                winningArmy.RemoveAll(x => !x.gameObject.activeInHierarchy);
+
+            }
 
 
             if (losingArmy.Count != 0)
-            {
-                CurrentWinner = null;
+                {
+                    CurrentWinner = null;
+                }
+                else
+                {
+                    CurrentWinner = winningArmy.Count > 0 ? winningArmy[0].Owner : null;
+                    yield return CurrentWinner;
+                }
             }
-            else
-            {
-                CurrentWinner = winningArmy.Count > 0 ? winningArmy[0].Owner : null;
-                yield return CurrentWinner;
-            }
-        }
 
+        }
     }
-}
+

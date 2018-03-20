@@ -106,12 +106,16 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public void DonateWithUnits(Country orderSubject, List<Unit> playerUnits)
         {
-            var unitCount = Random.Range(0, 6);
+            var maxUnitsToSend = playerUnits.Count / 2;
+            var panicPercentage = _country.PanicLevel / _country.Alliance.AveragePanic;
+            if (panicPercentage > 1) return;
+            var numberofUnitsToSend = maxUnitsToSend * panicPercentage;
 
             foreach (var playerUnit in playerUnits)
             {
                 playerUnit.ChangeOwner(orderSubject);
                 playerUnit.SetNewTarget(UtilsAndTools.FindNearestProvince(orderSubject).transform.position);
+                if (numberofUnitsToSend-- < 0) return;
             }
         }
     }
