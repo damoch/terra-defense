@@ -2,6 +2,7 @@
 using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.IO;
+using Assets.TerraDefense.Abstractions.World;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Units;
@@ -10,16 +11,20 @@ using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.Factions
 {
-    public class Aliens : UnitOwner, ISaveLoad {
+    public class Aliens : UnitOwner, ISaveLoad, ITimeAffected {
         public static Aliens Instance;
         private List<Unit> _airUnits;
         private List<Unit> _groundUnits;
         public List<Unit> UnitsInReserve;
         public bool ProduceReserves { get { return _airUnits?.Count > 0 && _groundUnits?.Count > 0 && _groundUnits.Sum(x => x.Cost) < Credits; } }
+        public bool CallingAnotherAliensWave { get; set; }
+        public int HoursUntilSecondWave;
+        private int _hoursUntilSecondWavePassed;
         private void Start()
         {
             Instance = this;
             UnitsInReserve = new List<Unit>();
+            CallingAnotherAliensWave = false;
             _airUnits = AvaibleUnits.Where(x => x.UnitType == UnitType.Air).ToList();
             _airUnits.Sort((x, y) => x.AirAttackValue.CompareTo(y.AirAttackValue));
 
@@ -136,6 +141,27 @@ namespace Assets.TerraDefense.Implementations.Factions
         public override void SetSavableData(Dictionary<string, string> json)
         {
             base.SetSavableData(json);
+        }
+
+        public void HourEvent()
+        {
+            if (!CallingAnotherAliensWave) return;
+            if (_hoursUntilSecondWavePassed++ > HoursUntilSecondWave)
+            {
+                var allProvinces = FindObjectsOfType<Province>();
+                var provCount = allProvinces.Count();
+                var alienProvs = allProvinces.Count(x => x.Owner == this);
+
+                if (alienProvs * 2 > provCount)
+                    FindObjectOfType<GameController>().Generator.StartSecondWave();
+                else Destroy(gameObject);
+            }
+
+        }
+
+        public void SetupTimeValues(float hourLength)
+        {
+            //throw new System.NotImplementedException();
         }
     }
 }

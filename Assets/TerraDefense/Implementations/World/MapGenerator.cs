@@ -186,6 +186,12 @@ namespace Assets.TerraDefense.Implementations.World
 
         }
 
+        internal void StartSecondWave()
+        {
+            NumberOfInvaders *= 2;
+            CreateInvaders();
+        }
+
         private void Initialize()
         {
             Player = Instantiate(PlayerGameObject).GetComponent<Player>();

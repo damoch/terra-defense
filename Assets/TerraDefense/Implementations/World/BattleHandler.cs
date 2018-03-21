@@ -38,6 +38,10 @@ namespace Assets.TerraDefense.Implementations.World
                 winningArmy = alliedUnits;
                 losingArmy = enemyUnits;
             }
+
+            damageValue += winningArmy.Average(x => x.AttackValue);
+            if (winningArmy.Count > losingArmy.Count) damageValue *= 1.1f;
+
             yield return null;
             var totalAirAttack = enemyUnits.Sum(unit => unit.AirAttackValue);
             var totalAirDefense = alliedUnits.Sum(unit => unit.AirAttackValue);
@@ -69,6 +73,7 @@ namespace Assets.TerraDefense.Implementations.World
                     counterValue = losingArmy.Average(x => x.AttackValue);
 
 
+                if (losingArmy.Count >= winningArmy.Count) counterValue *= 1.15f;
                 var counterAirValue = losingArmy.Average(x => x.AirAttackValue);
 
                 for (var i = 0; i < winningArmy.Count; i++)

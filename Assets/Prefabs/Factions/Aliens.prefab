@@ -61,3 +61,5 @@ MonoBehaviour:
   Name: Aliens
   UnitTriggerObject: {fileID: 1665686175310870, guid: 91e9e18740e32eb439f8fe783633b474,
     type: 2}
+  UnitsInReserve: []
+  HoursUntilSecondWave: 12

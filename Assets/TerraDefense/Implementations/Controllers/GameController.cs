@@ -124,6 +124,5 @@ namespace Assets.TerraDefense.Implementations.Controllers
             //unit.GetComponent<Unit>().SetNewTarget(Vector2.zero);
             _unitsPool[prototype.UnitName].Push(unit);
         }
-
     }
 }

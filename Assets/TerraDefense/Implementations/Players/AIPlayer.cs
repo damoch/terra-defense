@@ -23,7 +23,7 @@ namespace Assets.TerraDefense.Implementations.Players
             _orders = new Dictionary<PlatformUnit, Province>();
             Aliens = FindObjectOfType<Aliens>();
             _provinces = FindObjectsOfType<Province>().ToList();
-            InvokeRepeating("MakeNextMove",1f,1f);
+            InvokeRepeating("MakeNextMove", 5f,1f);
         }
 
         private void MakeNextMove()
@@ -33,9 +33,11 @@ namespace Assets.TerraDefense.Implementations.Players
             var units = Aliens.GetPlayerControllableUnits();
             if (units.Count == 0) {
                 FinalAttack();
+                Aliens.CallingAnotherAliensWave = true;
                 return;
             }
 
+            Aliens.CallingAnotherAliensWave = false;
             var platforms = new List<PlatformUnit>();
             foreach (var unit in units)
             {
