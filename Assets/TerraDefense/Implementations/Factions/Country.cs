@@ -87,7 +87,7 @@ namespace Assets.TerraDefense.Implementations.Factions
         }
         public override bool IsEnemy(Unit unit)
         {
-            return unit.Owner.GetType() == typeof(Aliens);
+            return Alliance != null && Alliance.IsEnemy(unit);
         }
 
         public override List<Unit> GetPlayerControllableUnits()

@@ -34,12 +34,11 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public override bool IsEnemy(Unit unit)
         {
-            return unit.Owner.GetType() == typeof(Aliens);
+            return !Countries.Contains(unit.Owner);
         }
 
         public override List<Unit> GetPlayerControllableUnits()
         {
-            //Czy sojusz powinien mieć jednostki?
             return FindObjectsOfType<Unit>().Where(u => u.Owner.Equals(this)).ToList();
         }
 

@@ -15,6 +15,7 @@ namespace Assets.TerraDefense.Implementations.UI
         public InputField NumberOfStartUnitsInput;
         public InputField LengthOfHourInput;
         public string NewGameSceneName;
+        public Toggle SecondWaveToggle;
 
         private void Start()
         {
@@ -35,6 +36,7 @@ namespace Assets.TerraDefense.Implementations.UI
             NewGameData.NumberOfCountries = Int32.Parse(NumberOfCountriesInput.text);
             NewGameData.NumberOfStartUnits = Int32.Parse(NumberOfStartUnitsInput.text);
             NewGameData.LengthOfHour = float.Parse(LengthOfHourInput.text);
+            NewGameData.SecondWave = SecondWaveToggle.isOn;
         }
     }
 }

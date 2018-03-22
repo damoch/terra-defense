@@ -24,7 +24,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
         private static Dictionary<string, Stack<GameObject>> _unitsPool;
         private static List<GameObject> _unitPrototypes;
         public int BasePoolSize;
-        
+        public bool SecondWaveOn { get; set; }
         public MapGenerator Generator;
         private void Start () {
             PrepareUnitPools();

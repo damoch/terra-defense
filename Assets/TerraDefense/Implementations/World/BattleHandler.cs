@@ -39,7 +39,7 @@ namespace Assets.TerraDefense.Implementations.World
                 losingArmy = enemyUnits;
             }
 
-            damageValue += winningArmy.Average(x => x.AttackValue);
+            damageValue += winningArmy.Count() > 0 ? winningArmy.Average(x => x.AttackValue) : 0;
             if (winningArmy.Count > losingArmy.Count) damageValue *= 1.1f;
 
             yield return null;

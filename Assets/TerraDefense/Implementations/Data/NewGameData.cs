@@ -9,5 +9,6 @@ namespace Assets.TerraDefense.Implementations.Data
         public static int NumberOfStartUnits;
         public static int NumberOfCountries;
         public static float LengthOfHour;
+        public static bool SecondWave;
     }
 }
