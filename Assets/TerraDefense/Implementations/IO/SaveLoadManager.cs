@@ -56,8 +56,8 @@ namespace Assets.TerraDefense.Implementations.IO
 
             Debug.Log(resultsList.Count);
             //PlayerPrefs.SetString(AutoSaveKey, saveData);
-            var savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName;
-
+            var savePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName.Replace(':', '-');
+            
             if (!Directory.Exists(savePath))
                 Directory.CreateDirectory(savePath);
             savePath += Path.DirectorySeparatorChar + fileName + FileExtension;
@@ -75,7 +75,7 @@ namespace Assets.TerraDefense.Implementations.IO
             if (fileName == null || fileName == "") fileName = AutoSaveKey;
             if(fileName.Contains(' '))
                 fileName = fileName.Split(' ')[0];
-            var loadPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName + Path.DirectorySeparatorChar + fileName + FileExtension;
+            var loadPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName.Replace(':', '-') + Path.DirectorySeparatorChar + fileName + FileExtension;
             if (!File.Exists(loadPath)) return false;
             var gObjects = new List<GameObject>();
             string json;
@@ -86,6 +86,7 @@ namespace Assets.TerraDefense.Implementations.IO
             catch(Exception ex)
             {
                 Debug.Log(ex);
+                Debug.Break();
                 return false;
             }
 
@@ -100,6 +101,7 @@ namespace Assets.TerraDefense.Implementations.IO
             catch(Exception ex)
             {
                 Debug.Log(ex);
+                Debug.Break();
                 return false;
             }
             var sortedPriorities = list.Keys.ToList();
@@ -134,7 +136,14 @@ namespace Assets.TerraDefense.Implementations.IO
 
         public List<string> GetAllSaveNames()
         {
-            var saveDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName;
+            var saveDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + Application.companyName + Path.DirectorySeparatorChar + Application.productName.Replace(':', '-');
+            
+            if (!Directory.Exists(saveDirectoryPath))
+            {
+                Directory.CreateDirectory(saveDirectoryPath);
+                return new List<string> { };
+            }
+
             var fileList =  Directory.GetFileSystemEntries(saveDirectoryPath).Where(x => Path.GetExtension(x).Equals(FileExtension)).ToList();
             var result = new List<string>();
             foreach (var item in fileList)

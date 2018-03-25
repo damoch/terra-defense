@@ -1,7 +1,8 @@
-﻿using Assets.TerraDefense.Enums;
+﻿using UnityEngine.UI;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 namespace Assets.TerraDefense.Implementations.UI
 {
@@ -13,8 +14,16 @@ namespace Assets.TerraDefense.Implementations.UI
         public GameObject SaveLoadPanel;
         public bool IsMenuActive { get { return Time.timeScale == 1; }}
 
+        public List<Texture2D> Backgrounds;
+        private int _currentBackgroundIndex = 0;
+        private List<GameObject> _itemsWithBackgrounds;
+
         private void Start()
         {
+            _itemsWithBackgrounds = new List<GameObject>
+            {
+                NewGameOptions, Options, SaveLoadPanel, gameObject
+            };
             int resolutionX = 800, resolutionY = 600;//lowest resolution
             var isFullscreen = false;
             if (PlayerPrefs.HasKey(OptionsMenuController.ResolutionXKey))
@@ -38,6 +47,8 @@ namespace Assets.TerraDefense.Implementations.UI
             }
 
             Screen.SetResolution(resolutionX, resolutionY, isFullscreen);
+
+            if (SceneManager.GetActiveScene().name == "mainMenu")InvokeRepeating("SetNewBackground", 0, 10f);
         }
 
         public void NewGameButtonClicked()
@@ -81,6 +92,22 @@ namespace Assets.TerraDefense.Implementations.UI
         public void ExitToMenu()
         {
             SceneManager.LoadScene("mainMenu");
+        }
+
+        private void SetNewBackground()
+        {
+            if (_currentBackgroundIndex > Backgrounds.Count - 1) _currentBackgroundIndex = 0;
+            foreach(var item in _itemsWithBackgrounds)
+            {
+                var newBackground = Backgrounds[_currentBackgroundIndex];
+                var comp = item.GetComponent<Image>();
+                var oldPosition = comp.sprite.rect.position;
+                var oldRect = new Rect(oldPosition, new Vector2(newBackground.width, newBackground.height));
+
+
+                comp.sprite = Sprite.Create(Backgrounds[_currentBackgroundIndex], oldRect, comp.sprite.pivot);
+            }
+            _currentBackgroundIndex++;
         }
     }
 }

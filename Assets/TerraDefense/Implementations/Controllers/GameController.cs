@@ -35,22 +35,22 @@ namespace Assets.TerraDefense.Implementations.Controllers
                 switch (option)
                 {
                     case StartInstruction.LoadGame:
-                        if (SaveLoadManager.LoadGameNameKey == null || 
-                            !PlayerPrefs.HasKey(SaveLoadManager.LoadGameNameKey) || 
-                            !SaveLoadManager.LoadGame(PlayerPrefs.GetString(SaveLoadManager.LoadGameNameKey)))
-                        {
-                            
-                            Debug.LogError("Load failed");
-                            PlayerPrefs.DeleteKey(SaveLoadManager.LoadGameNameKey);
-                            SceneManager.LoadScene("mainMenu");
-                            break;
-                        }
-                        return;
+                        if (SaveLoadManager.LoadGameNameKey == null) ThrowOnFailedLoad();
+                        if (!PlayerPrefs.HasKey(SaveLoadManager.LoadGameNameKey))ThrowOnFailedLoad();
+                        if (!SaveLoadManager.LoadGame(PlayerPrefs.GetString(SaveLoadManager.LoadGameNameKey))) ThrowOnFailedLoad();
+                        break;
                 }
 
             }
             Generator.enabled = true;//start generation
            
+        }
+
+        private void ThrowOnFailedLoad()
+        {
+            Debug.LogError("Load failed");
+            PlayerPrefs.DeleteAll();
+            SceneManager.LoadScene("mainMenu");
         }
 
         private void PrepareUnitPools()

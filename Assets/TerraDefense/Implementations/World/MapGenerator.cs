@@ -223,75 +223,71 @@ namespace Assets.TerraDefense.Implementations.World
             int rnd, rnd2, rnd3, rnd4, rnd5, rnd6, rnd7 = 0;
             string names = "";
             var i = Random.Range(1, 10);
-                rnd6 = (int)Math.Floor(Random.value * nm6.Length);
-                rnd7 = (int)Math.Floor(Random.value * nm7.Length);
+            rnd6 = (int)Math.Floor(Random.value * nm6.Length);
+            rnd7 = (int)Math.Floor(Random.value * nm7.Length);
 
-                if (rnd6 < 20)
+            if (rnd6 < 20)
+            {
+                while (rnd7 == 0)
                 {
-                    while (rnd7 == 0)
-                    {
-                        rnd7 = (int)Math.Floor(Random.value * nm7.Length);
-                    }
+                    rnd7 = (int)Math.Floor(Random.value * nm7.Length);
                 }
-                else
-                {
-                    rnd7 = 0;
-                }
-                rnd = (int)Math.Floor(Random.value * nm1.Length);
-                rnd2 = (int)Math.Floor(Random.value * nm2.Length);
-                rnd5 = (int)Math.Floor(Random.value * nm5.Length);
-                if (i < 2)
-                {
-                    names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm5[rnd5] + "  " + nm7[rnd7];
-                }
-                else if (i < 4)
-                {
-                    rnd3 = (int)Math.Floor(Random.value * nm3.Length);
-                    rnd4 = (int)Math.Floor(Random.value * nm2.Length);
-                    names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm3[rnd3] + nm2[rnd4] + nm5[rnd5] + "  " + nm7[rnd7];
-                }
-                else if (i < 8)
-                {
-                    rnd3 = (int)Math.Floor(Random.value * nm4.Length);
-                    rnd4 = (int)Math.Floor(Random.value * nm2.Length);
-                    names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm4[rnd3] + nm2[rnd4] + nm5[rnd5] + "  " + nm7[rnd7];
-                }
-                else
-                {
-                    rnd3 = (int)Math.Floor(Random.value * nm3.Length);
-                    rnd4 = (int)Math.Floor(Random.value * nm2.Length);
-                    rnd6 = (int)Math.Floor(Random.value * nm4.Length);
-                    rnd7 = (int)Math.Floor(Random.value * nm2.Length);
-                    if (i < 8)
-                    {
-                        names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm3[rnd3] + nm2[rnd4] + nm4[rnd6] + nm2[rnd7] + nm5[rnd5] + "  " + nm7[rnd7];
-                    }
-                    else
-                    {
-                        names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm4[rnd6] + nm2[rnd4] + nm3[rnd3] + nm2[rnd7] + nm5[rnd5] + "  " + nm7[rnd7];
-                    }
-                
             }
-            return FixName(names);// names.First().ToString().ToUpper() + names.Substring(1);
+            else
+            {
+                rnd7 = 0;
+            }
+            rnd = (int)Math.Floor(Random.value * nm1.Length);
+            rnd2 = (int)Math.Floor(Random.value * nm2.Length);
+            rnd5 = (int)Math.Floor(Random.value * nm5.Length);
+            if (i < 2)
+            {
+                names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm5[rnd5] + "  " + nm7[rnd7];
+            }
+            else if (i < 4)
+            {
+                rnd3 = (int)Math.Floor(Random.value * nm3.Length);
+                rnd4 = (int)Math.Floor(Random.value * nm2.Length);
+                names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm3[rnd3] + nm2[rnd4] + nm5[rnd5] + "  " + nm7[rnd7];
+            }
+            else if (i < 8)
+            {
+                rnd3 = (int)Math.Floor(Random.value * nm4.Length);
+                rnd4 = (int)Math.Floor(Random.value * nm2.Length);
+                names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm4[rnd3] + nm2[rnd4] + nm5[rnd5] + "  " + nm7[rnd7];
+            }
+            else
+            {
+                rnd3 = (int)Math.Floor(Random.value * nm3.Length);
+                rnd4 = (int)Math.Floor(Random.value * nm2.Length);
+                rnd6 = (int)Math.Floor(Random.value * nm4.Length);
+                rnd7 = (int)Math.Floor(Random.value * nm2.Length);
+                if (i < 8)
+                {
+                    names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm3[rnd3] + nm2[rnd4] + nm4[rnd6] + nm2[rnd7] + nm5[rnd5] + "  " + nm7[rnd7];
+                }
+                else
+                {
+                    names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm4[rnd6] + nm2[rnd4] + nm3[rnd3] + nm2[rnd7] + nm5[rnd5] + "  " + nm7[rnd7];
+                }
+
+            }
+            return FixName(names);
         }
 
         private string FixName(string name)
         {
             var words = name.Split(' ');
             var sb = new StringBuilder();
-            try
+
+            foreach (var word in words)
             {
-                foreach (var word in words)
-                {
-                    if (word == "") continue;
-                    sb.Append(word.First().ToString().ToUpper() + word.Substring(1));
-                    sb.Append(" ");
-                }
-            }catch(Exception ex)
-            {
-                Debug.Break();
+                if (word == "") continue;
+                sb.Append(word.First().ToString().ToUpper() + word.Substring(1));
+                sb.Append(" ");
             }
-            
+
+
             return sb.ToString();
         }
 
