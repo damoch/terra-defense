@@ -117,6 +117,7 @@ namespace Assets.TerraDefense.Implementations.World
                 unit.CurrentProvince = this;
             }
 
+            if(Owner == null)Owner = UnitOwner.GetByName(_ownerName);
             if (Owner.IsEnemy(unitComponent))
             {
                 unitComponent.SetNewTarget(GetNewUnitPosition(EnemyUnits.Count(), AttackPosition));

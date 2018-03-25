@@ -169,6 +169,12 @@ namespace Assets.TerraDefense.Implementations.UI
             if (!HandledCountry) return;
             CountryName.text = "Country name: " + HandledCountry.Name;
             CountryBudget.text = "Budget: " + HandledCountry.Credits;
+
+            if(Player.Alliance == null)
+            {
+                Player.Alliance = FindObjectOfType<Alliance>();
+            }
+
             CountryPanic.text = "Panic level: " + HandledCountry.PanicLevel + (Player.Alliance.AveragePanic > 0 ? " (" + ((HandledCountry.PanicLevel / Player.Alliance.AveragePanic) * 100).ToString().Split(',')[0] + "% of global)" : "");
             CountryPanicEffectText.gameObject.SetActive(HandledCountry.PanicEffect);
             SendHelpToButton.gameObject.SetActive(!HandledCountry.PanicEffect);

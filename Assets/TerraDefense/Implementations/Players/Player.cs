@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Enums;
 using Assets.TerraDefense.Implementations.Factions;
@@ -48,8 +49,14 @@ namespace Assets.TerraDefense.Implementations.Players
         }
         private void Update()
         {
-            if (Input.GetKey(KeyCode.Escape) && MenuController.gameObject.activeInHierarchy)
-                MenuController.TurnOffMenu();
+            try
+            {
+
+                if (Input.GetKey(KeyCode.Escape) && MenuController.gameObject.activeInHierarchy)
+                    MenuController.TurnOffMenu();
+            }catch
+            {
+            }
 
             if (Input.GetKey(KeyCode.Escape) && !MenuController.gameObject.activeInHierarchy)
                 MenuController.BringUpMainMenu();
