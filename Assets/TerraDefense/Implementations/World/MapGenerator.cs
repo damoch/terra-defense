@@ -3,12 +3,14 @@ using Assets.TerraDefense.Implementations.Factions;
 using Assets.TerraDefense.Implementations.Players;
 using Assets.TerraDefense.Implementations.UI;
 using Assets.TerraDefense.Implementations.Units;
-using GController =  Assets.TerraDefense.Implementations.Controllers.GameController;
+using GController = Assets.TerraDefense.Implementations.Controllers.GameController;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 using Random = UnityEngine.Random;
+using System.Text;
 
 namespace Assets.TerraDefense.Implementations.World
 {
@@ -46,6 +48,7 @@ namespace Assets.TerraDefense.Implementations.World
         public GameObject UnitTriggerObject;
         private List<Province> _generatedProvinces;
         public Camera MinimapCamera;
+        public List<string> NamesList;
         private void Start()
         {
             SetupGameData();
@@ -67,7 +70,7 @@ namespace Assets.TerraDefense.Implementations.World
             _provinceWidth = ProvinceGameObject.GetComponent<BoxCollider2D>().size.x * ProvinceGameObject.transform.localScale.x;
             _provincesMap = new Dictionary<int, Dictionary<int, Province>>();
 
-           
+
 
             Initialize();
             CreateProvincesMap();
@@ -101,6 +104,7 @@ namespace Assets.TerraDefense.Implementations.World
                     var province = Instantiate(ProvinceGameObject).GetComponent<Province>();
                     province.gameObject.transform.position = new Vector2(x * _provinceWidth, -y * _provinceHeight);
                     province.OnOwnerChange += uiController.UpdateAliensVictoryProgressText;
+                    province.Name = GenerateName();
                     _provincesMap[x].Add(y, province);
                 }
             }
@@ -138,9 +142,9 @@ namespace Assets.TerraDefense.Implementations.World
                 country.Color = color;
                 country.UnitColor = unitColor;
                 country.Credits = 100;
-                country.Name = "Country" + i;
+                country.Name = FixName(NamesList[i]);
 #if UNITY_EDITOR
-                country.gameObject.name = "Country" + i;
+                country.gameObject.name = "Country" + i + country.Name;
 #endif
                 country.Alliance = AllianceInstance;
                 AllianceInstance.Countries.Add(country);
@@ -169,7 +173,7 @@ namespace Assets.TerraDefense.Implementations.World
                 for (var u = 0; u < NumberOfStartUnits; u++)
                 {
                     var unit =
-                        GController.GetUnitInstance(country.AvaibleUnits[Random.Range(0, country.AvaibleUnits.Count - 1)].gameObject,  Vector2.zero)
+                        GController.GetUnitInstance(country.AvaibleUnits[Random.Range(0, country.AvaibleUnits.Count - 1)].gameObject, Vector2.zero)
                             .GetComponent<Unit>();
                     unit.Owner = country;
                     var province = provinces[Random.Range(0, provinces.Count - 1)];
@@ -178,7 +182,7 @@ namespace Assets.TerraDefense.Implementations.World
                     province.AlliedUnits.Add(unit);
                     unit.SetNewTarget(province.gameObject.transform.position);
                     unit.gameObject.transform.position = province.gameObject.transform.position;
-                    
+
                     var trigger = Instantiate(UnitTriggerObject, unit.gameObject.transform.position, Quaternion.identity);
                     trigger.transform.parent = unit.gameObject.transform;
                 }
@@ -204,6 +208,91 @@ namespace Assets.TerraDefense.Implementations.World
             AllianceInstance = Instantiate(AllianceGameObject).GetComponent<Alliance>();
             AllianceInstance.UnitTriggerObject = UnitTriggerObject;
             FindObjectOfType<UI.UIController>().Setup();
+        }
+
+        private string GenerateName()
+        {
+            var nm1 = new string[] { "b", "c", "d", "f", "g", "h", "l", "m", "n", "p", "r", "s", "t", "w", "y", "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z", "bl", "br", "ch", "cl", "cr", "dr", "fl", "fr", "gl", "gr", "pl", "pr", "sc", "sh", "sk", "sl", "sm", "sn", "sp", "st", "sw", "tr", "tw", "wh", "wr", "sch", "scr", "sph", "shr", "spl", "spr", "str", "thr" };
+            var nm2 = new string[] { "a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "ai", "eo", "ea", "ee", "oo", "oa", "ia", "io" };
+            var nm3 = new string[] { "br", "bl", "c", "ch", "cl", "ct", "ck", "cc", "d", "dg", "dw", "dr", "dl", "f", "g", "gg", "gl", "gw", "gr", "h", "k", "kr", "kw", "l", "ll", "lb", "ld", "lg", "lm", "ln", "lr", "lw", "lz", "m", "mr", "ml", "nw", "n", "nn", "ng", "nl", "p", "ph", "r", "rb", "rc", "rd", "rg", "rl", "rm", "rn", "rr", "rs", "rst", "rt", "rth", "rtr", "rw", "rv", "s", "ss", "sh", "st", "sth", "str", "sl", "sw", "t", "tb", "tl", "tg", "tm", "tn", "tw", "th", "tt", "v", "w", "wl", "wn", "x", "z" };
+            var nm4 = new string[] { "c", "d", "f", "ff", "g", "gg", "h", "l", "ll", "m", "mm", "n", "nn", "p", "pp", "r", "rr", "s", "ss", "t", "tt", "w" };
+            var nm5 = new string[] { "st", "sk", "sp", "nd", "nt", "nk", "mp", "rd", "ld", "lp", "rk", "lt", "lf", "pt", "ft", "ct", "t", "d", "k", "n", "p", "l", "g", "m", "s", "b", "c", "t", "d", "k", "n", "p", "l", "g", "m", "s", "b", "c" };
+            var nm6 = new string[] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "West", "East", "North", "South", "Little", "Upper", "Lower", "Fort", "Upper West", "Upper East", "Upper North", "Upper South", "Lower West", "Lower East", "Lower North", "Lower South", "Midtown", "Waterside", "Bayside", "Downtown" };
+            var nm7 = new string[] { "", "Acre", "Avenue", "Bazaar", "Boulevard", "Center", "Circle", "Corner", "Cross", "District", "East", "Garden", "Grove", "Heights", "Hill", "Hills", "Market", "North", "Park", "Place", "Plaza", "Point", "Road", "Row", "Side", "South", "Square", "Street", "Town", "Vale", "Valley", "West", "Wood", "Yard" };
+
+            int rnd, rnd2, rnd3, rnd4, rnd5, rnd6, rnd7 = 0;
+            string names = "";
+            var i = Random.Range(1, 10);
+                rnd6 = (int)Math.Floor(Random.value * nm6.Length);
+                rnd7 = (int)Math.Floor(Random.value * nm7.Length);
+
+                if (rnd6 < 20)
+                {
+                    while (rnd7 == 0)
+                    {
+                        rnd7 = (int)Math.Floor(Random.value * nm7.Length);
+                    }
+                }
+                else
+                {
+                    rnd7 = 0;
+                }
+                rnd = (int)Math.Floor(Random.value * nm1.Length);
+                rnd2 = (int)Math.Floor(Random.value * nm2.Length);
+                rnd5 = (int)Math.Floor(Random.value * nm5.Length);
+                if (i < 2)
+                {
+                    names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm5[rnd5] + "  " + nm7[rnd7];
+                }
+                else if (i < 4)
+                {
+                    rnd3 = (int)Math.Floor(Random.value * nm3.Length);
+                    rnd4 = (int)Math.Floor(Random.value * nm2.Length);
+                    names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm3[rnd3] + nm2[rnd4] + nm5[rnd5] + "  " + nm7[rnd7];
+                }
+                else if (i < 8)
+                {
+                    rnd3 = (int)Math.Floor(Random.value * nm4.Length);
+                    rnd4 = (int)Math.Floor(Random.value * nm2.Length);
+                    names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm4[rnd3] + nm2[rnd4] + nm5[rnd5] + "  " + nm7[rnd7];
+                }
+                else
+                {
+                    rnd3 = (int)Math.Floor(Random.value * nm3.Length);
+                    rnd4 = (int)Math.Floor(Random.value * nm2.Length);
+                    rnd6 = (int)Math.Floor(Random.value * nm4.Length);
+                    rnd7 = (int)Math.Floor(Random.value * nm2.Length);
+                    if (i < 8)
+                    {
+                        names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm3[rnd3] + nm2[rnd4] + nm4[rnd6] + nm2[rnd7] + nm5[rnd5] + "  " + nm7[rnd7];
+                    }
+                    else
+                    {
+                        names = nm6[rnd6] + " " + nm1[rnd] + nm2[rnd2] + nm4[rnd6] + nm2[rnd4] + nm3[rnd3] + nm2[rnd7] + nm5[rnd5] + "  " + nm7[rnd7];
+                    }
+                
+            }
+            return FixName(names);// names.First().ToString().ToUpper() + names.Substring(1);
+        }
+
+        private string FixName(string name)
+        {
+            var words = name.Split(' ');
+            var sb = new StringBuilder();
+            try
+            {
+                foreach (var word in words)
+                {
+                    if (word == "") continue;
+                    sb.Append(word.First().ToString().ToUpper() + word.Substring(1));
+                    sb.Append(" ");
+                }
+            }catch(Exception ex)
+            {
+                Debug.Break();
+            }
+            
+            return sb.ToString();
         }
 
     }
