@@ -28,6 +28,9 @@ namespace Assets.TerraDefense.Implementations.Players
 
         public int Priority => 0;
 
+        public Vector3 CameraBoundUpLeft { get; internal set; }
+        public Vector3 CameraBoundDownRight { get; internal set; }
+
         private void Start()
         {
             Camera = Camera.main;
@@ -80,16 +83,16 @@ namespace Assets.TerraDefense.Implementations.Players
                 Camera.orthographicSize--;
             }
 
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && Camera.transform.position.x < CameraBoundDownRight.x)
                 Camera.transform.Translate(ScrollingSpeed, 0, 0, 0);
 
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && Camera.transform.position.x > CameraBoundUpLeft.x)
                 Camera.transform.Translate(-ScrollingSpeed, 0, 0, 0);
 
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && Camera.transform.position.y < CameraBoundUpLeft.y)
                 Camera.transform.Translate(0, ScrollingSpeed, 0, 0);
 
-            if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && Camera.transform.position.y > CameraBoundDownRight.y)
                 Camera.transform.Translate(0, -ScrollingSpeed, 0, 0);
         }
 

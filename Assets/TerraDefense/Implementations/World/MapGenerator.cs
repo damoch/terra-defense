@@ -108,6 +108,9 @@ namespace Assets.TerraDefense.Implementations.World
                     _provincesMap[x].Add(y, province);
                 }
             }
+
+            Player.CameraBoundUpLeft = _provincesMap[0][0].gameObject.transform.position;
+            Player.CameraBoundDownRight = _provincesMap[MapSquareLength - 1][MapSquareHeight - 1].transform.position;
         }
 
         private void CreateInvaders()
