@@ -10,7 +10,6 @@ namespace Assets.TerraDefense.Abstractions.Factions
     public abstract class UnitOwner : MonoBehaviour, ISaveLoad
     {
         public Color Color;
-        public Color UnitColor;
         public int Credits;
         public List<Unit> AvaibleUnits;
         public string Name;
@@ -50,9 +49,6 @@ namespace Assets.TerraDefense.Abstractions.Factions
                 { "colorR", Color.r.ToString() },
                 { "colorG", Color.g.ToString() },
                 { "colorB", Color.b.ToString() },
-                { "ucolorR", UnitColor.r.ToString() },
-                { "ucolorG", UnitColor.g.ToString() },
-                { "ucolorB", UnitColor.b.ToString() }
 
             };
             return resultDict;
@@ -67,11 +63,7 @@ namespace Assets.TerraDefense.Abstractions.Factions
             var colorG = float.Parse(json["colorG"]);
             var colorB = float.Parse(json["colorB"]);
             Color = new Color(colorR, colorG, colorB);
-
-            var ucolorR = float.Parse(json["ucolorR"]);
-            var ucolorG = float.Parse(json["ucolorG"]);
-            var ucolorB = float.Parse(json["ucolorB"]);
-            UnitColor = new Color(ucolorR, ucolorG, ucolorB);
+            
         }
     }
 }

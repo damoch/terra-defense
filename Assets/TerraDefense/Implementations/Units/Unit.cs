@@ -43,7 +43,7 @@ namespace Assets.TerraDefense.Implementations.Units
             }
             Target = transform.position;
             InitialStatus = Status;
-            GetComponent<SpriteRenderer>().color = Owner.UnitColor;
+            GetComponent<SpriteRenderer>().color = Owner.Color;
         }
 	
         public virtual void Update () {
@@ -120,7 +120,7 @@ namespace Assets.TerraDefense.Implementations.Units
         {
             GetComponent<SpriteRenderer>().color = Color.white;
             Owner = newOwner;
-            GetComponent<SpriteRenderer>().color = Owner.UnitColor;
+            GetComponent<SpriteRenderer>().color = Owner.Color;
         }
     }
 }

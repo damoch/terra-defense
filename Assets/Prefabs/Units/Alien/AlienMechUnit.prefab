@@ -106,7 +106,7 @@ MonoBehaviour:
   AttackValue: 70
   AirAttackValue: 10
   DefenceValue: 40
-  UnitSpeed: 4
+  UnitSpeed: 3
   Cost: 40
   UnitType: 0
 --- !u!212 &212071459969690460

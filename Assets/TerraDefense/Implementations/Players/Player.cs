@@ -73,12 +73,12 @@ namespace Assets.TerraDefense.Implementations.Players
                 HandleRightClick();
             }
             var size = Camera.orthographicSize;
-            if (Input.GetAxis("Mouse ScrollWheel") < 0 && size < ZoomMax)
+            if ((Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetKey(KeyCode.KeypadMinus)) && size < ZoomMax)
             {
                 Camera.orthographicSize++;
             }
 
-            if (Input.GetAxis("Mouse ScrollWheel") > 0 && size > ZoomMin)
+            if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetKey(KeyCode.KeypadPlus) && size > ZoomMin)
             {
                 Camera.orthographicSize--;
             }

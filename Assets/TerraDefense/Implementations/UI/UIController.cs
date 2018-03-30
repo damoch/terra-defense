@@ -31,6 +31,11 @@ namespace Assets.TerraDefense.Implementations.UI
         public GameObject HandledObject { get; set; }
         public Button CancelButton;
         public bool OrderPanelActive { get { return OrderPanel.activeInHierarchy; }  }
+
+        public Text UnitTypeText;
+        public Text UnitAttackText;
+        public Text UnitDefenceText;
+        public Text UnitAntiAirText;
         public Text CountryName;
         public Text CountryBudget;
         public Text CountryPanic;
@@ -153,9 +158,13 @@ namespace Assets.TerraDefense.Implementations.UI
                 Player.DeselectUnit();
                 return;
             }
-            UnitNameText.text = unit.name;
-            UnitFactionText.text = unit.Owner.name;
+            UnitNameText.text = unit.UnitName;
+            UnitFactionText.text = unit.Owner.Name;
             UnitStatusText.text = "Status: " + unit.Status;
+            UnitTypeText.text = "Type: " + unit.UnitType;
+            UnitDefenceText.text = "Defence value: " + unit.DefenceValue;
+            UnitAttackText.text = "Attack value: " + unit.AttackValue;
+            UnitAntiAirText.text = "Anti air value: " + unit.AirAttackValue;
         }
 
         public void CountryOptionsClicked()

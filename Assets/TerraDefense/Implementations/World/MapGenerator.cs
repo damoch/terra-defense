@@ -143,7 +143,6 @@ namespace Assets.TerraDefense.Implementations.World
                 var country = Instantiate(CountryGameObject).GetComponent<Country>();
                 country.UnitTriggerObject = UnitTriggerObject;
                 country.Color = color;
-                country.UnitColor = unitColor;
                 country.Credits = 100;
                 country.Name = FixName(NamesList[i]);
 #if UNITY_EDITOR

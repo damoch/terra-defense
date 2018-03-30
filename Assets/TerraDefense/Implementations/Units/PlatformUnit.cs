@@ -30,7 +30,7 @@ namespace Assets.TerraDefense.Implementations.Units
                 throw new UnityException("No Aliens on scene!");
             }
             InvokeRepeating("DecideNextMove", 1f, 1f);
-            GetComponent<SpriteRenderer>().color = AliensOwner.UnitColor;
+            GetComponent<SpriteRenderer>().color = AliensOwner.Color;
             InitialStatus = Status;
         }
 

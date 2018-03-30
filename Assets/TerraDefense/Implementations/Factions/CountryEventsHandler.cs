@@ -115,6 +115,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             {
                 playerUnit.ChangeOwner(orderSubject);
                 playerUnit.SetNewTarget(UtilsAndTools.FindNearestProvince(orderSubject).transform.position);
+                orderSubject.PanicLevel -= (int)(playerUnit.DefenceValue / 10);
                 if (numberofUnitsToSend-- < 0) return;
             }
         }

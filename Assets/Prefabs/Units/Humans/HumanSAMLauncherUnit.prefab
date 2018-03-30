@@ -99,13 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15014a51e866e1e4b9e9c871508f4b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {x: 0, y: 0, z: 0}
   UnitName: SAM Launcher
   Owner: {fileID: 0}
   Status: 15
   AttackValue: 0
   AirAttackValue: 45
   DefenceValue: 0
-  UnitSpeed: 4
+  UnitSpeed: 2
   Cost: 20
   UnitType: 0
 --- !u!212 &212071459969690460

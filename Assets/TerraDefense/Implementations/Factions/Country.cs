@@ -118,6 +118,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             Credits -= unit.Cost;
             var instance = GameController.GetUnitInstance(unit.gameObject, spawnPosition);
             instance.GetComponent<Unit>().Owner = this;
+            PanicLevel -= (int)(instance.GetComponent<Unit>().DefenceValue / 10);
             var trigger = Instantiate(UnitTriggerObject, spawnPosition, Quaternion.identity);
             trigger.transform.parent = instance.transform;
             return instance;
@@ -200,6 +201,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             {
                 if (lostProvince.Owner == this) LostProvinces.Remove(lostProvince);
             }
+            if (!LostProvinces.Any()) PanicLevel -= ProvinceLostPanic * 2;
         }
 
         private Province GetProvinceWithHighestValue(Dictionary<Province,int> dictToSearch)
