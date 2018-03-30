@@ -9,6 +9,7 @@ using Assets.TerraDefense.Implementations.World;
 using System.IO;
 using System.Text;
 using Assets.TerraDefense.Abstractions.World;
+using Assets.TerraDefense.Implementations.Controllers;
 
 namespace Assets.TerraDefense.Implementations.IO
 {
@@ -24,6 +25,7 @@ namespace Assets.TerraDefense.Implementations.IO
         private Component GetLoadableObject(Type type)
         {
             var result = LoadableObjects.FirstOrDefault(x => x.GetComponent(type) != null);
+            if (result != null && result.name.ToLower().Contains("unit"))return GameController.GetUnitInstance(result, Vector3.zero).GetComponent(type);
             return result != null ? Instantiate(result).GetComponent(type) : new GameObject().AddComponent(type);
         }
 
@@ -114,6 +116,7 @@ namespace Assets.TerraDefense.Implementations.IO
                 {
                     var typeName = Type.GetType(saved["type"]);
                     var gObject = GetLoadableObject(typeName).gameObject;
+
                     gObject.SetActive(false);
                     gObject.name = saved["name"];
                     gObject.GetComponent<ISaveLoad>().SetSavableData(saved);
