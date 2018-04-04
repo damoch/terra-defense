@@ -22,6 +22,20 @@ namespace Assets.TerraDefense.Implementations.IO
         public string LoadGameNameKey;
         public int HoursToAutoSave;
         private int _currentHour = 0;
+        private bool _isSetUp;
+        public bool IsSetUp
+        {
+            get
+            {
+                return _isSetUp;
+            }
+
+            set
+            {
+                _isSetUp = value;
+            }
+        }
+
         private Component GetLoadableObject(Type type)
         {
             var result = LoadableObjects.FirstOrDefault(x => x.GetComponent(type) != null);
@@ -178,7 +192,7 @@ namespace Assets.TerraDefense.Implementations.IO
 
         public void SetupTimeValues(float seconds)
         {
-            //throw new NotImplementedException();
+            _isSetUp = true;
         }
     }
 

@@ -32,7 +32,22 @@ namespace Assets.TerraDefense.Implementations.Units
         }
         public delegate void StatusDelegate(Unit unit);
         public StatusDelegate OnStatusUpdate;
+        private bool _isSetUp;
+
         public bool IsHurt { get { return Status < InitialStatus; } }
+
+        public bool IsSetUp
+        {
+            get
+            {
+                return _isSetUp;
+            }
+
+            set
+            {
+                _isSetUp = value;
+            }
+        }
 
         public virtual void Start ()
         {
@@ -94,6 +109,7 @@ namespace Assets.TerraDefense.Implementations.Units
         public void SetupTimeValues(float seconds)
         {
             UnitSpeed = UnitSpeed / seconds;
+            _isSetUp = true;
         }
 
         public virtual Dictionary<string, string> GetSavableData()

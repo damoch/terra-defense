@@ -49,8 +49,10 @@ namespace Assets.TerraDefense.Implementations.World
         private List<Province> _generatedProvinces;
         public Camera MinimapCamera;
         public List<string> NamesList;
+        public List<Color> AvaibleColors;
         private void Start()
         {
+            
             SetupGameData();
             _countryWidth = (int)(Math.Sqrt(ProvincesPerCountry));
 
@@ -137,12 +139,10 @@ namespace Assets.TerraDefense.Implementations.World
 
             for (var i = 0; i < NumberOfCountries; i++)
             {
-                var color = new Color(Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255);
-                var unitColor = new Color(Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255, Random.Range(0, 255) / (float)255);
                 var provinces = new List<Province>();
                 var country = Instantiate(CountryGameObject).GetComponent<Country>();
                 country.UnitTriggerObject = UnitTriggerObject;
-                country.Color = color;
+                country.Color = AvaibleColors[i];
                 country.Credits = 100;
                 country.Name = FixName(NamesList[i]);
 #if UNITY_EDITOR

@@ -21,6 +21,8 @@ namespace Assets.TerraDefense.Implementations.Factions
         public bool CallingAnotherAliensWave { get; set; }
         public int HoursUntilSecondWave;
         private int _hoursUntilSecondWavePassed;
+        private bool _isSetUp;
+
         public bool SecondWaveEnabled { get; set; }
         private void Start()
         {
@@ -48,6 +50,18 @@ namespace Assets.TerraDefense.Implementations.Factions
             }
         }
 
+        public bool IsSetUp
+        {
+            get
+            {
+                return _isSetUp;
+            }
+
+            set
+            {
+                _isSetUp = value;
+            }
+        }
 
         public override bool IsEnemy(Unit unit)
         {
@@ -167,7 +181,7 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public void SetupTimeValues(float hourLength)
         {
-            //throw new System.NotImplementedException();
+            _isSetUp = true;
         }
     }
 }

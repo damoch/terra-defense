@@ -26,8 +26,10 @@ namespace Assets.TerraDefense.Implementations.Controllers
         public int BasePoolSize;
         public bool SecondWaveOn { get; set; }
         public MapGenerator Generator;
+        private static MapGenerator _generatorInstance;
         private void Start () {
             PrepareUnitPools();
+            _generatorInstance = Generator;
             //PlayerPrefs.DeleteAll(); //fix loading problems
             if (PlayerPrefs.HasKey("StartInstruction"))
             {
@@ -105,6 +107,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
             GameObject result;
             if (_unitsPool[unitName].Count == 0)result = Instantiate(_unitPrototypes.FirstOrDefault(x => x.GetComponent<Unit>().UnitName == unitName));
             else result = _unitsPool[prototype.GetComponent<Unit>().UnitName].Pop();
+            _generatorInstance.Clock.SetupTimeAffectedObject(result.GetComponent<Unit>());
             result.transform.position = worldCoordinates;
             result.GetComponent<Unit>().SetNewTarget(worldCoordinates);
             result.SetActive(true);

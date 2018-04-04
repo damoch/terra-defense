@@ -32,6 +32,19 @@ namespace Assets.TerraDefense.Implementations.UI
         public Button CancelButton;
         public bool OrderPanelActive { get { return OrderPanel.activeInHierarchy; }  }
 
+        public bool IsSetUp
+        {
+            get
+            {
+                return _isSetUp;
+            }
+
+            set
+            {
+                _isSetUp = value;
+            }
+        }
+
         public Text UnitTypeText;
         public Text UnitAttackText;
         public Text UnitDefenceText;
@@ -53,6 +66,8 @@ namespace Assets.TerraDefense.Implementations.UI
         public Text ProvinceDefenseValueText;
         public Text ProvinceAttackValueText;
         public GameObject ProvinceDataPanel;
+        private bool _isSetUp;
+
         public void Setup ()
         {
             Clock = FindObjectOfType<Clock>();
@@ -130,6 +145,7 @@ namespace Assets.TerraDefense.Implementations.UI
         public void SetupTimeValues(float seconds)
         {
             HourEvent();
+            _isSetUp = true;
         }
 
         public void ShowCommandPanel(bool show)

@@ -4,5 +4,6 @@
     {
         void HourEvent();
         void SetupTimeValues(float hourLength);
+        bool IsSetUp { get; set; }
     }
 }

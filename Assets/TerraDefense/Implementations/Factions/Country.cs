@@ -34,6 +34,19 @@ namespace Assets.TerraDefense.Implementations.Factions
         }
         public bool PanicEffect { get { return PanicLevel > Alliance.AveragePanic; } }
 
+        public bool IsSetUp
+        {
+            get
+            {
+                return _isSetUp;
+            }
+
+            set
+            {
+                _isSetUp = value;
+            }
+        }
+
         private string _allianceName;
         public Action OnStatusUpdate;
         private int _hourNumber;
@@ -42,6 +55,8 @@ namespace Assets.TerraDefense.Implementations.Factions
         private int _panicLevel;
         public int MinimalUnitCount;
         public int MinimalUnitCountOffset;
+        private bool _isSetUp;
+
         public Country()
         {
             _handler = new CountryEventsHandler(this);
@@ -211,7 +226,7 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public void SetupTimeValues(float seconds)
         {
-            //throw new System.NotImplementedException();
+            _isSetUp = true;
         }
 
         public override void EnemyIsRetreatingFromProperty(GameObject caller)

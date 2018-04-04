@@ -59,12 +59,26 @@ namespace Assets.TerraDefense.Implementations.World
             }
         }
 
+        public bool IsSetUp
+        {
+            get
+            {
+                return _isSetUp;
+            }
+
+            set
+            {
+                _isSetUp = value;
+            }
+        }
+
         public float EnemyEnterDamageFactor;
         public float FriendlyStayRepairFactor;
         public Transform DefensePosition;
         public Transform AttackPosition;
         private Collider2D _provinceBounds;
         public float NewUnitOffset;
+        private bool _isSetUp;
 
         private void Start ()
         {
@@ -234,6 +248,7 @@ namespace Assets.TerraDefense.Implementations.World
         public void SetupTimeValues(float seconds)
         {
             AlertDelay = FindObjectOfType<Clock>().LengthOfHour / 4;
+            _isSetUp = true;
         }
 
         public Dictionary<string, string> GetSavableData()

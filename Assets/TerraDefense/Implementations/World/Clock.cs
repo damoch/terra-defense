@@ -25,6 +25,7 @@ namespace Assets.TerraDefense.Implementations.World
         private void Start () {
 		    GameDateTime = new DateTime(2075,4,5,6,0,0);
             _currentTime = 0;
+            SetupTimeAffected();
             //if(LengthOfHour > 0)
             //    InvokeRepeating("HourEvent", LengthOfHour, LengthOfHour);
         }
@@ -56,6 +57,7 @@ namespace Assets.TerraDefense.Implementations.World
                 try
                 {
                     affected.HourEvent();
+                    SetupTimeAffectedObject(affected);
                 }
                 catch (Exception ex)
                 {
@@ -84,6 +86,22 @@ namespace Assets.TerraDefense.Implementations.World
             LengthOfHour = float.Parse(json["lengthOfHour"]);
             InvokeRepeating("HourEvent", LengthOfHour, LengthOfHour);
 
+        }
+
+        private void SetupTimeAffected()
+        {
+
+            var objectsWithTag = GameObject.FindGameObjectsWithTag("TimeAffected");
+            foreach(var obj in objectsWithTag)
+            {
+                SetupTimeAffectedObject(obj.GetComponent<ITimeAffected>());                
+            }
+        }
+
+        public void SetupTimeAffectedObject(ITimeAffected timeAffected)
+        {
+            if (timeAffected == null || timeAffected.IsSetUp) return;
+            timeAffected.SetupTimeValues(LengthOfHour);
         }
     }
 }

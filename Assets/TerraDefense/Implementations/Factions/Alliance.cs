@@ -17,9 +17,25 @@ namespace Assets.TerraDefense.Implementations.Factions
     {
         public List<Country> Countries;
         public double AveragePanic { get { return Countries != null && Countries.Count > 0 ? Countries.Average(a => a.PanicLevel) : 0; }  }
+
+        public bool IsSetUp
+        {
+            get
+            {
+                return _isSetUp;
+            }
+
+            set
+            {
+                _isSetUp = value;
+            }
+        }
+
         private List<string> _countryNames;
         public delegate void UpdateAllianceFoundsDelegate(float value);
         public UpdateAllianceFoundsDelegate OnFoundsUpdate;
+        private bool _isSetUp;
+
         private void Start () {
 		    if(Countries == null || Countries.Count == 0)
             {
@@ -61,7 +77,7 @@ namespace Assets.TerraDefense.Implementations.Factions
 
         public void SetupTimeValues(float seconds)
         {
-            //throw new NotImplementedException();
+            _isSetUp = true;
         }
 
         public override void EnemyIsAttackingProperty(GameObject caller)
