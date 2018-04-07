@@ -14,22 +14,34 @@ namespace Assets.TerraDefense.Implementations.UI
     // ReSharper disable once InconsistentNaming
     public class UIController : MonoBehaviour, ITimeAffected
     {
-        public Text UnitNameText;
-        public Text UnitFactionText;
-        public Text DateTimeText;
-        public Button AttackProvinceButton;
-        public Button FortifyProvinceButton;
-        public Button SendHelpToButton;
-        public GameObject UnitInfoPanel;
+        [SerializeField]
+        private Text UnitNameText;
+        [SerializeField]
+        private Text UnitFactionText;
+        [SerializeField]
+        private Text DateTimeText;
+        [SerializeField]
+        private Button AttackProvinceButton;
+        [SerializeField]
+        private Button FortifyProvinceButton;
+        [SerializeField]
+        private Button SendHelpToButton;
+        [SerializeField]
+        private GameObject UnitInfoPanel;
+        [SerializeField]
         public GameObject OrderPanel;
-        public Text UnitStatusText;
+        [SerializeField]
+        private Text UnitStatusText;
         public Player Player { get; set; }
         public Clock Clock { get; set; }
-        public Dictionary<Button, OrderType> OrderTypesForButtons { get; set; }
+        [SerializeField]
+        private Dictionary<Button, OrderType> OrderTypesForButtons { get; set; }
+        [SerializeField]
         public Button CountryOptionsButton;
         public Country HandledCountry { get; set; }
         public GameObject HandledObject { get; set; }
-        public Button CancelButton;
+        [SerializeField]
+        private Button CancelButton;
         public bool OrderPanelActive { get { return OrderPanel.activeInHierarchy; }  }
 
         public bool IsSetUp
@@ -93,7 +105,7 @@ namespace Assets.TerraDefense.Implementations.UI
 
         private void FoundsUpdate(float value)
         {
-            AllianceFoundsText.text = "Alliance fouds: " + value;
+            AllianceFoundsText.text = "Alliance budget: " + value;
         }
 
         private void FixedUpdate()

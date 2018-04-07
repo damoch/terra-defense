@@ -247,7 +247,8 @@ namespace Assets.TerraDefense.Implementations.World
 
         public void SetupTimeValues(float seconds)
         {
-            AlertDelay = FindObjectOfType<Clock>().LengthOfHour / 4;
+            AlertDelay = seconds / 4;
+            BattleDelay = seconds / 4;
             _isSetUp = true;
         }
 

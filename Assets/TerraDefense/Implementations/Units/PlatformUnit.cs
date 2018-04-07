@@ -29,7 +29,6 @@ namespace Assets.TerraDefense.Implementations.Units
             {
                 throw new UnityException("No Aliens on scene!");
             }
-            InvokeRepeating("DecideNextMove", 1f, 1f);
             GetComponent<SpriteRenderer>().color = AliensOwner.Color;
             InitialStatus = Status;
         }
@@ -131,6 +130,13 @@ namespace Assets.TerraDefense.Implementations.Units
             AttackValue *= propertyModifier;
             DefenceValue *= propertyModifier;
             return true;
+        }
+
+        public override void SetupTimeValues(float seconds)
+        {
+            base.SetupTimeValues(seconds);
+
+            InvokeRepeating("DecideNextMove", seconds/4, seconds/4);
         }
     }
 }

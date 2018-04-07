@@ -106,7 +106,7 @@ namespace Assets.TerraDefense.Implementations.Units
             Debug.Log("Test");
         }
 
-        public void SetupTimeValues(float seconds)
+        public virtual void SetupTimeValues(float seconds)
         {
             UnitSpeed = UnitSpeed / seconds;
             _isSetUp = true;

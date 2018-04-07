@@ -66,9 +66,9 @@ namespace Assets.TerraDefense.Implementations.IO
             }
             var saveData = JsonConvert.SerializeObject(resultsList);
 
-#if !DEBUG
-            saveData = Crypt(saveData);
-#endif
+//#if !DEBUG
+//            saveData = Crypt(saveData);
+//#endif
 
             Debug.Log(resultsList.Count);
             //PlayerPrefs.SetString(AutoSaveKey, saveData);
@@ -106,9 +106,9 @@ namespace Assets.TerraDefense.Implementations.IO
                 return false;
             }
 
-#if !DEBUG            
-            json = Derypt(saveData);
-#endif      
+//#if !DEBUG            
+//            json = Derypt(saveData);
+//#endif      
             Dictionary<int, List<Dictionary<string, string>>> list;
             try
             {
