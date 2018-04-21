@@ -105,7 +105,7 @@ MonoBehaviour:
   Status: 15
   AttackValue: 80
   AirAttackValue: 0
-  DefenceValue: 60
+  DefenceValue: 10
   UnitSpeed: 1
   Cost: 40
   UnitType: 0

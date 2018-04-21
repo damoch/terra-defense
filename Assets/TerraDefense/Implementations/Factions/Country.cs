@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.TerraDefense.Abstarctions.Factions;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.IO;
 using Assets.TerraDefense.Abstractions.World;
@@ -17,7 +18,7 @@ namespace Assets.TerraDefense.Implementations.Factions
         public Alliance Alliance;
         private Dictionary<Province, int> _provincesUnderAttack;
         private Dictionary<Province, int> _threatenedProvinces;
-        private readonly CountryEventsHandler _handler;
+        private readonly ICountryEventsHandler _handler;
         public int EnemyCloseToProvincePanicValue;
         public int EnemyAttackingProvincePanicValue;
         public int ProvinceLostPanic;
@@ -203,8 +204,8 @@ namespace Assets.TerraDefense.Implementations.Factions
 
             if (provinceWithEnemiesNear != null) 
                 _handler.HandleProvinceWithEnemiesNear(provinceWithEnemiesNear);
-            
         }
+
 
         private void CheckProvincesStatus()
         {

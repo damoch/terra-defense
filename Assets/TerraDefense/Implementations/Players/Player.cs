@@ -54,7 +54,6 @@ namespace Assets.TerraDefense.Implementations.Players
         {
             try
             {
-
                 if (Input.GetKey(KeyCode.Escape) && MenuController.gameObject.activeInHierarchy)
                     MenuController.TurnOffMenu();
             }catch
@@ -65,23 +64,18 @@ namespace Assets.TerraDefense.Implementations.Players
                 MenuController.BringUpMainMenu();
 
             if (Input.GetMouseButton((int)MouseButton.LeftMouse))
-            {
                 HandleLeftClick();
-            }
+
             if (Input.GetMouseButton((int) MouseButton.RightMouse))
-            {
                 HandleRightClick();
-            }
+            
             var size = Camera.orthographicSize;
             if ((Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetKey(KeyCode.KeypadMinus)) && size < ZoomMax)
-            {
                 Camera.orthographicSize++;
-            }
+
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetKey(KeyCode.KeypadPlus) && size > ZoomMin)
-            {
                 Camera.orthographicSize--;
-            }
 
             if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && Camera.transform.position.x < CameraBoundDownRight.x)
                 Camera.transform.Translate(ScrollingSpeed, 0, 0, 0);

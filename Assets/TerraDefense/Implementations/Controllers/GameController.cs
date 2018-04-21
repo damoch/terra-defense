@@ -41,11 +41,17 @@ namespace Assets.TerraDefense.Implementations.Controllers
                         if (!PlayerPrefs.HasKey(SaveLoadManager.LoadGameNameKey))ThrowOnFailedLoad();
                         if (!SaveLoadManager.LoadGame(PlayerPrefs.GetString(SaveLoadManager.LoadGameNameKey))) ThrowOnFailedLoad();
                         break;
-                }
+                    case StartInstruction.NewGame:
+                    default:
+                        Generator.enabled = true;
+                        break;
 
+                }
             }
-            Generator.enabled = true;//start generation
-           
+
+
+            Generator.enabled = true;
+            PlayerPrefs.DeleteKey("StartInstruction");
         }
 
         private void ThrowOnFailedLoad()
@@ -107,7 +113,7 @@ namespace Assets.TerraDefense.Implementations.Controllers
             GameObject result;
             if (_unitsPool[unitName].Count == 0)result = Instantiate(_unitPrototypes.FirstOrDefault(x => x.GetComponent<Unit>().UnitName == unitName));
             else result = _unitsPool[prototype.GetComponent<Unit>().UnitName].Pop();
-            _generatorInstance.Clock.SetupTimeAffectedObject(result.GetComponent<Unit>());
+            if(_generatorInstance  && _generatorInstance.Clock)_generatorInstance.Clock.SetupTimeAffectedObject(result.GetComponent<Unit>());
             result.transform.position = worldCoordinates;
             result.GetComponent<Unit>().SetNewTarget(worldCoordinates);
             result.SetActive(true);

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Assets.TerraDefense.Abstarctions.Factions;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.TerraDefense.Implementations.Factions
 {
-    public class CountryEventsHandler
+    public class CountryEventsHandler : ICountryEventsHandler
     {
         private readonly Country _country;
 

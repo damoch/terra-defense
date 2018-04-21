@@ -59,9 +59,9 @@ namespace Assets.TerraDefense.Implementations.World
                     affected.HourEvent();
                     SetupTimeAffectedObject(affected);
                 }
-                catch (Exception ex)
+                catch// (Exception ex)
                 {
-                    Debug.Log(ex.Message);
+                    //
                 }
             }
         }

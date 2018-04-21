@@ -242,9 +242,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumberOfInvaders: 5
-  NumberOfCountries: 12
-  NumberOfStartUnits: 7
-  LengthOfHour: 10
+  NumberOfCountries: 4
+  NumberOfStartUnits: 4
+  LengthOfHour: 5
   ProvincesPerCountry: 32
   PlayerGameObject: {fileID: 1847574945800934, guid: c7a28b53f1cec28419fb481b8e0210f7,
     type: 2}
