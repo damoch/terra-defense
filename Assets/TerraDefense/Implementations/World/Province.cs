@@ -14,6 +14,8 @@ namespace Assets.TerraDefense.Implementations.World
 {
     public class Province : MonoBehaviour, ITimeAffected, ISaveLoad
     {
+        public int IndexX { get; set; }
+        public int IndexY { get; set; }
         public float BattleDelay;
         public float AlertDelay;
         public List<Unit> EnemyUnits;
@@ -124,17 +126,18 @@ namespace Assets.TerraDefense.Implementations.World
             if(EnemyUnits == null)EnemyUnits = new List<Unit>();
             if(AlliedUnits.Contains(unitComponent) || 
                 EnemyUnits.Contains(unitComponent))return;
-
+            unitComponent.transform.position = transform.position;
             if (unitComponent.GetType() == typeof(PlatformUnit))
             {
                 var unit = (PlatformUnit) unitComponent;
                 unit.CurrentProvince = this;
             }
+            
 
             if(Owner == null)Owner = UnitOwner.GetByName(_ownerName);
             if (Owner.IsEnemy(unitComponent))
             {
-                unitComponent.SetNewTarget(GetNewUnitPosition(EnemyUnits.Count(), AttackPosition));
+                //unitComponent.SetNewTarget(GetNewUnitPosition(EnemyUnits.Count(), AttackPosition));
                 if (unitComponent.UnitType == Enums.UnitType.Ground && unitComponent.Owner != _originalOwner)
                     unitComponent.ModifyStatus(unitComponent.Status * -EnemyEnterDamageFactor);
                 EnemyUnits.Add(unitComponent);
@@ -151,7 +154,7 @@ namespace Assets.TerraDefense.Implementations.World
             }
             else 
             {
-                if (_provinceBounds.bounds.Contains(unitComponent.Target)) unitComponent.SetNewTarget(GetNewUnitPosition(AlliedUnits.Count(), DefensePosition));
+                //if (_provinceBounds.bounds.Contains(unitComponent.Target)) unitComponent.SetNewTarget(GetNewUnitPosition(AlliedUnits.Count(), DefensePosition));
                 AlliedUnits.Add(unitComponent);
             }
             UiHandle?.Invoke();

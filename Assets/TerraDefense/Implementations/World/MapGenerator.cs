@@ -39,6 +39,14 @@ namespace Assets.TerraDefense.Implementations.World
         private float _provinceWidth;
         private Dictionary<int, Dictionary<int, Province>> _provincesMap;
 
+        public Dictionary<int, Dictionary<int, Province>> ProvincesMap
+        {
+            get
+            {
+                return _provincesMap;
+            }
+        }
+
         public Player Player { get; set; }
         public Alliance AllianceInstance { get; set; }
         public Aliens Aliens { get; set; }
@@ -107,10 +115,11 @@ namespace Assets.TerraDefense.Implementations.World
                     province.gameObject.transform.position = new Vector2(x * _provinceWidth, -y * _provinceHeight);
                     province.OnOwnerChange += uiController.UpdateAliensVictoryProgressText;
                     province.Name = GenerateName();
+                    province.IndexX = x;
+                    province.IndexY = y;
                     _provincesMap[x].Add(y, province);
                 }
             }
-
             Player.CameraBoundUpLeft = _provincesMap[0][0].gameObject.transform.position;
             Player.CameraBoundDownRight = _provincesMap[MapSquareLength - 1][MapSquareHeight - 1].transform.position;
         }

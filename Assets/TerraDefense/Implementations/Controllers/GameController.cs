@@ -27,6 +27,8 @@ namespace Assets.TerraDefense.Implementations.Controllers
         public bool SecondWaveOn { get; set; }
         public MapGenerator Generator;
         private static MapGenerator _generatorInstance;
+
+        public Dictionary<int, Dictionary<int, Province>> ProvincesMap { get; set; }
         private void Start () {
             PrepareUnitPools();
             _generatorInstance = Generator;
@@ -132,6 +134,35 @@ namespace Assets.TerraDefense.Implementations.Controllers
             unit.GetComponent<Unit>().Owner = null;
             //unit.GetComponent<Unit>().SetNewTarget(Vector2.zero);
             _unitsPool[prototype.UnitName].Push(unit);
+        }
+
+        public static List<Province> FindProvincesNear(Province province)
+        {
+            var maxX = _generatorInstance.ProvincesMap.Keys.Count() - 1;
+            var maxY = _generatorInstance.ProvincesMap.Values.Count() - 1;
+            var result = new List<Province>();
+
+            if(province.IndexY + 1 < maxY)
+            {
+                result.Add(_generatorInstance.ProvincesMap[province.IndexX][province.IndexY + 1]);
+            }
+
+            if (province.IndexY - 1 >= 0)
+            {
+                result.Add(_generatorInstance.ProvincesMap[province.IndexX][province.IndexY + 1]);
+            }
+
+            if (province.IndexX - 1 >= 0)
+            {
+                result.Add(_generatorInstance.ProvincesMap[province.IndexX - 1][province.IndexY]);
+            }
+
+            if (province.IndexX + 1 < maxX)
+            {
+                result.Add(_generatorInstance.ProvincesMap[province.IndexX + 1][province.IndexY]);
+            }
+
+            return result;
         }
     }
 }

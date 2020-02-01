@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstractions.Factions;
 using Assets.TerraDefense.Abstractions.IO;
@@ -22,6 +23,9 @@ namespace Assets.TerraDefense.Implementations.Factions
         public int HoursUntilSecondWave;
         private int _hoursUntilSecondWavePassed;
         private bool _isSetUp;
+
+        [SerializeField]
+        private int _reinforcementsCount;
 
         public bool SecondWaveEnabled { get; set; }
         private void Start()
@@ -129,6 +133,16 @@ namespace Assets.TerraDefense.Implementations.Factions
 
             Credits -= instance.GetComponent<Unit>().Cost;
             return instance;
+        }
+
+        internal void GetReinforcements(PlatformUnit platformUnit)
+        {
+            var howMany = UnitsInReserve.Count < _reinforcementsCount ? UnitsInReserve.Count : _reinforcementsCount;
+            for (int i = 0; i < howMany; i++)
+            {
+                platformUnit.Units.Add(UnitsInReserve[i]);
+                UnitsInReserve[i].SetNewTarget(platformUnit.CurrentProvince.transform.position);
+            }
         }
 
         public override void EnemyIsAttackingProperty(GameObject caller)

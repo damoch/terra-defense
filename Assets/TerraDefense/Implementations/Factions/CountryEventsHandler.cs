@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.TerraDefense.Abstarctions.Factions;
+using Assets.TerraDefense.Implementations.Controllers;
 using Assets.TerraDefense.Implementations.Units;
 using Assets.TerraDefense.Implementations.Utils;
 using Assets.TerraDefense.Implementations.World;
@@ -11,10 +12,12 @@ namespace Assets.TerraDefense.Implementations.Factions
     public class CountryEventsHandler : ICountryEventsHandler
     {
         private readonly Country _country;
+        private List<BattleGroup> _battleGroups;
 
         public CountryEventsHandler(Country country)
         {
             _country = country;
+            _battleGroups = new List<BattleGroup>();
         }
 
         public void HandleProvinceWithEnemiesNear(Province provinceWithEnemiesNear)
@@ -80,29 +83,82 @@ namespace Assets.TerraDefense.Implementations.Factions
             }
         }
 
+        public void CheckBattleGroups(List<Unit> playerUnits)
+        {
+            var groupsToRemove = new List<BattleGroup>();
+            foreach (var battleGroup in _battleGroups)
+            {
+                if (battleGroup.IsGroupReadyForAttack())
+                {
+                    battleGroup.CommenceAttack();
+                }
+
+                while (!battleGroup.IsGroupStrengthSufficient())
+                {
+                    var unit = playerUnits.First();
+                    battleGroup.BattleGroupUnits.Add(unit);
+
+                    foreach (var u in battleGroup.BattleGroupUnits)
+                    {
+                        u.SetNewTarget(battleGroup.RallyProvince.transform.position);
+                    }
+                }
+
+                if (!battleGroup.TargetProvince.Owner.IsEnemy(playerUnits.First()))
+                {
+                    groupsToRemove.Add(battleGroup);
+                }
+
+
+            }
+            foreach (var group in groupsToRemove)
+            {
+                _battleGroups.Remove(group);
+            }
+        }
+
         public void AttackProvince(Province lostProvince, List<Unit> playerUnits)
         {
-            var occupationStrength = lostProvince.DefenseValue;
-            
-            Debug.Log("Alies" + playerUnits.Sum(a => a.AttackValue));
-            Debug.Log("Enemy " + occupationStrength);
-
-            if (playerUnits.Sum(a => a.AttackValue) <= occupationStrength+1)
+            var battleGroup = _battleGroups.Find(x => x.TargetProvince = lostProvince);
+            if (battleGroup != null)
             {
-                var retreatProvince = UtilsAndTools.FindNearestProvince(lostProvince, _country);
-                if(retreatProvince != null)
-                    _country.ProduceUnit(retreatProvince.transform.position);
+                if (battleGroup.IsGroupReadyForAttack())
+                {
+                    battleGroup.CommenceAttack();
+                }
+
+                while (!battleGroup.IsGroupStrengthSufficient())
+                {
+                    var unit = playerUnits.First();
+                    battleGroup.BattleGroupUnits.Add(unit);
+                    unit.SetNewTarget(battleGroup.RallyProvince.transform.position);
+                }
                 return;
             }
-            var attackStrength = 0f;
+            battleGroup = new BattleGroup();
+            battleGroup.TargetProvince = lostProvince;
+            battleGroup.RallyProvince = GameController.FindProvincesNear(lostProvince).First();
+            battleGroup.BattleGroupUnits = battleGroup.RallyProvince.AlliedUnits;
 
-            foreach (var alliedUnit in playerUnits)
+            while (!battleGroup.IsGroupStrengthSufficient())
             {
-                alliedUnit.SetNewTarget(lostProvince.transform.position);
-                attackStrength += alliedUnit.AttackValue;
-
-                if (attackStrength > occupationStrength) break;
+                var unit = playerUnits.First(x => !IsUnitInBattleGroup(x) && !battleGroup.BattleGroupUnits.Contains(x));
+                battleGroup.BattleGroupUnits.Add(unit);
+                unit.SetNewTarget(battleGroup.RallyProvince.transform.position);
             }
+            _battleGroups.Add(battleGroup);
+        }
+
+        private bool IsUnitInBattleGroup(Unit unit)
+        {
+            foreach (var battleGroup in _battleGroups)
+            {
+                if (battleGroup.BattleGroupUnits.Contains(unit))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void DonateWithUnits(Country orderSubject, List<Unit> playerUnits)

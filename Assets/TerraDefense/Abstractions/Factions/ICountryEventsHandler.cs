@@ -12,5 +12,6 @@ namespace Assets.TerraDefense.Abstarctions.Factions
         void FortifyProvince(Province province, List<Unit> playerUnits);
         void HandleProvinceUnderAttack(Province provinceUnderAttack, List<Unit> playerUnits);
         void HandleProvinceWithEnemiesNear(Province provinceWithEnemiesNear);
+        void CheckBattleGroups(List<Unit> playerUnits);
     }
 }

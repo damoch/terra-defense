@@ -91,7 +91,8 @@ namespace Assets.TerraDefense.Implementations.UI
 
         public void ExitToMenu()
         {
-            TurnOffMenu();
+            gameObject.SetActive(false);
+            Time.timeScale = 1;
             SceneManager.LoadScene("mainMenu");
         }
 

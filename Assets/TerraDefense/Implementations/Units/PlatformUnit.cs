@@ -17,6 +17,9 @@ namespace Assets.TerraDefense.Implementations.Units
         public Province CurrentProvince;// { get; set; }
         public Action OnDestroyed { get; internal set; }
 
+        [SerializeField]
+        private int _minUnitsCount;
+
         public override void Start()
         {
             TargetProvince = null;
@@ -93,6 +96,11 @@ namespace Assets.TerraDefense.Implementations.Units
                 }
             }
 
+            if (ShouldAskForReinforcements())
+            {
+                AliensOwner.GetReinforcements(this);
+            }
+
 
         }
 
@@ -137,6 +145,11 @@ namespace Assets.TerraDefense.Implementations.Units
             base.SetupTimeValues(seconds);
 
             InvokeRepeating("DecideNextMove", seconds/4, seconds/4);
+        }
+
+        private bool ShouldAskForReinforcements()
+        {
+            return Units.Count < _minUnitsCount;
         }
     }
 }

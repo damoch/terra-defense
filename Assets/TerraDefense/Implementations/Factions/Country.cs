@@ -134,6 +134,7 @@ namespace Assets.TerraDefense.Implementations.Factions
             Credits -= unit.Cost;
             var instance = GameController.GetUnitInstance(unit.gameObject, spawnPosition);
             instance.GetComponent<Unit>().Owner = this;
+            instance.GetComponent<SpriteRenderer>().color = Color;
             PanicLevel -= (int)(instance.GetComponent<Unit>().DefenceValue / 10);
             var trigger = Instantiate(UnitTriggerObject, spawnPosition, Quaternion.identity);
             trigger.transform.parent = instance.transform;
@@ -204,6 +205,8 @@ namespace Assets.TerraDefense.Implementations.Factions
 
             if (provinceWithEnemiesNear != null) 
                 _handler.HandleProvinceWithEnemiesNear(provinceWithEnemiesNear);
+
+            _handler.CheckBattleGroups(playerUnits);
         }
 
 
